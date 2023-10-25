@@ -1,4 +1,5 @@
 'use client'
+import { useSession, signIn, signOut } from 'next-auth/react'
 import { Button } from "@/components/ui/button"
 import * as React from "react"
 import {
@@ -27,11 +28,11 @@ export default function DropdownMenuDemo() {
       <Button variant="outline" className="border-none outline-none no-focus"><RiAccountPinCircleLine size={35}/></Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent className="w-56 absolute right-1 custom-scrollbar">
-      <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
+      <DropdownMenuLabel>Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-        <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
-        <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
+        <DropdownMenuRadioItem value="top" onClick={() => signIn('google')}>Sign In</DropdownMenuRadioItem>
+        <DropdownMenuRadioItem value="bottom" onClick={() => signOut()}>Sign Out</DropdownMenuRadioItem>
         <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
       </DropdownMenuRadioGroup>
     </DropdownMenuContent>

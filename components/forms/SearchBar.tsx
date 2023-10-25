@@ -33,13 +33,13 @@ const SearchBar = () => {
       }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/2 max-sm:w-full mx-auto relative border-blue flex gap-3 border-2 p-2 rounded-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/2 max-sm:w-full mx-auto relative  flex gap-3 border-2 border-none rounded-full">
         <FormField
           control={form.control}
           name="searchString"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormControl className="border-none">
+              <FormControl className="border-blue">
                 <Input className="no-focus outline-none w-full" placeholder="search location, rent and plot" {...field} />
               </FormControl>
               <FormMessage className="absolute bg-red-700 text-dark-1 px-3 rounded" />
