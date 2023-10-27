@@ -6,13 +6,17 @@ interface Params {
     name: string,
     email: string,
     image: string,
-    password: string | ''
+    password: string | '',
+    signInType: 'google' | 'credentials',
+    isEmailVerified: boolean,
 }
 export async function createUser({
     name,
     email,
     image,
     password,
+    signInType,
+    isEmailVerified,
 }: Params) {
     try {
         connectToDB()
@@ -21,10 +25,14 @@ export async function createUser({
             name: name,
             email: email,
             image: image,
-            password: password
+            password: password,
+            signInType: signInType,
+            isEmailVerified: isEmailVerified,
         })
 
       await user.save()
+
+      return user
 
     } catch(error: any) {
         throw new Error(`Failed to create user: ${error.message}`)

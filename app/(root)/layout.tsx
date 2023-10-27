@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import '../globals.css'
 import TopBar from '@/components/shared/TopBar'
 import BottomBar from '@/components/shared/BottomBar'
+import Provider from '@/context/Provider'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <TopBar />   
-        {children}
-        <BottomBar />
+        <Provider>
+          <TopBar />   
+          {children}
+          <BottomBar />
+        </Provider>
       </body>
     </html>
   )

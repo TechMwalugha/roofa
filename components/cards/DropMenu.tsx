@@ -21,6 +21,8 @@ import {
 import { RiAccountPinCircleLine } from 'react-icons/ri'
 
 export default function DropdownMenuDemo() {
+  const { data: session } = useSession()
+
   const [position, setPosition] = React.useState("bottom")
   return (
     <DropdownMenu>
