@@ -16,7 +16,7 @@ export async function POST(req: any) {
       image: password,
       password: hashedPassword,
       signInType: 'credentials',
-      isEmailVerified: false      
+      isEmailVerified: false,      
   })
 
     

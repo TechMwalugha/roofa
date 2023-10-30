@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { signIn } from "next-auth/react"
+import {  signIn } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
 import { FcGoogle } from 'react-icons/fc'
@@ -43,10 +43,13 @@ const LoginForm = () => {
                 password: values.password,
             })
 
+            if(res?.error === 'Email is not verified') router.push(`/verify/${values.email}`)
+
             if(res?.error) {
                 setError(res.error)
                 return
             }
+
             // Redirect to the home page after successful authentication
             router.push("/")
             
@@ -116,7 +119,7 @@ const LoginForm = () => {
         href='/register'
         className="mt-4 text-subtle-medium"
         >
-            Don't have an account? <span className="text-blue">Sign Up</span>
+            Don't have an account? <span className="text-blue hover:underline">Sign Up</span>
         </Link>
       </form>
     </Form>

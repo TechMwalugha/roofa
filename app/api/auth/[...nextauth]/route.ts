@@ -22,23 +22,13 @@ const handler = NextAuth({
         }),
         CredentialsProvider({
             name: "Credentials",
-            credentials: {
-                // username: {
-                //     label: "Email:",
-                //     type: "email",
-                //     placeholder: "manu@gmail.com"
-                // },
-                // password: {
-                //     label: "Password:",
-                //     type: "password",
-                //     placeholder: "********"
-                // }
-            },
+            credentials: {},
             async authorize(credentials: any) {
                 // This is where you need to retrieve user data 
                 // to verify with credentials
                 // Docs: https://next-auth.js.org/configuration/providers/credentials
-                const user = await fetchUserByEmail(credentials?.email as string)
+                try{
+                    const user = await fetchUserByEmail(credentials?.email as string)
                 if(user) {
                     if(user.signInType !== 'credentials') throw new Error('Email uses google sign in')
 
@@ -47,12 +37,18 @@ const handler = NextAuth({
                     if (!passwordsMatch) {
                         throw new Error('Password does not match')
                     }
+                    if(!user.isEmailVerified) {
+                        throw new Error('Email is not verified')
+                    }
 
 
                     return user
                 } else {
                     throw new Error('User does not exist')
                     // return null
+                }
+                }catch(err: any) {
+                    throw new Error(err.message)
                 }
             }
         })
