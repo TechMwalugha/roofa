@@ -33,7 +33,7 @@ const SearchBar = () => {
       }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/2 max-sm:w-full mx-auto relative  flex gap-3 border-2 border-none rounded-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="md:w-1/2 w-full mx-auto relative  flex items-center justify-center gap-3 border-2 border-none rounded-full">
         <FormField
           control={form.control}
           name="searchString"
@@ -46,7 +46,7 @@ const SearchBar = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="rounded-full"><FiSearch/></Button>
+        <Button type="submit" className="rounded bg-blue "><FiSearch/></Button>
       </form>
     </Form>
   )

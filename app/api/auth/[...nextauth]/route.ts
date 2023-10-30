@@ -45,7 +45,7 @@ const handler = NextAuth({
                     const passwordsMatch = await bcrypt.compare(credentials?.password as string, user.password);
 
                     if (!passwordsMatch) {
-                        return null;
+                        throw new Error('Password does not match')
                     }
 
 

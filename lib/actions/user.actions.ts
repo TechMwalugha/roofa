@@ -19,7 +19,7 @@ export async function createUser({
     isEmailVerified,
 }: Params) {
     try {
-        connectToDB()
+       connectToDB()
 
         const user = new User({
             name: name,
@@ -41,6 +41,7 @@ export async function createUser({
 
 export async function fetchUserByEmail(email: string) {
     try {
+        connectToDB()
         const user = await User.findOne({ email: email })
 
         return user

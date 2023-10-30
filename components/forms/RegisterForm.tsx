@@ -131,9 +131,9 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="rounded-full">Login</Button>
+        <Button type="submit" className="rounded-md bg-blue hover:bg-blue-gray-500">Register</Button>
         <Link
-        href='/register'
+        href='/login'
         className="mt-4 text-subtle-medium"
         >
             Have an account? <span className="text-blue">Sign In</span>

@@ -1,11 +1,16 @@
-import { connectToDB } from "@/lib/mongoose"
+
+import { CarouselDefault } from "@/components/cards/Carousel";
+import rentals from "@/lib/testData/rentalsData";
+import Link from "next/link";
+
 
 export default function Home() {
-  connectToDB()
 
   return (
-    <section className='mt-48'>
-      <h1 className="text-center text-3xl font-bold">Home Page</h1>
+   <section className='mt-48 px-2 flex flex-wrap items-center gap-2 xs:flex-row'>
+      {rentals.map((rental, index) => (
+        <CarouselDefault key={index} images={rental.src} name={rental.name} />   
+      ))}
     </section>
   )
 }

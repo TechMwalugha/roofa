@@ -59,7 +59,7 @@ const LoginForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
       {error && (
-            <div className="bg-red-500 text-white w-fit mx-auto text-sm py-1 px-3 rounded-md mt-2">
+            <div className="bg-red-500 text-white w-full text-center text-small-medium mx-auto text-sm py-1 px-3 rounded-md mt-2">
               {error}
             </div>
           )}
@@ -92,7 +92,7 @@ const LoginForm = () => {
               <FormControl>
                 <Input placeholder="lucky@gmail.com" {...field} />
               </FormControl>
-              <FormMessage className="text-tiny-medium"/>
+              <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
             </FormItem>
           )}
         />
@@ -107,11 +107,11 @@ const LoginForm = () => {
               <FormControl>
                 <Input placeholder="********" {...field} type="password" />
               </FormControl>
-              <FormMessage className="text-subtle-medium" />
+              <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
             </FormItem>
           )}
         />
-        <Button type="submit" className="rounded-full">Login</Button>
+        <Button type="submit" className="rounded  bg-blue">Login</Button>
         <Link
         href='/register'
         className="mt-4 text-subtle-medium"

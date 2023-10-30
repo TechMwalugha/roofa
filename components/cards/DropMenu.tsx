@@ -19,13 +19,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { RiAccountPinCircleLine } from 'react-icons/ri'
+import { useRouter } from 'next/navigation'
 
 export default function DropdownMenuDemo() {
   const { data: session } = useSession()
+  const router = useRouter()
 
   const [position, setPosition] = React.useState("bottom")
   return (
-    <DropdownMenu>
+   session ? ( <DropdownMenu>
+    <DropdownMenuTrigger asChild>
+      <Button variant="outline" className="border-none outline-none no-focus"><RiAccountPinCircleLine size={35}/></Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent className="w-56 absolute right-1 custom-scrollbar">
+      <DropdownMenuLabel>Account Details</DropdownMenuLabel>
+      <DropdownMenuSeparator />
+      <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+        <DropdownMenuRadioItem value="top" onClick={() => alert('hello')}>Profile</DropdownMenuRadioItem>
+        <DropdownMenuRadioItem value="bottom" onClick={() => router.push('/api/auth/signout')}>Log Out</DropdownMenuRadioItem>
+        <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
+      </DropdownMenuRadioGroup>
+    </DropdownMenuContent>
+  </DropdownMenu>) : ( <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="outline" className="border-none outline-none no-focus"><RiAccountPinCircleLine size={35}/></Button>
     </DropdownMenuTrigger>
@@ -33,11 +48,11 @@ export default function DropdownMenuDemo() {
       <DropdownMenuLabel>Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-        <DropdownMenuRadioItem value="top" onClick={() => signIn('google')}>Sign In</DropdownMenuRadioItem>
-        <DropdownMenuRadioItem value="bottom" onClick={() => signOut()}>Sign Out</DropdownMenuRadioItem>
+        <DropdownMenuRadioItem value="top" onClick={() => router.push('/login')}>Sign In</DropdownMenuRadioItem>
+        <DropdownMenuRadioItem value="bottom" onClick={() => router.push('/register')}>Register</DropdownMenuRadioItem>
         <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
       </DropdownMenuRadioGroup>
     </DropdownMenuContent>
-  </DropdownMenu>
+  </DropdownMenu>)
   )
 }

@@ -6,7 +6,7 @@ import { IoBedSharp } from 'react-icons/io5'
 
 const TopBar = () => {
   return (
-    <nav className="topbar">
+    <nav className="topbar bg-white">
         <div className="flex items-center justify-between">
         <Link href="/" className="">
             <Image 
