@@ -23,3 +23,12 @@ export const registerFormSchema = z.object({
     email: z.string().min(4, {message: 'email is too short'}).max(50, {message: 'too long'}).email("This is not a valid email."),
     password: z.string().min(6, {message: 'minimum six characters'}).max(20, {message: 'maximum 20 characters'})
  })
+
+ export const forgotPasswordFormSchema = z.object({
+   email: z.string().min(4, {message: 'email is too short'}).max(50, {message: 'too long'}).email("This is not a valid email."), 
+ })
+
+ export const resetPasswordFormSchema = z.object({
+   password: z.string().min(2, {message: 'Too short'}).max(50, {message: 'too long'}),
+   confirmPassword: z.string().min(2, {message: 'Too short'}).max(50, {message: 'too long'}),
+   })

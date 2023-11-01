@@ -11,8 +11,9 @@ export function CarouselDefault({images, name}: Props) {
   return (
     <Link href='/' className="flex rounded-sm flex-col flex-auto w-72 ">
       <Carousel className="rounded-xl w-full   h-60">
-        {images.map((image) => (
+        {images.map((image, index) => (
           <Image 
+          key={index}
           src={image}
           alt={name}
           fill

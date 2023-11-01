@@ -18,6 +18,11 @@ const Page = async  ({ params }: {params: {email: string}}) =>{
 
 
     if(user) {
+
+      if(user.isEmailVerified) {
+        redirect('/')
+      }
+
       const randomString = generateRandom32ByteString()
 
       await updateUser({
@@ -36,7 +41,7 @@ const Page = async  ({ params }: {params: {email: string}}) =>{
       email: user.email,
       subject: 'VERIFICATION',
       heading: 'Verify Email',
-      content: `click the link to verify email: <a href=http://localhost:3000/verify/token/${randomString}>Click here</a>`
+      content: `click the link to verify email: <a href=http://localhost:3000/verifytoken/${randomString}>Click here</a>`
     })
 }
   
@@ -77,7 +82,7 @@ const Page = async  ({ params }: {params: {email: string}}) =>{
           </p>
           <div className="flex items-center justify-between mt-3">
             <Link href="#" className="text-small-medium bg-blue p-1 rounded capitalize hover:bg-black hover:text-white">Resend Link</Link>
-            <Link href="#" className="text-small-medium bg-blue p-1 rounded capitalize hover:bg-black hover:text-white">create Account</Link>
+            <Link href="/register" className="text-small-medium bg-blue p-1 rounded capitalize hover:bg-black hover:text-white">create Account</Link>
             <Link href="#" className="text-small-medium bg-blue p-1 rounded capitalize hover:bg-black hover:text-white">Help</Link>
           </div>
         </div>

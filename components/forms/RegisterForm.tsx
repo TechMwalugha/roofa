@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation"
 
 const RegisterForm = () => {
     const [error, setError] = useState("");
+    const [email, setEmail] = useState("");
     const router = useRouter();
 
     const form = useForm<z.infer<typeof registerFormSchema>>({
@@ -36,6 +37,7 @@ const RegisterForm = () => {
 
      async function onSubmit(values: z.infer<typeof registerFormSchema>) {
         form.reset()
+      setEmail(values.email)
         try {
             const res = await fetch("api/register", {
                 method: "POST",
@@ -63,11 +65,18 @@ const RegisterForm = () => {
     <div className="flex items-center justify-center h-screen bg-blue">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
-      {error && (
-            <div className="bg-red-500 text-white w-fit mx-auto text-sm py-1 px-3 rounded-md mt-2">
+      {error && error !== "User registered." && (
+            <div className="bg-red-500 text-white w-full mx-auto text-sm py-1 px-3 rounded-md mt-2">
               {error}
             </div>
           )}
+          {error === "User registered." && (
+            <div className="bg-green-200 flex flex-col text-white w-full text-center mx-auto text-sm py-1 px-3 rounded-md mt-2">
+              <p className="">{error}</p>
+              <Link href={`/verify/${email}`} className="block bg-primary-500 p-1 rounded-md text-small-medium">Verify Email</Link>
+            </div>
+          )}
+          
         <Link 
         href='/'
         className="mx-auto mb-4"

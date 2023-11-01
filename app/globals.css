@@ -59,7 +59,7 @@
   }
 
   .topbar {
-  @apply fixed top-0 z-30 flex flex-col w-full  justify-center border-b-2 px-6 pt-2 pb-4 ;
+  @apply z-30 flex flex-col w-full  justify-center border-b-2 px-6 pt-2 pb-4 ;
   }
 
 

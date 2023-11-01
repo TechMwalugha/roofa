@@ -1,15 +1,26 @@
 
 'use server'
 import User from "@/lib/models/user.model"
+import { connectToDB } from "@/lib/mongoose"
 import Image from "next/image"
 import Link from "next/link"
+import { getServerSession } from "next-auth"
+import { redirect } from "next/navigation"
+
 const page = async ({ params}: { params: { id: string}}) => {
+  const session = await getServerSession()
+
+  if(session) {
+    redirect('/')
+  }
     let user
     let secondsDifference = 0 
     let execute = false
 
     try {
+      connectToDB()
     user = await User.findOne({ verificationToken: params.id})
+
     // Define the target date
     if(user) {
         const targetDate = new Date(user.updatedAt);
@@ -22,13 +33,16 @@ const page = async ({ params}: { params: { id: string}}) => {
 
         // Convert milliseconds to a more readable format (e.g., seconds)
          secondsDifference = Math.floor(timeDifference / 1000);
-    }
 
-    if(user && !user.isEmailVerified && secondsDifference > 3600) {
+         if(!user.isEmailVerified && secondsDifference < 3600) {
         execute = true
         user.isEmailVerified = true
         await user.save()
     }
+
+    }
+
+    
 
     } catch(error: any) {
         throw new Error('Could not verify: ' + error.message)
@@ -48,7 +62,7 @@ const page = async ({ params}: { params: { id: string}}) => {
       )}
 
       {/* verification  found  but expired*/}
-      {user && secondsDifference < 3600 && (
+      {user && secondsDifference > 3600 && (
       <div className="shadow-md p-2 flex flex-col">
         <p className="mb-3 text-subtle-semibold capitalize">hello {user?.name}, verification token has expired. Kindly:</p>
         <Link href={`/verify/${user.email}`} className="community-card_btn w-full text-center">Verify Email</Link>
@@ -56,7 +70,7 @@ const page = async ({ params}: { params: { id: string}}) => {
       )}
 
       {/* if email is already verified*/}
-      {user && user.isEmaiVerified && (
+      {user && !execute && user.isEmailVerified && (
       <div className="shadow-md p-2 flex flex-col">
         <p className="mb-3 text-subtle-semibold capitalize">hello {user?.name}, email is already verified, kindly:</p>
         <Link href={`/login`} className="community-card_btn w-full text-center">Login</Link>

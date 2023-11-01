@@ -65,6 +65,18 @@ export async function fetchUserByEmail(email: string) {
     }
 }
 
+export async function fetchUserByToken(token: string) {
+    try {
+        connectToDB()
+        const user: any = await User.findOne({ verificationToken: token })
+
+        return user
+
+    } catch (error: any) {
+        throw new Error(`Unable to fetch user: ${error.message}`)
+    }
+}
+
 export async function updateUser(
     {id, name, email, image, password, isEmailVerified, verificationToken, role, accountStatus}: updateUserProps
     ) {
