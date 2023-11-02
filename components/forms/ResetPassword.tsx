@@ -79,7 +79,7 @@ const ResetPassword = ({ id,  email }: Params) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
       {error && (
-            <div className=" text-black w-full text-center text-small-medium mx-auto text-sm py-1 px-3 rounded-md mt-2">
+            <div className="flex flex-col text-black w-full text-center text-small-medium mx-auto text-sm py-1 px-3 rounded-md mt-2">
               <p>{error}</p>
               {error === 'password reset successfully.' && <Link href='/login' className="bg-blue w-full rounded p-2 text-center mt-2">Login</Link>}
             </div>

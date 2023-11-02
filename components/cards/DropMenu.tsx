@@ -34,13 +34,33 @@ export default function DropdownMenuDemo() {
     <DropdownMenuContent className="w-56 absolute right-1 custom-scrollbar">
       <DropdownMenuLabel>Account Details</DropdownMenuLabel>
       <DropdownMenuSeparator />
-      <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-        <DropdownMenuRadioItem value="top" onClick={() => alert('hello')}>Profile</DropdownMenuRadioItem>
-        <DropdownMenuRadioItem value="bottom" onClick={() => router.push('/api/auth/signout')}>Log Out</DropdownMenuRadioItem>
-        <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
+      <DropdownMenuRadioGroup value={position} onValueChange={setPosition} className='text-small-medium tracking-wider'>
+        <DropdownMenuRadioItem value="one" 
+        onClick={() => alert('hello')}
+        className='cursor-pointer hover:bg-gray-200'
+        >Notifications</DropdownMenuRadioItem>
+        <DropdownMenuRadioItem value="two" 
+        onClick={() => alert('hello')}
+        className='cursor-pointer hover:bg-gray-200'
+        >Bookings</DropdownMenuRadioItem>
+        <DropdownMenuRadioItem value="three" 
+        onClick={() => alert('hello')}
+        className='cursor-pointer hover:bg-gray-200'
+        >Favorites</DropdownMenuRadioItem>
+        <hr className='my-3'/>
+        <DropdownMenuRadioItem value="three" 
+        onClick={() => alert('hello')}
+        className='cursor-pointer hover:bg-gray-200'
+        >Account</DropdownMenuRadioItem>
+        <hr className='my-3'/>
+        <DropdownMenuRadioItem value="four" 
+        onClick={() => router.push('/api/auth/signout')}
+        className='cursor-pointer hover:bg-gray-200'
+        >Log Out</DropdownMenuRadioItem>
       </DropdownMenuRadioGroup>
     </DropdownMenuContent>
-  </DropdownMenu>) : ( <DropdownMenu>
+  </DropdownMenu>
+  ) : ( <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="outline" className="border-none outline-none no-focus"><RiAccountPinCircleLine size={35}/></Button>
     </DropdownMenuTrigger>
@@ -48,9 +68,18 @@ export default function DropdownMenuDemo() {
       <DropdownMenuLabel>Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-        <DropdownMenuRadioItem value="top" onClick={() => router.push('/login')}>Sign In</DropdownMenuRadioItem>
-        <DropdownMenuRadioItem value="bottom" onClick={() => router.push('/register')}>Register</DropdownMenuRadioItem>
-        <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
+        <DropdownMenuRadioItem value="top" 
+        onClick={() => router.push('/login')}
+        className='cursor-pointer hover:bg-gray-200'
+        >Log In</DropdownMenuRadioItem>
+        <DropdownMenuRadioItem value="bottom" 
+        onClick={() => router.push('/register')}
+        className='cursor-pointer hover:bg-gray-200'
+        >Sign Up</DropdownMenuRadioItem>
+        <hr className='my-3'/>
+        <DropdownMenuRadioItem value="right"
+        className='cursor-pointer hover:bg-gray-200'
+        >Help Center</DropdownMenuRadioItem>
       </DropdownMenuRadioGroup>
     </DropdownMenuContent>
   </DropdownMenu>)

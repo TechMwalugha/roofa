@@ -6,6 +6,7 @@ export async function POST(req: any) {
         const { email } = await req.json();
         const user = await fetchUserByEmail(email)
         if(!user) return NextResponse.json({ message: 'user does not exists'}, { status: 401})
+        if(user.signInType ==="google") return NextResponse.json({ message: 'Kindly, Use google signIn'}, { status: 401})
         return NextResponse.json({ message: "user fetched successfully.", user }, { status: 201 });
 
     } catch(error) {

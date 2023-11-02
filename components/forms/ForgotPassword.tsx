@@ -60,13 +60,17 @@ const ForgotPassword = () => {
             const user = userData.user
             if(!user) {
               setLoader(false)
-                setError('Email not found')
+                setError(userData.message)
                 return
             }
             if(!user.isEmailVerified) {
               setLoader(false)
                 setError('Verify email first')
                 return
+            }
+            if(user.signInType === "google") {
+              setLoader(false)
+              setError
             }
 
             const randomString = generateRandom32ByteString()
