@@ -14,6 +14,7 @@ const handler = NextAuth({
       },
       pages: {
         signIn: "/login",
+        error: '/error',
       },
     providers: [
         GoogleProvider({

@@ -121,6 +121,13 @@ const LoginForm = () => {
         >
             Don't have an account? <span className="text-blue hover:underline">Sign Up</span>
         </Link>
+
+        <Link
+        href='/forgotpassword'
+        className="mt-4 text-subtle-medium"
+        >
+           <span className="text-blue">Forgot password?</span>
+        </Link>
       </form>
     </Form>
     </div>

@@ -147,13 +147,6 @@ const RegisterForm = () => {
         >
             Have an account? <span className="text-blue">Sign In</span>
         </Link>
-
-        <Link
-        href='/forgotpassword'
-        className="mt-4 text-subtle-medium"
-        >
-            Have an account? <span className="text-blue">Forgot password?</span>
-        </Link>
       </form>
     </Form>
     </div>

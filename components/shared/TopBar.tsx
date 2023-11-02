@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 const TopBar = () => {
   const scrollDirection = useScrollDirection()
   return (
-    <nav className={`topbar  sticky ${ scrollDirection === "down" ? "-top-30" : "top-0"} bg-white mb-3 transition-all`}>
+    <nav className={`topbar  sticky top-0 ${ scrollDirection === "down" ? "transform -translate-y-full" : "transform-none"} bg-white mb-3 transition-all duration-1000`}>
         <div className="flex items-center justify-between">
         <Link href="/" className="">
             <Image 
