@@ -51,7 +51,7 @@ const DeleteAccountForm = ({id}: { id: string}) => {
                 return
             }
 
-            signOut()
+            // signOut()
             await deleteUser(id as any)
 
             
