@@ -8,7 +8,7 @@ const BottomBar = () => {
             <div className="w-full pb-3 flex items-center justify-space-between">
                 {bottomBarContent.map((content, index) => (
                     <div key={index} className="footer-section flex flex-col flex-1">
-                        <h1 className="max-sm:hidden mb-1 uppercase font-bold text-heading4-bold">{content.h1}</h1>
+                        <h1 className=" hidden md:flex mb-1 uppercase font-bold text-heading4-bold">{content.h1}</h1>
                         {content.links.map((link, index) => (
                             <Link 
                             className=" font-serif text-small-medium pb-0.5 tracking-wider capitalize hover:underline"

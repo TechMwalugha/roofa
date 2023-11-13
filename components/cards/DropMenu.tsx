@@ -20,16 +20,26 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { RiAccountPinCircleLine } from 'react-icons/ri'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 export default function DropdownMenuDemo() {
   const { data: session } = useSession()
+  
   const router = useRouter()
 
   const [position, setPosition] = React.useState("bottom")
   return (
    session ? ( <DropdownMenu>
     <DropdownMenuTrigger asChild>
-      <Button variant="outline" className="border-none outline-none no-focus"><RiAccountPinCircleLine size={35}/></Button>
+      <Button variant="outline" className="border-none outline-none no-focus">
+        <Image
+          className="inline-block w-8 h-8 rounded-full object-cover"
+          src={session?.user?.image as string}
+          alt="profile image"
+          width={35}
+          height={35}
+        />
+      </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent className="w-56 absolute right-1 custom-scrollbar">
       <DropdownMenuLabel>Account Details</DropdownMenuLabel>
@@ -49,7 +59,7 @@ export default function DropdownMenuDemo() {
         >Favorites</DropdownMenuRadioItem>
         <hr className='my-3'/>
         <DropdownMenuRadioItem value="three" 
-        onClick={() => alert('hello')}
+        onClick={() => router.push('/user/account-settings')}
         className='cursor-pointer hover:bg-gray-200'
         >Account</DropdownMenuRadioItem>
         <hr className='my-3'/>

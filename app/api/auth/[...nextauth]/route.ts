@@ -59,7 +59,10 @@ const handler = NextAuth({
             if(session.user !== undefined && session.user !== null ) {
              const sessionUser = await fetchUserByEmail(session.user.email as string)
 
-             session.user.id = sessionUser._id
+             session.user.id = sessionUser?._id
+             session.user.name = sessionUser?.name
+             session.user.email = sessionUser?.email
+             session.user.image = sessionUser?.image
             }
 
             return session
@@ -70,7 +73,7 @@ const handler = NextAuth({
             try{
                 const userExists = await fetchUserByEmail(profile.email)
                 if(!userExists || userExists === null) {
-                    createUser({
+                    await createUser({
                         name: profile.name as string,
                         email: profile.email as string,
                         image: profile.picture as string,

@@ -103,3 +103,42 @@ export async function updateUser(
         throw new Error(`Unable to update user: ${error.message}`)
     }
 }
+
+export async function fetchUserById(id: mongoose.Schema.Types.ObjectId) {
+    try {
+        connectToDB()
+
+        const user = await User.findById(id)
+
+        return user
+    } catch (error: any) {
+        throw new Error("An error occured: " + error.message)
+    }
+}
+
+export async function deleteUser(id: mongoose.Schema.Types.ObjectId) {
+    try {
+        connectToDB()
+
+        await User.deleteOne({ id: id})
+        
+    } catch (error: any) {
+        throw new Error(`An error occurred: ${error.message}`)
+    }
+}
+
+export async function updateUserImage({ id, newFileName}: { id: mongoose.Schema.Types.ObjectId, newFileName: string}) {
+    try {
+        connectToDB()
+
+        const user = await User.findById(id)
+
+        user.image = `/userImages/${newFileName}`
+
+        await user.save()
+        
+    } catch (error: any) {
+        throw new Error(`an error occurred: ${error.message}`)
+        
+    }
+}
