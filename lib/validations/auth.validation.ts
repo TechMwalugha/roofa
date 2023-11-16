@@ -32,3 +32,13 @@ export const registerFormSchema = z.object({
    password: z.string().min(2, {message: 'Too short'}).max(50, {message: 'too long'}),
    confirmPassword: z.string().min(2, {message: 'Too short'}).max(50, {message: 'too long'}),
    })
+
+   //image rules
+   const MAX_FILE_SIZE = 5 * 1024 * 1024;
+   const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
+
+  export const uploadUserImage = z.object({
+    profileImage: z
+    .any()
+  })

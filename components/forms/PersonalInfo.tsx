@@ -17,22 +17,24 @@ import {
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import Link from "next/link"
-import { FcGoogle } from 'react-icons/fc'
 import { useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
-import UploadUserImage from "./UploadUserImage"
-import mongoose from "mongoose"
+import UserInfoAlertBox from "../shared/alerts/UserInfoAlertBox"
+import { updateUserProfile } from "@/lib/actions/user.actions"
+import { useSession, signOut } from "next-auth/react"
 
 interface Props {
-    name: string 
-    email: string
-    image: string
-    signInType: 'google' | 'credentials'
-    isEmailVerified: boolean
-    role: string
-    accountStatus: boolean
+  id: string
+  name: string 
+  email: string
+  image: string
+  signInType: 'google' | 'credentials'
+  isEmailVerified: boolean
+  role: string
+  accountStatus: boolean
 }
 const PersonalInfo = ({
+     id,
      name, 
      email,
      image, 
@@ -45,6 +47,13 @@ const PersonalInfo = ({
     const router = useRouter();
     const path = usePathname();
 
+    const { data: session } = useSession()
+    if(!session) {
+      router.push('/')
+      return
+    }
+
+    
     const form = useForm<z.infer<typeof personalInfoFormSchema>>({
         resolver: zodResolver(personalInfoFormSchema),
         defaultValues: {
@@ -55,9 +64,23 @@ const PersonalInfo = ({
 
      async function onSubmit(values: z.infer<typeof personalInfoFormSchema>) {
         form.reset()
+
+        console.log('first')
+        if(session?.user?.name === values.name && session.user?.email === values.email) {
+          alert('no change detected!')
+          return
+        }
         try {
-            
-            
+          console.log('hello')
+          updateUserProfile({
+            id: id as any, 
+            name: values.name, 
+            email: values.email,
+            path: path
+          })
+
+          signOut()
+          
         } catch (error: any) {
             throw new Error(`An error occurred: ${error.message}`)
         }
@@ -74,17 +97,14 @@ const PersonalInfo = ({
           )}
 
           <h2 className="text-center">Update your Personal Information here</h2>
-        <Link 
-        href='/'
-        className="mx-auto mb-4"
-        >
-            <Image 
-            src='/assets/roofalogo.png'
-            width={80}
-            height={80}
-            alt='Roofa Logo'
-            />
-        </Link>
+        <div className="my-3 ml-auto">
+        <UserInfoAlertBox
+        signInType = {signInType}
+        isEmailVerified = {isEmailVerified}
+        role = {role}
+        accountStatus = {accountStatus}
+         />
+        </div>
       
         <FormField
           control={form.control}
@@ -109,6 +129,7 @@ const PersonalInfo = ({
             className='mb-2'
             >
               <FormLabel>Email</FormLabel>
+              <FormDescription className="text-subtle-medium">Use an address you’ll always have access to.</FormDescription>
               <FormControl>
                 <Input placeholder="" {...field} type="email" />
               </FormControl>
@@ -116,8 +137,7 @@ const PersonalInfo = ({
             </FormItem>
           )}
         />
-
-      
+      <p className="text-subtle-medium text-center mb-2 text-red-400">Once you update this data you'll have to login again</p>
 
         <Button type="submit" className="rounded  bg-blue">Update</Button>
         

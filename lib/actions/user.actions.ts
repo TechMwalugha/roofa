@@ -3,6 +3,7 @@ import { connectToDB } from '@/lib/mongoose'
 import User from '../models/user.model'
 import mongoose from 'mongoose'
 import { revalidatePath } from 'next/cache'
+import sendEmail from '../emailing/nodemailer.email'
 
 interface createUserProps {
     name: string,
@@ -141,4 +142,34 @@ export async function updateUserImage({ id, newFileName}: { id: mongoose.Schema.
         throw new Error(`an error occurred: ${error.message}`)
         
     }
+}
+
+export async function updateUserProfile(
+    {id, name, email, path}:
+    {
+        id: mongoose.Schema.Types.ObjectId
+        name: string,
+        email: string,
+        path: string
+    }) {
+
+        connectToDB()
+
+        try {
+            const user = await User.findById(id)
+
+            if(!user) return 
+
+            user.name = name
+            user.email = email
+
+            
+            await user.save()
+            
+            revalidatePath(path)
+
+            
+        } catch (error: any) {
+            throw new Error('an error occurred while updating data. Try again')
+        }
 }

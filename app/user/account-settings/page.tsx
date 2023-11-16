@@ -5,6 +5,7 @@ import {MdOutlineSecurity, MdPayments} from 'react-icons/md'
 import {FaGifts} from 'react-icons/fa'
 import Link from "next/link"
 import Warning from "@/components/shared/alerts/Warning"
+import { redirect } from "next/navigation"
 
 
 const page = async () => {
@@ -13,6 +14,9 @@ const page = async () => {
     
     const user = await fetchUserByEmail(session?.user?.email as string)
 
+    if(!user) {
+        redirect('/')
+    }
   return (
     <div className="p-4 w-full overflow-hidden">
      <h3 className="text-small-regular sm:text-heading4-medium">

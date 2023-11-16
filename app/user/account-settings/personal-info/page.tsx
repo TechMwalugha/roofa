@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth"
 import { fetchUserByEmail } from "@/lib/actions/user.actions"
 import { redirect } from "next/navigation"
 import PersonalInfo from "@/components/forms/PersonalInfo"
-import UploadUserImage from "@/components/forms/UploadUserImage"
+import UploadUserImageForm from "@/components/forms/UploadUserImageForm"
 
 const page = async () => {
 
@@ -48,11 +48,12 @@ const page = async () => {
       </div>
        
       <div className="flex-1 w-full">
-      <UploadUserImage 
+      <UploadUserImageForm 
         id={user.id}
         image={user.image}
         />
         <PersonalInfo
+            id={user.id}
             name = {user.name} 
             email = {user.email}
             image = {user.image}
