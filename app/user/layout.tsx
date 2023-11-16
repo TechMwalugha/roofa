@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
       <Provider> 
-        <header className='flex sticky top-0 bg-white items-center justify-between px-2 mb-2 shadow'>
+        <header className='flex sticky top-0 bg-white z-10 items-center justify-between px-2 mb-2 shadow'>
         <Link href="/" className="">
             <Image 
             src='/assets/roofalogo.png'
