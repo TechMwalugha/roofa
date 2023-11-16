@@ -15,9 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import Image from "next/image"
-import Link from "next/link"
-import { useState } from "react"
+import {  useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import UserInfoAlertBox from "../shared/alerts/UserInfoAlertBox"
 import { updateUserProfile } from "@/lib/actions/user.actions"
@@ -48,10 +46,6 @@ const PersonalInfo = ({
     const path = usePathname();
 
     const { data: session } = useSession()
-    if(!session) {
-      router.push('/')
-      return
-    }
 
     
     const form = useForm<z.infer<typeof personalInfoFormSchema>>({
@@ -65,13 +59,21 @@ const PersonalInfo = ({
      async function onSubmit(values: z.infer<typeof personalInfoFormSchema>) {
         form.reset()
 
-        console.log('first')
+        
         if(session?.user?.name === values.name && session.user?.email === values.email) {
           alert('no change detected!')
           return
         }
+
+        if(session?.user?.email !== values.email) {
+          const confirmWithUser = confirm(`Are you sure you want to update your email to: ${values.email}`)
+
+          if(!confirmWithUser) {
+            return
+          }
+        }
         try {
-          console.log('hello')
+          
           updateUserProfile({
             id: id as any, 
             name: values.name, 

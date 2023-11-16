@@ -34,7 +34,7 @@ const page = async () => {
             <p className="text-small-medium">Provide more information and how we can reach you</p>
         </Link>
 
-        <Link href="#" className="p-3 shadow-lg rounded-md flex-auto w-72">
+        <Link href="/forgotpassword" className="p-3 shadow-lg rounded-md flex-auto w-72">
             <h4 className="mb-5">
                 <MdOutlineSecurity size={30}/>
             </h4>
