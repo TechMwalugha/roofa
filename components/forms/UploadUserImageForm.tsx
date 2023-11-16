@@ -3,13 +3,15 @@
 import Image from "next/image"
 import { useState } from "react"
 import { usePathname } from "next/navigation"
+import { formatDateString } from "@/lib/utils"
 
 
 const UploadUserImageForm =(
-    {  id, image } :
+    {  id, image, createdAt } :
     { 
       id: string,
       image: string,
+      createdAt: string,
     }) => {
         const [file, setFile] = useState<File>()
         const [error, setError] = useState('')
@@ -63,7 +65,7 @@ const UploadUserImageForm =(
 
     return (
         <main className='mb-5 shadow p-5 rounded-lg'>
-    <div className='flex gap-2 items-center mb-3'>
+    <div className='flex gap-2 items-center mb-3 w-full'>
        <div className='w-16 h-16 relative'>
        <Image
        src={file === undefined ? image : URL.createObjectURL(file)}
@@ -84,6 +86,8 @@ const UploadUserImageForm =(
        />
        <input type="submit" value="Upload" className='bg-transparent border p-2 rounded cursor-pointer border-blue' />
      </form>
+
+     <p className="text-subtle-medium text-right mt-4">Joined on: {formatDateString(createdAt)}</p>
      {
         error && (
             <div className="text-center mt-5 bg-red-700 py-1">

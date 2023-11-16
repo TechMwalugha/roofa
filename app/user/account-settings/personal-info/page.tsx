@@ -51,6 +51,7 @@ const page = async () => {
       <UploadUserImageForm 
         id={user.id}
         image={user.image}
+        createdAt={user.createdAt}
         />
         <PersonalInfo
             id={user.id}
