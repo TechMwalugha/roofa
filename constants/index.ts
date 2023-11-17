@@ -12,3 +12,41 @@ export const bottomBarContent = [
         links: ['Invite Friends','Facebook','Twitter','Instagram',]
     }
 ]
+
+export const asideBarContent = [
+    {
+        title: 'Dashboard',
+        icon: 'RxDashboard',
+        route: 'dashboard'
+    },
+    {
+        title: 'Users',
+        icon: 'FaUsers',
+        route: 'users'
+    },
+    {
+        title: 'Rentals',
+        icon: 'BsFillHousesFill',
+        route: 'rentals'
+    },
+    {
+        title: 'Bookings',
+        icon: 'RiPassPendingLine',
+        route: 'bookings'
+    },
+    {
+        title: 'Notifications',
+        icon: 'IoNotifications',
+        route: 'notifications'
+    },
+    {
+        title: 'Payments',
+        icon: 'MdOutlinePayments',
+        route: 'payments'
+    },
+    {
+        title: 'Logout',
+        icon: 'BiLogOut',
+        route: 'logout'
+    },
+]

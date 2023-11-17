@@ -44,13 +44,13 @@ const userSchema = new mongoose.Schema({
     rentalHistory: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Property'
+            ref: 'Rental'
         }
     ],
     favorites: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Property'
+            ref: 'Rental'
         }
     ],
     bookings: [
