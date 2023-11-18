@@ -114,6 +114,12 @@ import { FiEdit } from "react-icons/fi";
                   </TableCell>
             </TableRow>
           ))}
+
+          {
+            users.length === 0 && (
+              <p className="py-3 text-heading4-medium text-danger">no users found</p>
+            )
+          }
         </TableBody>
         <TableFooter>
           <TableRow>
