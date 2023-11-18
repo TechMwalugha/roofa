@@ -21,7 +21,9 @@ export default function RootLayout({
       <body className={inter.className}> 
       <Provider>
         <TopBar/>
-        {children}
+        <div className='p-4 md:pl-80 mt-20'>
+          {children}
+        </div>
         <AsideBar/>
       </Provider>
       </body>

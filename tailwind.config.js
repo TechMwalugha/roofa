@@ -189,11 +189,14 @@ module.exports = {
         "light-4": "#5C5C7B",
         "gray-1": "#697C89",
         "primary": "#7380ec",
-        glassmorphism: "rgba(16, 16, 18, 0.60)",
+        "success": "#41f1b6",
+        "danger": "#ff7782",
+        "warning": "#ffbb55",
+        "glassmorphism": "rgba(16, 16, 18, 0.60)",
       },
       boxShadow: {
-        "count-badge": "0px 0px 6px 2px rgba(219, 188, 159, 0.30)",
-        "groups-sidebar": "-30px 0px 60px 0px rgba(28, 28, 31, 0.50)",
+        "count": "0px 0px 6px 2px rgba(219, 188, 159, 0.30)",
+        "groups": "-30px 0px 60px 0px rgba(28, 28, 31, 0.50)",
       },
       screens: {
         xs: "400px",
