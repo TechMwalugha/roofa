@@ -6,11 +6,24 @@ import Link from "next/link";
 import TableCon from "@/components/admin/cards/Table";
 import { usersTableHeaders } from "@/constants/index"
 import { fetchAllUsers } from "@/lib/actions/user.actions";
+import Pagination from "@/components/shared/Pagination";
 
 
 
-const page = async () => {
-    const users = await fetchAllUsers()
+const page = async ({
+  searchParams,
+}: {
+  searchParams: {
+    [key: string]: string | undefined
+  }
+}) => {
+
+    const result = await fetchAllUsers({
+      userId: "655232c816ead6c7594aff29",
+      searchString: searchParams?.q,
+      pageNumber: searchParams?.page ? +searchParams.page : 1,
+      pageSize: 25,
+    })
 
   return (
     <div>
@@ -20,7 +33,9 @@ const page = async () => {
               <p className="text-dark-4 lowercase">all users</p>
             </div>
             <div className="max-sm:w-full">
-                <SearchUser />
+                <SearchUser 
+                routeType="users"
+                />
             </div>
         </div>
 
@@ -77,7 +92,12 @@ const page = async () => {
             <TableCon 
             title="A list of all users."
             tableHeaders = {usersTableHeaders}
-            users={users}
+            users={result.users}
+            />
+            <Pagination
+            path='users'
+            pageNumber={searchParams?.page ? +searchParams.page : 1}
+            isNext={result.isNext}
             />
         </div>
     </div>

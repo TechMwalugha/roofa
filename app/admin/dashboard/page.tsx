@@ -45,7 +45,9 @@ const page = () => {
 
         <h1 className="text-2xl font-bold text-body-bold">Recent Bookings</h1>
         <section className="shadow-lg  mt-2">
-          <TableCon/>
+          {/* <TableCon
+          
+          /> */}
         </section>
     </div>
   )

@@ -86,7 +86,7 @@ import { FiEdit } from "react-icons/fi";
         </TableHeader>
         <TableBody>
           {users.map((user, index) => (
-            <TableRow key={user.id}>
+            <TableRow key={user._id}>
               <TableCell className="font-medium">{index + 1}</TableCell>
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
@@ -107,7 +107,7 @@ import { FiEdit } from "react-icons/fi";
                 <TableCell>{formatDateString(user.updatedAt)}</TableCell>
                 <TableCell>
                   <Link
-                  href={`edit/${user.id}`}
+                  href={`edit/${user._id}`}
                   >
                     <FiEdit size={20} />
                   </Link>

@@ -1,54 +1,51 @@
-"use client"
- 
-import { searchFormSchema } from "@/lib/validations/search.validation"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from 'zod'
-import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { FiSearch } from 'react-icons/fi'
- 
+'use client'
 
-const SearchUser = () => {
-    const form = useForm<z.infer<typeof searchFormSchema>>({
-        resolver: zodResolver(searchFormSchema),
-        defaultValues: {
-          searchString: "",
-        },
-      })
+import Image from "next/image"
 
-      function onSubmit(values: z.infer<typeof searchFormSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
-      }
+import { useState, useEffect } from "react"
+import { useRouter } from 'next/navigation'
+
+interface Props {
+    routeType: string
+}
+
+const SearchUser = ({routeType}: Props) => {
+
+    const router = useRouter()
+    const [search, setSearch] = useState('')
+
+    useEffect(()=>{
+        const delayDebounceFn = setTimeout(()=>{
+            if(search) {
+                router.push(`${routeType}?q=`+ search)
+            } else {
+                router.push(routeType)
+            }
+        }, 300)
+
+        return () => clearTimeout(delayDebounceFn)
+
+    }, [search, routeType])
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className=" w-full  relative  flex items-center justify-center gap-3 border-2 border-none rounded-full">
-        <FormField
-          control={form.control}
-          name="searchString"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormControl className="border-blue">
-                <Input className="no-focus outline-none w-full" placeholder="search name, email" {...field} />
-              </FormControl>
-              <FormMessage className="absolute bg-red-700 text-dark-1 px-3 rounded" />
-            </FormItem>
-          )}
+    <div className='searchbar'>
+        <Image
+        src='/assets/search-gray.svg'
+        alt='search'
+        width={24}
+        height={24}
+        className='object-contain'
         />
-        <Button type="submit" className="rounded bg-blue "><FiSearch/></Button>
-      </form>
-    </Form>
+        <input
+        id='text'
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder={`${
+            routeType !== "users" ? "Search communities" : "Search name, email"
+        }`}
+        className='no-focus searchbar_input'
+        />
+  </div>
   )
 }
 
