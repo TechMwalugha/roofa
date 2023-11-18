@@ -8,6 +8,9 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
+import { formatDateString } from "@/lib/utils"
+import Link from "next/link";
+import { FiEdit } from "react-icons/fi";
   
   const invoices = [
     {
@@ -54,32 +57,68 @@ import {
     },
   ]
   
-  export default function TableCon() {
+  export default function TableCon(
+    {
+      title,
+      tableHeaders,
+      users,
+    }:
+    {
+      title: string
+      tableHeaders: string[] 
+      users: any[]
+    }) {
+
+      let i = 0
     return (
       <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableCaption>{title}</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            {
+              tableHeaders.map((head) => {
+                return (
+                  <TableHead key={head}>{head}</TableHead>
+                )
+              })
+            }
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+          {users.map((user, index) => (
+            <TableRow key={user.id}>
+              <TableCell className="font-medium">{index + 1}</TableCell>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>
+                {user.accountStatus && (
+                  <span className="text-sm bg-green-500 p-2 rounded-sm font-semibold">
+                    Active
+                  </span>
+                )
+                }
+                {!user.accountStatus && (
+                  <span className="text-sm bg-danger p-2 rounded-sm font-semibold">
+                    Suspended
+                  </span>
+                )
+                }
+                </TableCell>
+                <TableCell>{formatDateString(user.updatedAt)}</TableCell>
+                <TableCell>
+                  <Link
+                  href={`edit/${user.id}`}
+                  >
+                    <FiEdit size={20} />
+                  </Link>
+                  </TableCell>
             </TableRow>
           ))}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right">$2,500.00</TableCell>
+            <TableCell className="text-right">{users.length}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>

@@ -173,3 +173,14 @@ export async function updateUserProfile(
             throw new Error('an error occurred while updating data. Try again')
         }
 }
+export async function fetchAllUsers() {
+    try {
+        connectToDB()
+
+        const users = await User.find()
+
+        return users
+    } catch (error: any) {
+        throw new Error(`An error occurred: ${error.message}`)
+    }
+}

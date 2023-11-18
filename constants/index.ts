@@ -50,3 +50,12 @@ export const asideBarContent = [
         route: 'logout'
     },
 ]
+
+export const usersTableHeaders = [
+    "",
+    "Name",
+    "email",
+    "Account Status",
+    "Updated At",
+    "Action"
+]

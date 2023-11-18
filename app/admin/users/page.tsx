@@ -4,10 +4,14 @@ import { MdOutlineNewLabel } from "react-icons/md";
 import { FiUserPlus } from "react-icons/fi";
 import Link from "next/link";
 import TableCon from "@/components/admin/cards/Table";
+import { usersTableHeaders } from "@/constants/index"
+import { fetchAllUsers } from "@/lib/actions/user.actions";
 
 
 
-const page = () => {
+const page = async () => {
+    const users = await fetchAllUsers()
+
   return (
     <div>
         <div className="flex items-center justify-between bg-success p-2">
@@ -70,7 +74,11 @@ const page = () => {
         </div>
 
         <div>
-            <TableCon />
+            <TableCon 
+            title="A list of all users."
+            tableHeaders = {usersTableHeaders}
+            users={users}
+            />
         </div>
     </div>
 
