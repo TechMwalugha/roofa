@@ -107,7 +107,7 @@ import { FiEdit } from "react-icons/fi";
                 <TableCell>{formatDateString(user.updatedAt)}</TableCell>
                 <TableCell>
                   <Link
-                  href={`edit/${user._id}`}
+                  href={`users/edit/${user._id}`}
                   >
                     <FiEdit size={20} />
                   </Link>
