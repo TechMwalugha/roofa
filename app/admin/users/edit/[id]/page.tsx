@@ -1,9 +1,11 @@
+import DeleteUser from "@/components/admin/cards/DeleteUser"
 import CollapsibleCon from "@/components/cards/Collapsible"
 import HorizontalLine from "@/components/shared/utils/HorizontalLine"
 import { fetchUserById } from "@/lib/actions/user.actions"
 import { formatDateString } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 
 
 const page = async ({
@@ -15,6 +17,11 @@ const page = async ({
 }) => {
 
   const user = await fetchUserById(params.id as any)
+
+  
+  if(!user) {
+    redirect('/admin/users')
+  }
   
   return (
     <section>
@@ -83,6 +90,26 @@ const page = async ({
               />
             )
           }
+
+          {
+            !user.isEmailVerified && (
+                <p className="text-subtle-medium p-3 bg-danger rounded-sm"> Email is not verified: <br/>
+                check email if its sensible or if updated at is over a month, remove this account.
+                </p>
+            )
+          }
+
+          {
+            !user.accountStatus && (
+              <p className="text-subtle-medium p-3 bg-danger rounded-sm"> Account is suspended: <br/>
+                Reason: check email if its sensible or if updated at is over a month, remove this account.
+              </p>
+            )
+          }
+
+          <DeleteUser
+          id={user.id}
+           />
 
       <HorizontalLine />
 

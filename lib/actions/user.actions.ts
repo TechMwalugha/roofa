@@ -118,11 +118,20 @@ export async function fetchUserById(id: mongoose.Schema.Types.ObjectId) {
     }
 }
 
-export async function deleteUser(id: mongoose.Schema.Types.ObjectId) {
+export async function deleteUser(userId: mongoose.Schema.Types.ObjectId) {
     try {
         connectToDB()
+        console.log(userId)
 
-        await User.deleteOne({ id: id})
+        const user = await User.findById(userId)
+        console.log(user)
+        
+    
+        const deletedUser = await User.findOneAndDelete({ 
+            _id: userId
+        });
+
+        console.log(deletedUser)
         
     } catch (error: any) {
         throw new Error(`An error occurred: ${error.message}`)

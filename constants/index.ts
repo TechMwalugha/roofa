@@ -17,32 +17,32 @@ export const asideBarContent = [
     {
         title: 'Dashboard',
         icon: 'RxDashboard',
-        route: 'dashboard'
+        route: '/admin/dashboard'
     },
     {
         title: 'Users',
         icon: 'FaUsers',
-        route: 'users'
+        route: '/admin/users'
     },
     {
         title: 'Rentals',
         icon: 'BsFillHousesFill',
-        route: 'rentals'
+        route: '/admin/rentals'
     },
     {
         title: 'Bookings',
         icon: 'RiPassPendingLine',
-        route: 'bookings'
+        route: '/admin/bookings'
     },
     {
         title: 'Notifications',
         icon: 'IoNotifications',
-        route: 'notifications'
+        route: '/admin/notifications'
     },
     {
         title: 'Payments',
         icon: 'MdOutlinePayments',
-        route: 'payments'
+        route: '/admin/payments'
     },
     {
         title: 'Logout',

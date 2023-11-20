@@ -91,13 +91,13 @@ import { FiEdit } from "react-icons/fi";
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>
-                {user.accountStatus && (
+                {user.accountStatus && user.isEmailVerified && (
                   <span className="text-sm bg-green-500 p-2 rounded-sm font-semibold">
                     Active
                   </span>
                 )
                 }
-                {!user.accountStatus && (
+                {!user.accountStatus || !user.isEmailVerified && (
                   <span className="text-sm bg-danger p-2 rounded-sm font-semibold">
                     Suspended
                   </span>

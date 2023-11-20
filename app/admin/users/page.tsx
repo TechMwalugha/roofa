@@ -7,6 +7,8 @@ import TableCon from "@/components/admin/cards/Table";
 import { usersTableHeaders } from "@/constants/index"
 import { fetchAllUsers } from "@/lib/actions/user.actions";
 import Pagination from "@/components/shared/Pagination";
+import { redirect } from "next/navigation";
+
 
 
 
@@ -24,6 +26,12 @@ const page = async ({
       pageNumber: searchParams?.page ? +searchParams.page : 1,
       pageSize: 25,
     })
+    
+    if(!result.users) {
+      redirect('/admin/dashboard')
+    }
+
+    const roofaUsers = result.users.map((user) => user.role === 'user')
 
   return (
     <div>
@@ -48,7 +56,7 @@ const page = async ({
             </div>
 
             <h3 className="text-heading3-bold mt-2">
-              121
+               {roofaUsers.length}
             </h3>
           </div>
 
