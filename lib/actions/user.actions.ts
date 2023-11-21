@@ -5,6 +5,7 @@ import mongoose, { SortOrder } from 'mongoose'
 import { revalidatePath } from 'next/cache'
 import sendEmail from '../emailing/nodemailer.email'
 import { FilterQuery } from 'mongoose'
+import { updateUserProps } from '@/interfaces'
 
 interface createUserProps {
     name: string,
@@ -14,17 +15,7 @@ interface createUserProps {
     signInType: 'google' | 'credentials',
     isEmailVerified: boolean,
 }
-interface updateUserProps {
-    id: mongoose.Schema.Types.ObjectId
-    name: string
-    email: string 
-    image: string 
-    password: string
-    isEmailVerified: boolean 
-    verificationToken: string 
-    role: string 
-    accountStatus: boolean
-}
+
 
 export async function createUser({
     name,
@@ -240,4 +231,21 @@ export async function fetchAllUsers({
       throw error;
     }
   }
+
+export async function updateUserRole({ id, newRole }: {id: string, newRole: string}) {
+    try {
+        connectToDB()
+
+        const user = await User.findById(id)
+
+        user.role = newRole
+
+        await user.save()
+        
+    } catch (error: any) {
+
+     console.error("Error fetching users:", error);
+      throw error;
+    }
+}
   

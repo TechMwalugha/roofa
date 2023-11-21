@@ -62,7 +62,7 @@ const DeleteAccountForm = ({id}: { id: string}) => {
   return (
 
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col bg-white shadow-md">
+      <form onSubmit={form.handleSubmit(onSubmit)} className=" p-5 rounded-lg flex flex-col bg-white shadow-md">
       {error && (
             <div className="bg-red-500 text-white w-full text-center text-small-medium mx-auto text-sm py-1 px-3 rounded-md mt-2">
               {error}

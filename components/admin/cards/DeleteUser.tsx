@@ -27,7 +27,6 @@ const DeleteUser = ({id}: { id: string}) => {
     }
   return (
     <Button
-    className="mt-3"
     onClick={() => removeUser(id)}
     >remove account</Button>
   )

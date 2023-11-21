@@ -1,11 +1,13 @@
 import DeleteUser from "@/components/admin/cards/DeleteUser"
+import UserToAgent from "@/components/admin/cards/UserToAgent"
 import CollapsibleCon from "@/components/cards/Collapsible"
 import HorizontalLine from "@/components/shared/utils/HorizontalLine"
-import { fetchUserById } from "@/lib/actions/user.actions"
+import { fetchUserByEmail, fetchUserById } from "@/lib/actions/user.actions"
 import { formatDateString } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import { getServerSession } from "next-auth";
 
 
 const page = async ({
@@ -15,6 +17,24 @@ const page = async ({
     id: string
   }
 }) => {
+  const session = await getServerSession()
+
+  if(!session) {
+    redirect('/not-found')
+  }
+
+  const sessionUser = await fetchUserByEmail(session?.user?.email as string)
+
+  if(!sessionUser) {
+    redirect('/not-found')
+  }
+
+  let isAllowed: boolean =  sessionUser.role === 'roofa-agent' || sessionUser.role === 'admin' ? true : false
+
+  if(!isAllowed) {
+    redirect('/not-found')
+  }
+
 
   const user = await fetchUserById(params.id as any)
 
@@ -107,9 +127,17 @@ const page = async ({
             )
           }
 
+          <div className="mt-3 flex items-center justify-between">
           <DeleteUser
           id={user.id}
            />
+           { sessionUser.role === 'admin' && (
+            <UserToAgent
+            id={user.id}
+            role={user.role}
+            />
+           )}
+          </div>
 
       <HorizontalLine />
 

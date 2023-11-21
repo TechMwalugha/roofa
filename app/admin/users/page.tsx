@@ -1,13 +1,13 @@
 import SearchUser from "@/components/admin/forms/SearchUser"
 import { TbSum } from "react-icons/tb";
 import { MdOutlineNewLabel } from "react-icons/md";
-import { FiUserPlus } from "react-icons/fi";
-import Link from "next/link";
+import { MdRealEstateAgent } from "react-icons/md";
 import TableCon from "@/components/admin/cards/Table";
 import { usersTableHeaders } from "@/constants/index"
-import { fetchAllUsers } from "@/lib/actions/user.actions";
+import { fetchAllUsers, fetchUserByEmail } from "@/lib/actions/user.actions";
 import Pagination from "@/components/shared/Pagination";
 import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
 
 
@@ -20,6 +20,25 @@ const page = async ({
   }
 }) => {
 
+  const session = await getServerSession()
+
+  if(!session) {
+    redirect('/not-found')
+  }
+
+  const sessionUser = await fetchUserByEmail(session?.user?.email as string)
+
+  if(!sessionUser) {
+    redirect('/not-found')
+  }
+
+  let isAllowed: boolean =  sessionUser.role === 'roofa-agent' || sessionUser.role === 'admin' ? true : false
+
+  if(!isAllowed) {
+    redirect('/not-found')
+  }
+
+
     const result = await fetchAllUsers({
       userId: "655232c816ead6c7594aff29",
       searchString: searchParams?.q,
@@ -31,7 +50,19 @@ const page = async ({
       redirect('/admin/dashboard')
     }
 
-    const roofaUsers = result.users.map((user) => user.role === 'user')
+    const roofaUsers = result.users.map((user) => {
+       if(user.role === 'user') {
+        return user
+       }
+      })
+    const roofaAgents = result.users.map((user) => {
+      if(user.role === 'roofa-agent') {
+       return user
+      }
+     })
+  
+    
+   
 
   return (
     <div>
@@ -56,7 +87,7 @@ const page = async ({
             </div>
 
             <h3 className="text-heading3-bold mt-2">
-               {roofaUsers.length}
+            {`${roofaUsers[0] === undefined ? '0' : roofaUsers.length}`}
             </h3>
           </div>
 
@@ -71,19 +102,17 @@ const page = async ({
               121
             </h3>
           </div>
+          { sessionUser.role === 'admin' && (
           <div className="flex flex-col flex-auto  rounded-lg shadow-count p-2">
             <div className="flex items-center gap-2">
-            <FiUserPlus size={30} />
-            <p className="text-base1-semibold capitalize">new agent</p>
+            <MdRealEstateAgent size={30} />
+            <p className="text-base1-semibold capitalize">Agents</p>
             </div>
-
-            <Link
-            href="/new-agent"
-            className="text-center mt-2 hover:text-white bg-primary p-2 rounded-md"
-            >
-                create
-            </Link>
+            <h3 className="text-heading3-bold mt-2">
+            {`${roofaAgents[0] === undefined ? '0' : roofaAgents.length}`}
+            </h3>
           </div>
+          )}
         </div>
 
 {/*---horizontal line----*/}
