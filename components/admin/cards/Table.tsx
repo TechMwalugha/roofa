@@ -68,7 +68,7 @@ import { FiEdit } from "react-icons/fi";
       tableHeaders: string[] 
       users: any[]
     }) {
-
+    
       let i = 0
     return (
       <Table>
@@ -87,8 +87,10 @@ import { FiEdit } from "react-icons/fi";
         <TableBody>
           {users.map((user, index) => (
             <TableRow key={user._id}>
-              <TableCell className="font-medium">{index + 1}</TableCell>
-              <TableCell>{user.name}</TableCell>
+              <TableCell className={`font-medium ${user.role === 'roofa-agent' ? 'bg-blue' : ''}`}>{index + 1}</TableCell>
+              <TableCell>
+                {user.name}
+                </TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>
                 {user.accountStatus && user.isEmailVerified && (

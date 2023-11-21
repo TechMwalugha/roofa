@@ -22,6 +22,7 @@ const page = async ({
 
   const session = await getServerSession()
 
+
   if(!session) {
     redirect('/not-found')
   }
@@ -40,7 +41,7 @@ const page = async ({
 
 
     const result = await fetchAllUsers({
-      userId: "655232c816ead6c7594aff29",
+      userId: sessionUser.id,
       searchString: searchParams?.q,
       pageNumber: searchParams?.page ? +searchParams.page : 1,
       pageSize: 25,
@@ -50,20 +51,22 @@ const page = async ({
       redirect('/admin/dashboard')
     }
 
-    const roofaUsers = result.users.map((user) => {
-       if(user.role === 'user') {
-        return user
-       }
+    let roofaUsers = result.users.filter((user) => {
+       return user.role === 'user'
       })
-    const roofaAgents = result.users.map((user) => {
-      if(user.role === 'roofa-agent') {
-       return user
-      }
+
+      
+    const roofaAgents = result.users.filter((user) => {
+      return user.role === 'roofa-agent'
      })
+
+     let users = result.users
+     if(sessionUser.role === 'roofa-agent') {
+
+      users =  roofaUsers
+     } 
   
     
-   
-
   return (
     <div>
         <div className="flex items-center justify-between bg-success p-2">
@@ -129,7 +132,7 @@ const page = async ({
             <TableCon 
             title="A list of all users."
             tableHeaders = {usersTableHeaders}
-            users={result.users}
+            users={users}
             />
             <Pagination
             path='users'

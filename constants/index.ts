@@ -47,7 +47,7 @@ export const asideBarContent = [
     {
         title: 'Logout',
         icon: 'BiLogOut',
-        route: 'logout'
+        route: '/api/auth/signout'
     },
 ]
 
