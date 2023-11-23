@@ -8,6 +8,7 @@ import { fetchAllUsers, fetchUserByEmail } from "@/lib/actions/user.actions";
 import Pagination from "@/components/shared/Pagination";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import { getSecondsDifference } from "@/lib/utils";
 
 
 
@@ -65,7 +66,12 @@ const page = async ({
 
       users =  roofaUsers
      } 
-  
+
+     const newUsers = result.users.filter((user) => {
+      return getSecondsDifference(user.createdAt) < 3600 * 24 * 30 && user.role !== 'roofa-agent' && user.role !== 'admin'
+     })
+
+     
     
   return (
     <div>
@@ -102,7 +108,7 @@ const page = async ({
 
             <p className="text-x-small-semibold">(this month)</p>
             <h3 className="text-heading3-bold mt-2">
-              121
+              {newUsers.length}
             </h3>
           </div>
           { sessionUser.role === 'admin' && (

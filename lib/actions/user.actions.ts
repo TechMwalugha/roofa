@@ -248,4 +248,20 @@ export async function updateUserRole({ id, newRole }: {id: string, newRole: stri
       throw error;
     }
 }
-  
+
+export async function suspendUser({id, newAccountStatus}:{id: string, newAccountStatus: boolean}) {
+    try {
+        connectToDB()
+
+        const user = await User.findById(id)
+
+        user.accountStatus = newAccountStatus
+
+        await user.save()
+        
+    } catch (error: any) {
+
+     console.error("Error fetching users:", error);
+      throw error;
+    }
+}

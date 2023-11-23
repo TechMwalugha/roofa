@@ -36,6 +36,19 @@ export function formatDateString(dateString: string) {
   return `${time} - ${formattedDate}`;
 }
 
-const random32ByteString = generateRandom32ByteString();
+export function getSecondsDifference(userJoinDate: string) {
+  const targetDate = new Date(userJoinDate);
+
+        // Get the current date
+        const currentDate = new Date();
+
+        // Calculate the time difference in milliseconds
+        const timeDifference = currentDate.getTime() - targetDate.getTime();
+
+        // Convert milliseconds to a more readable format (e.g., seconds)
+         const secondsDifference = Math.floor(timeDifference / 1000);
+         
+         return secondsDifference
+}
 
 

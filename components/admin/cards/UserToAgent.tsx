@@ -1,6 +1,7 @@
 
 'use client'
 
+import { Button } from "@/components/ui/button"
 import { updateUserRole } from "@/lib/actions/user.actions"
 
 
@@ -30,12 +31,12 @@ const UserToAgent = (
         }
     
   return (
-    <button 
-           className="bg-blue hover:bg-blue-400 capitalize text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+    <Button 
+           className="capitalize flex-auto"
            onClick={() => userToAgent()}
            >
             change to {role === 'user' ? 'Agent' : 'user'}
-    </button>
+    </Button>
   )
 }
 

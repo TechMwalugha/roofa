@@ -8,6 +8,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth";
+import SuspendUser from "@/components/admin/cards/SuspendUser"
 
 
 const page = async ({
@@ -72,7 +73,7 @@ const page = async ({
           </div>
 
           <div>
-            {user.accountStatus && (
+            {user.accountStatus && user.isEmailVerified && (
               <Image 
               src="/assets/verified-image.png"
               width={45}
@@ -82,9 +83,9 @@ const page = async ({
               />
             )}
 
-           {!user.accountStatus && (
+           {!user.accountStatus && !user.isEmailVerified && (
               <Image 
-              src="/assets/unverified-image.png"
+              src="/assets/unverified-image.jpg"
               width={45}
               height={45}
               alt="verification image"
@@ -121,16 +122,21 @@ const page = async ({
 
           {
             !user.accountStatus && (
-              <p className="text-subtle-medium p-3 bg-danger rounded-sm"> Account is suspended: <br/>
+              <p className="text-subtle-medium p-3 bg-danger rounded-sm mt-2"> Account is suspended: <br/>
                 Reason: check email if its sensible or if updated at is over a month, remove this account.
               </p>
             )
           }
 
-          <div className="mt-3 flex items-center justify-between">
+          <div className="mt-3 flex items-center justify-between flex-wrap gap-3">
           <DeleteUser
           id={user.id}
            />
+           <SuspendUser
+            id={user.id}
+            accountStatus = {user.accountStatus}
+           />
+
            { sessionUser.role === 'admin' && (
             <UserToAgent
             id={user.id}

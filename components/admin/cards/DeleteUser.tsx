@@ -1,7 +1,6 @@
 'use client'
 import { Button } from "@/components/ui/button"
 import { deleteUser } from "@/lib/actions/user.actions"
-import mongoose from "mongoose"
 
 
 
@@ -27,6 +26,7 @@ const DeleteUser = ({id}: { id: string}) => {
     }
   return (
     <Button
+    className="flex-auto"
     onClick={() => removeUser(id)}
     >remove account</Button>
   )
