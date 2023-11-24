@@ -17,3 +17,9 @@ export interface updateUserProps {
     role: string 
     accountStatus: boolean
 }
+export interface GeoLocation {
+    name: string;
+    address: string;
+    latitude: number;
+    longitude: number;
+}

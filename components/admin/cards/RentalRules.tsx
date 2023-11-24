@@ -2,36 +2,36 @@ import { Button } from "@/components/ui/button"
 import { ChangeEvent, useState } from "react"
 
 
-const Amenities = ( { amenities, setAmenities } : { amenities: string[], setAmenities: React.Dispatch<React.SetStateAction<string[]>>}) => {
+const RentalRules = ( { rentalRules, setRentalRules } : { rentalRules: string[], setRentalRules: React.Dispatch<React.SetStateAction<string[]>>}) => {
     function handleAddAmenity() {
-        setAmenities([...amenities, ""])
+        setRentalRules([...rentalRules, ""])
         
     }
     function handleRemoveAmenity(index: number) {
-        const list = [...amenities]
+        const list = [...rentalRules]
         list.splice(index, 1)
 
-        setAmenities(list)
+        setRentalRules(list)
     }
 
     function handleInputChange(e: ChangeEvent, index: number) {
         const {value} = e.target as any
 
-        amenities[index] = value
+        rentalRules[index] = value
 
         
     }
   return (
     <div className="border p-3 mb-2">
-        <h3 className="text-subtle-medium text-center mb-3">Amenities</h3>
+        <h3 className="text-subtle-medium text-center mb-3">Rental Rules</h3>
 
        <Button
        type="button"
         onClick={() => handleAddAmenity()}
         className="mb-2"
-        >Add Amenity</Button>
+        >Add Rule</Button>
       {
-        amenities.map((amenity, index) => {
+        rentalRules.map((rule, index) => {
             return (
                 <div key={index} className="flex items-center gap-2 mb-2">
                     <input 
@@ -40,7 +40,7 @@ const Amenities = ( { amenities, setAmenities } : { amenities: string[], setAmen
                         className="w-full p-3  outline-none border-none rounded shadow-count" 
                         onChange={e=>handleInputChange(e, index)}
                     />
-                    { amenities.length !== 1 && (
+                    { rentalRules.length !== 1 && (
                         <button 
                         className="p-3 bg-danger rounded"
                         onClick={() => handleRemoveAmenity(index)}
@@ -54,4 +54,4 @@ const Amenities = ( { amenities, setAmenities } : { amenities: string[], setAmen
   )
 }
 
-export default Amenities
+export default RentalRules

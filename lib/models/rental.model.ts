@@ -41,7 +41,12 @@ const rentalSchema = new mongoose.Schema({
         }
     ],
     geoLocation: {
-        type: String,
+        type: {
+            name: String,
+            address: String,
+            latitude: Number,
+            longitude: Number
+        }
     },
     rentalsRules: [
         {
@@ -57,12 +62,12 @@ const rentalSchema = new mongoose.Schema({
             ref: 'Rental'
         }
     ],
-    serviceFee: [
-        {
+    serviceFee: {
+        type: {
             paidBy: String,
             amount: Number,
         }
-    ],
+    },
     bookings: [
         {
             type: mongoose.Schema.Types.ObjectId,
