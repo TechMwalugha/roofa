@@ -65,9 +65,9 @@ function Carousel() {
             <div
                 key={slideIndex}
                 onClick={() => goToSlide(slideIndex)}
-                className='text-2xl cursor-pointer'
+                className={`text-2xl cursor-pointer ${currentIndex === slideIndex ? "bg-primary" : ""} rounded-full `}
             >
-                <RxDotFilled />
+                <RxDotFilled  size={20} />
             </div>
             ))}
         </div>
