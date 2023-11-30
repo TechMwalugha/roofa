@@ -23,3 +23,29 @@ export interface GeoLocation {
     latitude: number;
     longitude: number;
 }
+
+export interface createNewRental {
+    title: string;
+    description: string;
+    rentalType: string[]
+    price: number;
+    location: string;
+    images: string[];
+    owner: mongoose.Schema.Types.ObjectId;
+    amenities: string[];
+    geoLocation: {
+            name: string,
+            address: string,
+            latitude: number,
+            longitude: number
+    };
+    rentalRules: string[];
+    availableRooms: number;
+    rentalsNear: mongoose.Schema.Types.ObjectId[];
+    serviceFee: {
+        paidBy: string;
+        amount: number;
+    };
+    rentalStatus: boolean;
+
+}

@@ -1,14 +1,19 @@
-
-
-
-
+import Carousel from "@/components/cards/Carousel";
 
 export default function Home() {
 
   return (
-   <section className='px-2 flex flex-wrap items-center gap-2 xs:flex-row'>
+   <section className='px-2 flex flex-wrap items-center gap-5 xs:flex-row'>
       
-      <h1>Hello this is the home page</h1>
+      <Carousel />
+      <Carousel />
+      <Carousel />
+      <Carousel />
+      <Carousel />
+      <Carousel />
+      <Carousel />
+      <Carousel />
+      <Carousel />
     </section>
   )
 }

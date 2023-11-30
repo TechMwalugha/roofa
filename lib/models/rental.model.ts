@@ -12,10 +12,11 @@ const rentalSchema = new mongoose.Schema({
         required: true,
         lowerCase: true
     },
-    rentalType: {
+    rentalType: [
+        {
         type: String,
-        required: true,
-    },
+       }
+   ],
     price: {
         type: Number,
         required: true,
@@ -48,7 +49,7 @@ const rentalSchema = new mongoose.Schema({
             longitude: Number
         }
     },
-    rentalsRules: [
+    rentalRules: [
         {
             type: String,
         }

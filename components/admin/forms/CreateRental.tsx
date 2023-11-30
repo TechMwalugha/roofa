@@ -8,8 +8,15 @@ import ImagePreview from "../cards/ImagePreview";
 import Amenities from "../cards/Amenities";
 import GeoLocation from "../cards/GeoLocation";
 import RentalRules from "../cards/RentalRules";
+import { createRental } from "@/lib/actions/rental.action";
+import mongoose from "mongoose";
+import Image from "next/image";
 
-const FileUploadForm = () => {
+const FileUploadForm = ({ users }: 
+  {
+    users: any[]
+  }) => {
+    
   const [images, setImages] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
 
@@ -30,26 +37,58 @@ const FileUploadForm = () => {
       
       const _files = Array.from(e.target.files)
       setImages(_files);
+  
     }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setUploading(true);
     const formData = new FormData(e.currentTarget);
      
-    // images.forEach((image, i) => {
-    //   formData.append(image.name, image);
-    // });
-    console.log(amenities)
-    console.log(geoLocation)
-    console.log(rentalRules)
-    const rentalType = formData.getAll('rentalType')
-    console.log(rentalType)
-    console.log(formData.get('rentalStatus'))
+    images.forEach((image, i) => {
+      formData.append(image.name, image);
+    });
+    const res = await fetch('/api/uploadRentalImages', {
+      method: 'POST',
+      body: formData
+    })
+    const responseData = await res.json();
 
-    setUploading(true);
-    // await axios.post("/api/upload", formData);
+    if (responseData.success) {
+      const imageUrls = responseData.data;
+
+      // Perform further actions with imageUrls
+
+      createRental({
+        title: formData.get("title") as string,
+        description: formData.get("description") as string,
+        rentalType: formData.getAll("rentalType") as string[],
+        price: formData.get("price") as any,
+        location: formData.get("location") as string,
+        images: imageUrls,
+        owner: formData.get("owner") as any,
+        amenities: amenities,
+        geoLocation: geoLocation,
+        rentalRules: rentalRules,
+        availableRooms: formData.get("availableRooms") as any,
+        // rentalsNear: formData.getAll("rentalsNear") as any,
+        rentalsNear: ['655cf3447e3a1a8e59b082c7', '655cf3447e3a1a8e59b082c1'] as any,
+        serviceFee: {
+          paidBy: formData.get("paidBy") as string,
+          amount: formData.get("amount") as any,
+        },
+        rentalStatus: formData.get("rentalStatus") == 'on' ? true : false,
+      
+      })
+    } else {
+      console.error('Server response indicates failure');
+      // Handle error or provide user feedback
+    }
+
+
+
 
       setUploading(false);
 
@@ -116,18 +155,36 @@ const FileUploadForm = () => {
 
       </div>
       {/* owner */}
-      <input 
-       type="text"
+      <select 
        name="owner"
-       className="w-full p-3  outline-none border-none rounded shadow-count mb-2" 
-       placeholder="owner: kevo@gmail.com"
-       />
+       className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
+       multiple
+       >
+        <option 
+        value="" 
+        disabled
+        className="text-small-medium pb-2 border-b-2"
+        >select the landlord</option>
+        { users.map((user, index) => {
+          return (
+            <option 
+            key={user._id} 
+            value={user._id}
+            className="lowercase my-2 shadow p-3 rounded cursor-pointer"
+            >
+            {index}. {user.name},
+               {user.email}
+            </option>
+          )
+        })}
+       </select>
        {/* amenities*/}
        <Amenities
        amenities={amenities}
        setAmenities={setAmenities}
         />
 
+        {/*GeoLocation */}
       <GeoLocation
       geoLocation={geoLocation}
       setGeoLocation={setGeoLocation}
@@ -187,8 +244,7 @@ const FileUploadForm = () => {
       >
       <input 
        type="checkbox"
-       name="rentalStatus"
-      //  className="w-full p-3  outline-none border-none rounded shadow-count mb-2" 
+       name="rentalStatus" 
        />
        <p>Status</p>
       </div>
