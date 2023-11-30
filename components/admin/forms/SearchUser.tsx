@@ -28,7 +28,7 @@ const SearchUser = ({routeType}: Props) => {
     }, [search, routeType])
 
   return (
-    <div className='searchbar'>
+    <div className='searchbar md:w-3/4 mx-auto'>
         <Image
         src='/assets/search-gray.svg'
         alt='search'
@@ -41,7 +41,7 @@ const SearchUser = ({routeType}: Props) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder={`${
-            routeType !== "users" ? "Search communities" : "Search name, email"
+            routeType === "/" ? "Search name, location" : routeType
         }`}
         className='no-focus searchbar_input'
         />

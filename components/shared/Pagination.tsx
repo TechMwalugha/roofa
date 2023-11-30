@@ -32,7 +32,7 @@ function Pagination({ pageNumber, isNext, path }: Props) {
   if (!isNext && pageNumber === 1) return null;
 
   return (
-    <div className='pagination'>
+    <div className='pagination mb-3'>
       <Button
         onClick={() => handleNavigation("prev")}
         disabled={pageNumber === 1}

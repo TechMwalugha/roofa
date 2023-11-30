@@ -5,6 +5,7 @@ import SearchBar from "../forms/SearchBar"
 import DropMenu from "../cards/DropMenu"
 import { IoBedSharp } from 'react-icons/io5'
 import { useEffect, useState } from "react"
+import SearchUser from "../admin/forms/SearchUser"
 
 const TopBar = () => {
   const scrollDirection = useScrollDirection()
@@ -29,7 +30,7 @@ const TopBar = () => {
         </div>
 
         <div>
-        <SearchBar />
+        <SearchUser routeType="/" />
         </div>
 
         <div className="flex items-center justify-between gap-3  overflow-x-scroll hide-scrollbar mt-4">

@@ -4,9 +4,21 @@ import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
 import { MdEventAvailable } from "react-icons/md";
 import Link from 'next/link';
-import { Button } from '../ui/button';
 
-function Carousel() {
+
+function Carousel({
+    id,
+    title,
+    location,
+    price,
+    images
+}: {
+    id: string
+    title: string
+    location: string
+    price: number
+    images: string[]
+}) {
   const slides = [
     {
       url: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2620&q=80',
@@ -30,12 +42,12 @@ function Carousel() {
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
+    const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
   };
 
   const nextSlide = () => {
-    const isLastSlide = currentIndex === slides.length - 1;
+    const isLastSlide = currentIndex === images.length - 1;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
@@ -49,7 +61,7 @@ function Carousel() {
     className='flex-auto w-72 mb-10'>
         <div className=' h-[250px] w-full relative group'>
         <div
-            style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
+            style={{ backgroundImage: `url(/rentalImages/${images[currentIndex]})` }}
             className='w-full h-full rounded-md bg-center bg-cover duration-500'
         ></div>
         {/* Left Arrow */}
@@ -61,11 +73,11 @@ function Carousel() {
             <BsChevronCompactRight onClick={nextSlide} size={30} />
         </div>
         <div className='flex top-4 justify-center py-2'>
-            {slides.map((slide, slideIndex) => (
+            {images.map((slide, slideIndex) => (
             <div
                 key={slideIndex}
                 onClick={() => goToSlide(slideIndex)}
-                className={`text-2xl cursor-pointer ${currentIndex === slideIndex ? "bg-primary" : ""} rounded-full `}
+                className={`text-2xl cursor-pointer ${currentIndex === slideIndex ? "text-blue" : ""} rounded-full `}
             >
                 <RxDotFilled  size={20} />
             </div>
@@ -76,22 +88,18 @@ function Carousel() {
         {/* apartment detalils */}
 
         <Link 
-        href={"/"}
+        href={`/${id}`}
         >
-           <div className='flex gap-2 items-center mt-5 justify-between'> 
+           <div className='flex gap-2 items-center mt-8 justify-between'> 
                 <div>
-                    <h3 className='capitalize text-heading4-medium'>irido Plaza</h3>
-                    <h4 className='text-gray-500'>kisauni, mombasa</h4>
-                    <p className='text-gray-400'>Ksh. 3000</p>
+                    <h3 className='capitalize text-heading4-medium'>{title}</h3>
+                    <h4 className='text-gray-500'>{location}</h4>
+                    <p className='text-gray-400'>Ksh. {price}</p>
                 </div>
-                <div className=' text-primary'>
+                <div className=' text-blue'>
                 <MdEventAvailable size={30} />
                 </div>
             </div>
-
-            <Button
-            className='w-full mt-3'
-            >Check</Button>
         </Link>
     </section>
   );

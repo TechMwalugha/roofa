@@ -3,7 +3,7 @@
 import { createNewRental } from "@/interfaces"
 import { connectToDB } from "../mongoose"
 import Rental from "../models/rental.model"
-import  fs  from "fs"
+import { FilterQuery, SortOrder } from "mongoose"
 
 export async  function createRental({
             title,
@@ -45,3 +45,57 @@ export async  function createRental({
         throw new Error(`Unable to create new rental: ${error.message}`)
     }
 }
+
+export async function fetchAllRentals({
+    searchString = "",
+    pageNumber = 1,
+    pageSize = 20,
+    sortBy = "desc",
+  }: {
+    searchString?: string;
+    pageNumber?: number;
+    pageSize?: number;
+    sortBy?: SortOrder;
+  }) {
+    try {
+      connectToDB();
+  
+      // Calculate the number of users to skip based on the page number and page size.
+      const skipAmount = (pageNumber - 1) * pageSize;
+  
+      // Create a case-insensitive regular expression for the provided search string.
+      const regex = new RegExp(searchString, "i");
+
+      // Create an initial query object to filter users.
+      const query: FilterQuery<typeof Rental> = {};
+  
+      // If the search string is not empty, add the $or operator to match either name or email fields.
+      if (searchString.trim() !== "") {
+        query.$or = [
+          { title: { $regex: regex } },
+          { location: { $regex: regex } },
+        ];
+      }
+  
+      // Define the sort options for the fetched users based on createdAt field and provided sort order.
+      const sortOptions = { createdAt: sortBy };
+  
+      const rentalsQuery = Rental.find(query)
+        .sort(sortOptions)
+        .skip(skipAmount)
+        .limit(pageSize)
+  
+      // Count the total number of users that match the search criteria (without pagination).
+      const totalUsersCount = await Rental.countDocuments(query);
+  
+      const rentals = await rentalsQuery.exec();
+  
+      // Check if there are more users beyond the current page.
+    const isNext = totalUsersCount > skipAmount + rentals.length;
+  
+      return { rentals, isNext };
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw error;
+    }
+  }
