@@ -4,6 +4,7 @@ import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
 import { MdEventAvailable } from "react-icons/md";
 import Link from 'next/link';
+import { Button } from '../ui/button';
 
 function Carousel() {
   const slides = [
@@ -44,8 +45,7 @@ function Carousel() {
   };
 
   return (
-    <Link 
-    href={"/"}
+    <section
     className='flex-auto w-72 mb-10'>
         <div className=' h-[250px] w-full relative group'>
         <div
@@ -75,17 +75,25 @@ function Carousel() {
 
         {/* apartment detalils */}
 
-        <div className='flex gap-2 items-center mt-5 justify-between'>
-            <div>
-                <h3 className='capitalize text-heading4-medium'>irido Plaza</h3>
-                <h4 className='text-gray-500'>kisauni, mombasa</h4>
-                <p className='text-gray-400'>Ksh. 3000</p>
+        <Link 
+        href={"/"}
+        >
+           <div className='flex gap-2 items-center mt-5 justify-between'> 
+                <div>
+                    <h3 className='capitalize text-heading4-medium'>irido Plaza</h3>
+                    <h4 className='text-gray-500'>kisauni, mombasa</h4>
+                    <p className='text-gray-400'>Ksh. 3000</p>
+                </div>
+                <div className=' text-primary'>
+                <MdEventAvailable size={30} />
+                </div>
             </div>
-            <div className='justify-self-start text-primary'>
-            <MdEventAvailable size={30} />
-            </div>
-        </div>
-    </Link>
+
+            <Button
+            className='w-full mt-3'
+            >Check</Button>
+        </Link>
+    </section>
   );
 }
 
