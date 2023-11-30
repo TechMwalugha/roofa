@@ -1,6 +1,7 @@
 import CreateRental from "@/components/admin/forms/CreateRental"
 import User from "@/lib/models/user.model"
 import { connectToDB } from "@/lib/mongoose"
+import { ObjectId } from "mongoose"
 import { getServerSession } from "next-auth"
 
 
@@ -15,7 +16,7 @@ const page = async () => {
       create
       <CreateRental
         users={users.map((user) => {
-          user._id = user._id.toString()
+          user._id = (user._id as ObjectId).toString()
           return user
         })}
       />
