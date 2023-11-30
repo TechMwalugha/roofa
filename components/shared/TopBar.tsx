@@ -35,16 +35,16 @@ const TopBar = () => {
 
         <div className="flex items-center justify-between gap-3  overflow-x-scroll hide-scrollbar mt-4">
           <div>
-            <Link href='#' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
+            <Link href='/?q=single room' className="flex gap-2 items-center justify-center"><IoBedSharp/> Single Room</Link>
           </div>
           <div>
-            <Link href='#' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
+            <Link href='/?q=bedsitter' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
           </div>
           <div>
-            <Link href='#' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
+            <Link href='/?q=one bedroom' className="flex gap-2 items-center justify-center"><IoBedSharp/> One Bedroom</Link>
           </div>
           <div>
-            <Link href='#' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
+            <Link href='/?q=two bedroom' className="flex gap-2 items-center justify-center"><IoBedSharp/> Two Bedroom</Link>
           </div>
           <div>
             <Link href='#' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
