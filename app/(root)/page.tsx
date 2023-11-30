@@ -33,6 +33,14 @@ export default async function Home({
           )
        })
      }
+     {
+        result.rentals && result.rentals.length === 0 && (
+          <div className='w-full text-center text-2xl text-gray-400 mb-10 mx-auto'>
+            No rentals found
+            <img src="/assets/sad-disappointed-emoji.gif" alt="" className="mx-auto" />
+          </div>
+        )
+     }
     </section>
     <Pagination
             path='/'
