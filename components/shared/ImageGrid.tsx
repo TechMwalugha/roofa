@@ -26,7 +26,7 @@ const ImageCarousel = (
         
        <div
        key={index}
-       className={`relative bg-primary  m-0 overflow-hidden object-cover ${index === currentImage ? 'max-md:block' : 'max-md:hidden'} max-md:h-72 max-md:w-full  ${index === 0 ? 'gallery-img-1 rounded-s-lg' : ''} ${index === 2 || index === 4 ? "rounded-r-lg" : "" }`}
+       className={`relative bg-primary  m-0 overflow-hidden object-cover ${index === currentImage ? 'max-md:block' : 'max-md:hidden'} max-md:h-72 max-md:w-full  ${index === 0 ? 'gallery-img-1 md:rounded-s-lg' : ''} ${index === 2 || index === 4 ? "md:rounded-r-lg" : "" }`}
        >
          <img
           src={`/rentalImages/${image}`}
