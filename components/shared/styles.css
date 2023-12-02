@@ -1,0 +1,16 @@
+
+
+@media screen and (min-width: 768px) {
+    .gallery{
+        display: grid;
+        grid-gap: 10px;
+        grid-template-areas: 'first first . .' 'first first . .';
+        margin: 20px 0;
+        padding: 0 2%;
+        overflow: hidden;
+    }
+    
+    .gallery-img-1{
+        grid-area: first;
+    }
+  }

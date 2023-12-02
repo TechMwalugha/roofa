@@ -3,7 +3,7 @@
 import { createNewRental } from "@/interfaces"
 import { connectToDB } from "../mongoose"
 import Rental from "../models/rental.model"
-import { FilterQuery, SortOrder } from "mongoose"
+import { FilterQuery, ObjectId, SortOrder } from "mongoose"
 
 export async  function createRental({
             title,
@@ -100,3 +100,17 @@ export async function fetchAllRentals({
       throw error;
     }
   }
+
+export async function fetchSingleRental({ id }: { id : ObjectId}) {
+  try{
+    connectToDB()
+    const rental = await Rental.findById(id)
+    if(!rental) {
+      throw new Error("Rental not found")
+    }
+    return rental
+
+  } catch(error: any) {
+    throw new Error(`${error.message}`)
+  }
+}
