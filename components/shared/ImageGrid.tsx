@@ -39,7 +39,7 @@ const ImageCarousel = (
 
     </div>
 
-    <div className="flex mt-5 items-center justify-center md:hidden overflow-x-scroll">
+    <div className="flex mt-5 items-center justify-center md:hidden overflow-x-scroll hide-scrollbar">
           {images.map((image, index) => (
             <Image
               key={index}

@@ -104,7 +104,11 @@ export async function fetchAllRentals({
 export async function fetchSingleRental({ id }: { id : ObjectId}) {
   try{
     connectToDB()
-    const rental = await Rental.findById(id)
+    const rental = await Rental.findById(id).populate({
+      path: 'owner',
+      model: 'User',
+      select: 'name image _id'
+    })
     if(!rental) {
       throw new Error("Rental not found")
     }
