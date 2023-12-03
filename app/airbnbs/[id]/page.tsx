@@ -55,10 +55,10 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       </div>
       <HorizontalLine />
       </div>
-
-      <div className='bg-primary h-52 sticky bottom-4'>
+      <div className='shadow-count hidden lg:block w-72 h-52 sticky top-5'>
         hello
       </div>
+
       </div>
 
       <p>{rental.description}</p>
