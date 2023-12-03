@@ -36,15 +36,10 @@ const ImageCarousel = (
        </div>
 
       ))}
-      {/* <img src="/rentalImages/1701332993436_mercury.jpg" alt="image" className='gallery-img-1' />
-      <img src="/rentalImages/1701332993436_mercury.jpg" alt="image" />
-      <img src="/rentalImages/1701332993436_mercury.jpg" alt="image" />
-      <img src="/rentalImages/1701332993436_mercury.jpg" alt="image" />
-      <img src="/rentalImages/1701332993436_mercury.jpg" alt="image" /> */}
 
     </div>
 
-    <div className="flex mt-5 items-center justify-center md:hidden">
+    <div className="flex mt-5 items-center justify-center md:hidden overflow-x-scroll">
           {images.map((image, index) => (
             <Image
               key={index}

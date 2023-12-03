@@ -21,6 +21,7 @@ export default async function Home({
    <section className='px-2 flex flex-wrap items-center gap-5 xs:flex-row'>
       {
        result.rentals && result.rentals.map((rental) => {
+        const images = rental.images.slice(0, 5)
           return (
             <Carousel 
             key={rental.id} 
@@ -28,7 +29,7 @@ export default async function Home({
             title={rental.title}
             location={rental.location}
             price={rental.price}
-            images={rental.images}
+            images={images}
              />
           )
        })
