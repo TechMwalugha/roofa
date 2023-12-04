@@ -3,6 +3,7 @@
 import { createNewRental } from "@/interfaces"
 import { connectToDB } from "../mongoose"
 import Rental from "../models/rental.model"
+import User from "../models/user.model"
 import { FilterQuery, ObjectId, SortOrder } from "mongoose"
 
 export async  function createRental({
@@ -106,7 +107,7 @@ export async function fetchSingleRental({ id }: { id : ObjectId}) {
     connectToDB()
     const rental = await Rental.findById(id).populate({
       path: 'owner',
-      model: 'User',
+      model: User,
       select: 'name image _id'
     })
     if(!rental) {
