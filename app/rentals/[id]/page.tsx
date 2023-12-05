@@ -35,13 +35,14 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       </div>
       <ImageGrid
       images={rentalImages}
+      id={id}
       />
-     <div className='flex items-center justify-between'>
+     <div className='flex items-center justify-between gap-2'>
       <div className=''>
       <div className='flex items-center gap-9 p-2'>
         <div>
           <h3 className='text-heading3-bold'>Entire apartment hosted by {rental.owner.name}</h3>
-          <p className='capitalize'>{rental.rentalType.map((type: string) => ' . ' + type)}</p>
+          <p className='capitalize'>{rental.rentalType.map((type: string, index: number) => `${index !== 0 ? ' . ' : '' } ${type}`)}</p>
         </div>
         <div className='w-16 h-16'>
           <Image
@@ -55,8 +56,12 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       </div>
       <HorizontalLine />
       </div>
-      <div className='shadow-count hidden lg:block w-72 h-52 sticky top-5'>
-        hello
+      <div className='shadow hidden lg:block flex-auto rounded relative group h-[200px]'>
+        <div
+        style={{ backgroundImage: `url(/assets/advert-rental-img.jpg)` }}
+        className='w-full h-full rounded-md bg-center bg-cover duration-500'
+        >
+        </div>
       </div>
 
       </div>
