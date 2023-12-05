@@ -29,6 +29,7 @@ const page = async ({
         { result.images.map((image: string, index: number) => {
             return (
                 <img 
+                key={index}
                 src={`/rentalImages/${image}`}
                 alt={`rental image ${index + 1}`}
                 className="w-full object-cover my-3 md:w-2/4"
