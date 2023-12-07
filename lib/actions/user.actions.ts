@@ -1,7 +1,7 @@
 "use server"
 import { connectToDB } from '@/lib/mongoose'
 import User from '../models/user.model'
-import mongoose, { SortOrder } from 'mongoose'
+import mongoose, { ObjectId, SortOrder } from 'mongoose'
 import { revalidatePath } from 'next/cache'
 import sendEmail from '../emailing/nodemailer.email'
 import { FilterQuery } from 'mongoose'
@@ -264,4 +264,32 @@ export async function suspendUser({id, newAccountStatus}:{id: string, newAccount
      console.error("Error fetching users:", error);
       throw error;
     }
+}
+
+export async function addFavoriteRental({ id, rentalId, path} : { id: ObjectId, rentalId: ObjectId, path: string}) {
+    try {
+        connectToDB()
+
+        const user = await User.findById(id)
+ 
+        if(!user) {
+            return
+        }
+
+        if(user.favorites.includes(rentalId)) {
+            return
+        }
+
+        user.favorites.push(rentalId)
+
+        await user.save()
+
+        revalidatePath(path)
+
+        return true
+    }  catch (error: any) {
+
+        console.error("Error adding rental as favorite:", error);
+         throw error.message;
+       }
 }

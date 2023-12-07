@@ -2,7 +2,6 @@ import ImageGrid from '@/components/shared/ImageGrid'
 import { fetchSingleRental } from '@/lib/actions/rental.action'
 import { ObjectId } from 'mongoose'
 import Link from 'next/link';
-import { FcLikePlaceholder } from "react-icons/fc";
 import Image from 'next/image';
 import HorizontalLine from '@/components/shared/utils/HorizontalLine';
 import RentalTypes from '@/components/cards/RentalTypes';
@@ -10,12 +9,22 @@ import LocationMap from '@/components/shared/LocationMap';
 import Carousel from '@/components/cards/Carousel';
 import BookingCard from '@/components/cards/BookingCard';
 import Share from '@/components/cards/Share';
+import { getServerSession } from 'next-auth';
+import { fetchUserByEmail } from '@/lib/actions/user.actions';
+import { TiTick } from "react-icons/ti";
+import SaveRental from '@/components/cards/SaveRental';
+
 
 const page = async ({ params } : { params: { id: ObjectId}}) => {
   const id = params.id
   
   const rental = await fetchSingleRental({id})
   const rentalImages = rental.images.slice(0,5)
+
+  const session = await getServerSession()
+  
+  const user = await fetchUserByEmail(session?.user?.email as any)
+
 
   return (
     <div className='md:p-2'>
@@ -30,10 +39,18 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
           image={rentalImages[0]}
            />
 
-          <Link
-          href={""} 
-          className='flex items-center gap-2 hover:bg-gray-100 p-1 rounded'
-          ><FcLikePlaceholder /> <span className='underline'>Save</span></Link>
+          { session && user && !user?.favorites?.includes(rental.id) && (
+            <SaveRental
+            id={user.id}
+            rentalId = {rental.id}
+             />
+          )}
+
+         { session && user && user?.favorites?.includes(rental.id) && (
+            <button
+            className='flex items-center gap-2 bg-primary text-subtle-semibold p-1 rounded'
+            ><TiTick /><span className=''>Saved</span></button>
+          )}
         </div>
       </div>
       <ImageGrid
