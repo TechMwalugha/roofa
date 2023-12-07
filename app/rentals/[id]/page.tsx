@@ -7,6 +7,9 @@ import { FcLikePlaceholder } from "react-icons/fc";
 import Image from 'next/image';
 import HorizontalLine from '@/components/shared/utils/HorizontalLine';
 import RentalTypes from '@/components/cards/RentalTypes';
+import LocationMap from '@/components/shared/LocationMap';
+import Carousel from '@/components/cards/Carousel';
+import BookingCard from '@/components/cards/BookingCard';
 
 const page = async ({ params } : { params: { id: ObjectId}}) => {
   const id = params.id
@@ -121,45 +124,78 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
 
       <HorizontalLine />
 
+      {/* Location on map */}
+
+      {/* <div>
+        <LocationMap />
+      </div> */}
+      <HorizontalLine />
+
       {/* rules */}
 
       <div>
-      <h2 className=' mb-3 text-heading4-medium'>Things to know </h2>
+        <h2 className=' mb-3 text-heading4-medium'>Things to know </h2>
 
-      <div 
-      className='flex gap-5 max-md:flex-col'
-      >
-        <div className='md:w-2/4 px-2'>
-          <h3 className='text-body-medium'>House rules</h3>
-         
-            {rental.rentalRules.map((rule: string, index: number) => {
-              return(
-                <p 
-                key={index}
-                className='text-small-regular mb-4'
-                >
-                {rule}
-                </p>
-              )
-            })}
-        </div>
+        <div 
+        className='flex gap-5 max-md:flex-col'
+        >
+          <div className='md:w-2/4 px-2'>
+            <h3 className='text-body-medium'>House rules</h3>
+          
+              {rental.rentalRules.map((rule: string, index: number) => {
+                return(
+                  <p 
+                  key={index}
+                  className='text-small-regular mb-4'
+                  >
+                  {rule}
+                  </p>
+                )
+              })}
+          </div>
 
-        <div className='md:w-2/4 px-2'>
-          <h3 className='text-body-medium'>Booking policy</h3>
-          <p className='text-small-regular mb-4'>Be aware that Roofa charges a fee for the service offered. The service fee is either paid by you or the house owners. 
-          For this house the service fee is paid by {rental.serviceFee.paidBy.trim() == 'customer' ? 'you' : 'owners of the house'}. 
-          <span className='bg-gray-100 p-[2px] text-primary'>{rental.serviceFee.paidBy.trim() == 'customer' ? ` The service fee is Ksh. ${rental.serviceFee.amount}` : 'No need to worry about the service Fee'}.</span> 
-          </p>
-          <Link
-          href="/"
-          className='underline decoration-solid mb-4'
-          >
-           More details
-          </Link>
+          <div className='md:w-2/4 px-2'>
+            <h3 className='text-body-medium'>Booking policy</h3>
+            <p className='text-small-regular mb-4'>Be aware that Roofa charges a fee for the service offered. The service fee is either paid by you or the house owners. 
+            For this house the service fee is paid by {rental.serviceFee.paidBy.trim() == 'customer' ? 'you' : 'owners of the house'}. 
+            <span className='bg-gray-100 p-[2px] text-primary'>{rental.serviceFee.paidBy.trim() == 'customer' ? ` The service fee is Ksh. ${rental.serviceFee.amount}` : 'No need to worry about the service Fee'}.</span> 
+            </p>
+            <Link
+            href="/"
+            className='underline decoration-solid mb-4'
+            >
+            More details
+            </Link>
+          </div>
         </div>
       </div>
-      </div>
 
+      <HorizontalLine />
+
+      {/* Houses near this house */}
+      <h2 className='text-center mb-3 text-heading4-medium'>Houses near this house </h2>
+
+      <section className='px-2 flex flex-wrap items-center gap-5 xs:flex-row mb-4'>
+        {
+        rental.rentalsNear && rental.rentalsNear.map((rental: any) => {
+          const images = rental.images.slice(0, 5)
+            return (
+              <Carousel 
+              key={rental.id} 
+              id={rental._id.toString()}
+              title={rental.title}
+              location={rental.location}
+              price={rental.price}
+              images={images}
+              />
+            )
+        })
+      }
+     </section>
+
+     <BookingCard
+     availableRooms={rental.availableRooms}
+      />
     </div>
   )
 }

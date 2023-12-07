@@ -4,7 +4,7 @@ import Image from "next/image"
 const RentalTypes = ({ type }: {type: string}) => {
   return (
     <div
-    className="border p-6 m-2 rounded flex-auto cursor-pointer hover:bg-gray-100 hover:border-none"
+    className="border p-6 m-2 rounded flex-auto cursor-pointer hover:border-blue"
     >
         <Image
         src='/assets/bedroom.png'

@@ -110,6 +110,11 @@ export async function fetchSingleRental({ id }: { id : ObjectId}) {
       model: User,
       select: 'name image _id'
     })
+    .populate({
+      path: 'rentalsNear',
+      model: Rental,
+      select: 'title location price images'
+    })
     if(!rental) {
       throw new Error("Rental not found")
     }
