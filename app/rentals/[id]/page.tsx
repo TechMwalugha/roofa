@@ -2,7 +2,6 @@ import ImageGrid from '@/components/shared/ImageGrid'
 import { fetchSingleRental } from '@/lib/actions/rental.action'
 import { ObjectId } from 'mongoose'
 import Link from 'next/link';
-import { IoShareOutline } from "react-icons/io5";
 import { FcLikePlaceholder } from "react-icons/fc";
 import Image from 'next/image';
 import HorizontalLine from '@/components/shared/utils/HorizontalLine';
@@ -10,6 +9,7 @@ import RentalTypes from '@/components/cards/RentalTypes';
 import LocationMap from '@/components/shared/LocationMap';
 import Carousel from '@/components/cards/Carousel';
 import BookingCard from '@/components/cards/BookingCard';
+import Share from '@/components/cards/Share';
 
 const page = async ({ params } : { params: { id: ObjectId}}) => {
   const id = params.id
@@ -26,10 +26,9 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
         </div>
 
         <div className='flex items-center gap-3'>
-          <Link
-          href={""} 
-          className='flex items-center gap-2 hover:bg-gray-100 p-1 rounded'
-          ><IoShareOutline /><span className='underline'>Share</span> </Link>
+          <Share
+          image={rentalImages[0]}
+           />
 
           <Link
           href={""} 
