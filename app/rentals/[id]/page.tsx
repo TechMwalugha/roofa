@@ -18,12 +18,12 @@ import SaveRental from '@/components/cards/SaveRental';
 const page = async ({ params } : { params: { id: ObjectId}}) => {
   const id = params.id
   
-  const rental = await fetchSingleRental({id})
+  const rental:any = await fetchSingleRental({id})
   const rentalImages = rental.images.slice(0,5)
 
   const session = await getServerSession()
   
-  const user = await fetchUserByEmail(session?.user?.email as any)
+  const user:any = await fetchUserByEmail(session?.user?.email as any)
 
 
   return (
@@ -84,6 +84,12 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       </div>
 
       {/* availability */}
+      <BookingCard
+     availableRooms={rental.availableRooms}
+     id={rental.id}
+      />
+
+      {/* adverts */}
 
       <div className='shadow hidden lg:block flex-auto rounded relative group h-[200px]'>
           <div
@@ -189,6 +195,8 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       <HorizontalLine />
 
       {/* Houses near this house */}
+      {Array.isArray(rental.rentalsNear) && rental.rentalsNear.length !==0 && (
+      <>
       <h2 className='text-center mb-3 text-heading4-medium'>Houses near this house </h2>
 
       <section className='px-2 flex flex-wrap items-center gap-5 xs:flex-row mb-4'>
@@ -208,10 +216,9 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
         })
       }
      </section>
-
-     <BookingCard
-     availableRooms={rental.availableRooms}
-      />
+     </>
+)}
+    
     </div>
   )
 }

@@ -4,13 +4,14 @@ import {
     PopoverContent,
     PopoverTrigger,
   } from "@/components/ui/popover"
+import { ObjectId } from "mongoose"
 
   
-const BookingCard = ({ availableRooms} : { availableRooms: number}) => {
+const BookingCard = ({ availableRooms, id} : { availableRooms: number, id: ObjectId}) => {
   return (
     <Popover>
         <PopoverTrigger 
-        className="fixed bottom-3 right-2 bg-blue p-6 rounded-lg shadow hover:text-white transition-all"
+        className="w-full mb-5 bg-blue p-6 rounded-lg shadow hover:text-white transition-all"
         >check availability</PopoverTrigger>
         <PopoverContent className="block">
             { availableRooms >= 1 && (
@@ -18,7 +19,7 @@ const BookingCard = ({ availableRooms} : { availableRooms: number}) => {
                     <p className="text-heading3-bold">Available</p>
                     <p className="text-small-medium mb-3">Reserve this place today</p>
                     <Link 
-                    href={""} 
+                    href={`/rentals/book/${id}`}
                     className="text-small-medium block w-full bg-danger p-3 rounded-md text-center">Reserve</Link>
                 </div>
             )}
