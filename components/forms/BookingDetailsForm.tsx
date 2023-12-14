@@ -22,7 +22,13 @@ import { FcGoogle } from 'react-icons/fc'
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 
-const BookingDetailsForm = () => {
+const BookingDetailsForm = ({
+  email,
+  name
+}: {
+  email: string
+  name: string
+}) => {
     const { data: session } = useSession()
     // console.log(session)
 
@@ -33,8 +39,8 @@ const BookingDetailsForm = () => {
     const form = useForm<z.infer<typeof bookingDetailsFormSchema>>({
         resolver: zodResolver(bookingDetailsFormSchema),
         defaultValues: {
-            email: '',
-            fullName: '',
+            email: email || '',
+            fullName: name || '',
             reportingDate: new Date(),
             mpesaPhoneNumber: '',
             identityNumber: '',
@@ -46,7 +52,7 @@ const BookingDetailsForm = () => {
    
       }
   return (
-    <div className="md:w-2/4">
+    <div className="md:w-2/4 shadow-count rounded">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
       {error && (
@@ -75,7 +81,7 @@ const BookingDetailsForm = () => {
             >
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="lucky@gmail.com" {...field} />
+                <Input placeholder="lucky@gmail.com" {...field}  className="text-small-semibold"/>
               </FormControl>
               <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
             </FormItem>
@@ -90,7 +96,7 @@ const BookingDetailsForm = () => {
             >
               <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input placeholder="John Doe" {...field} type="string" />
+                <Input placeholder="John Doe" {...field} type="string"  className="text-small-semibold"/>
               </FormControl>
               <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
             </FormItem>
@@ -106,7 +112,7 @@ const BookingDetailsForm = () => {
             >
               <FormLabel>Reporting Date <span className="text-subtle-medium italic">*must be within the next 10 days</span></FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} type="date" />
+                <Input placeholder="" {...field} type="date" className="text-small-semibold" />
               </FormControl>
               <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
             </FormItem>
@@ -122,7 +128,7 @@ const BookingDetailsForm = () => {
             >
               <FormLabel>M-pesa Phone Number</FormLabel>
               <FormControl>
-                <Input placeholder="07*** | 01*** | 2547*** | 2541***" {...field} type="string" />
+                <Input placeholder="07*** | 01*** | 2547*** | 2541***" {...field} type="string"  className="text-small-semibold"/>
               </FormControl>
               <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
             </FormItem>
@@ -138,25 +144,32 @@ const BookingDetailsForm = () => {
             >
               <FormLabel>Identity Number</FormLabel>
               <FormControl>
-                <Input placeholder="1234567" {...field} type="string" />
+                <Input placeholder="1234567" {...field} type="string"  className="text-small-semibold"/>
               </FormControl>
               <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
             </FormItem>
           )}
         />
 
+        <div
+        className="flex items-center gap-5"
+        >
         <FormField
           control={form.control}
           name="gender"
           defaultValue="female"
           render={({ field }) => (
             <FormItem
-            className='mb-2 flex items-center'
+            className='flex items-center gap-3'
             >
+              <div
+              className="flex items-center gap-3"
+              >
               <FormLabel>Female</FormLabel>
               <FormControl>
                 <Input placeholder="1234567" {...field} type="radio" />
               </FormControl>
+              </div>
               <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
             </FormItem>
           )}
@@ -168,16 +181,20 @@ const BookingDetailsForm = () => {
           defaultValue="male"
           render={({ field }) => (
             <FormItem
-            className='mb-5 flex items-center'
             >
-              <FormLabel>Male</FormLabel>
+              <div
+              className="flex items-center gap-3"
+              >
+             <FormLabel>Male</FormLabel>
               <FormControl>
-                <Input placeholder="1234567" {...field} type="radio" className="" />
+                <Input placeholder="1234567" {...field} type="radio" />
               </FormControl>
+              </div>
               <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
             </FormItem>
           )}
         />
+        </div>
 
 
 

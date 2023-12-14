@@ -1,4 +1,5 @@
 import BookingDetails from "@/components/cards/BookingDetails"
+import ReviewOrderCard from "@/components/cards/ReviewOrderCard"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { fetchSingleRental } from "@/lib/actions/rental.action"
 import { ObjectId } from "mongoose"
@@ -23,16 +24,25 @@ const page = async ({ params } : { params: { id: string }}) => {
       </TabsList>
       <TabsContent 
       value="account"
-      className="shadow"
+      className=""
       >
         <BookingDetails
-        id={params.id as any}
+        id={rental._id}
          />
         </TabsContent>
       <TabsContent 
       value="password"
-      className="shadow"
-      >Change your password here.</TabsContent>
+      className="shadow flex items-center justify-center"
+      >
+        <ReviewOrderCard
+        id={rental._id}
+        title={rental.title}
+        price={rental.price}
+        location={rental.location}
+        serviceFee={rental.serviceFee}
+        image={rental.images[0]}
+        />
+      </TabsContent>
     </Tabs>
   )
 }
