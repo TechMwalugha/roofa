@@ -49,7 +49,8 @@ const BookingDetailsForm = ({
       })
 
      async function onSubmit(values: z.infer<typeof bookingDetailsFormSchema>) {
-   
+
+      console.log(values)
       }
   return (
     <div className="md:w-2/4 shadow-count rounded">
@@ -167,7 +168,7 @@ const BookingDetailsForm = ({
               >
               <FormLabel>Female</FormLabel>
               <FormControl>
-                <Input placeholder="1234567" {...field} type="radio" />
+                <Input placeholder="1234567" {...field} type="radio" value="female" />
               </FormControl>
               </div>
               <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
@@ -187,7 +188,7 @@ const BookingDetailsForm = ({
               >
              <FormLabel>Male</FormLabel>
               <FormControl>
-                <Input placeholder="1234567" {...field} type="radio" />
+                <Input placeholder="1234567" {...field} type="radio" value="male" />
               </FormControl>
               </div>
               <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>

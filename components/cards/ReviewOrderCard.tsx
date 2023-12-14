@@ -147,7 +147,7 @@ const ReviewOrderCard = ({
       <HorizontalLine />
 
       <p className="text-tiny-medium italic text-center">
-        After you fill out your details click book and an M-pesa transaction will be initiated, enter your M-pesa pin and wait for the order to be completed
+        After you fill out your details click book and an M-pesa transaction will be initiated, enter your M-pesa pin and wait for the order to be completed.
     </p>
     </div>
   )
