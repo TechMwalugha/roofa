@@ -110,7 +110,7 @@ const BookingDetailsForm = ({
             <FormItem
             className='mb-2'
             >
-              <FormLabel>Reporting Date <span className="text-subtle-medium italic">*must be within the next 10 days</span></FormLabel>
+              <FormLabel>Reporting Date <span className="text-subtle-medium italic">*must be within the next 10 days*</span></FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} type="date" className="text-small-semibold" />
               </FormControl>
