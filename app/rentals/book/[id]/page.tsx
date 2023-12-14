@@ -1,8 +1,16 @@
+import BookingDetails from "@/components/cards/BookingDetails"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { fetchSingleRental } from "@/lib/actions/rental.action"
+import { ObjectId } from "mongoose"
 
 
 
-const page = ({ params } : { params: { id: string }}) => {
+const page = async ({ params } : { params: { id: string }}) => {
+  const id =  params.id as any
+
+  const rental = await fetchSingleRental({ id })
+
+
   return (
     <Tabs 
     defaultValue="account" 
@@ -16,7 +24,11 @@ const page = ({ params } : { params: { id: string }}) => {
       <TabsContent 
       value="account"
       className="shadow"
-      >Make changes to your account here. { params.id } </TabsContent>
+      >
+        <BookingDetails
+        id={params.id as any}
+         />
+        </TabsContent>
       <TabsContent 
       value="password"
       className="shadow"
