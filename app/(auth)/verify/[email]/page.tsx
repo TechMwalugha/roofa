@@ -41,7 +41,7 @@ const Page = async  ({ params }: {params: {email: string}}) =>{
       email: user.email,
       subject: 'VERIFICATION',
       heading: 'Verify Email',
-      content: `click the link to verify email: <a href=http://https://roofa-git-master-techmwalughas-projects.vercel.app/verifytoken/${randomString}>Click here</a>`
+      content: `click the link to verify email: <a href=https://roofa-git-master-techmwalughas-projects.vercel.app/verifytoken/${randomString}>Click here</a>`
     })
 }
   
