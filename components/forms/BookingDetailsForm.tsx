@@ -1,5 +1,8 @@
 'use client'
 
+import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { bookingDetailsFormSchema } from "@/lib/validations/payment.validation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -21,6 +24,7 @@ import Link from "next/link"
 import { FcGoogle } from 'react-icons/fc'
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { MdOutlineClose } from "react-icons/md";
 
 const BookingDetailsForm = ({
   email,
@@ -29,6 +33,21 @@ const BookingDetailsForm = ({
   email: string
   name: string
 }) => {
+
+
+  const CloseButton = ({ closeToast }: { closeToast: any}) => (
+    <div
+    onClick={closeToast}
+    >
+      <MdOutlineClose size={30} />
+    </div>
+  )
+
+  const notify = () => toast("house booked successfully !", {
+    position: toast.POSITION.TOP_RIGHT,
+    toastId: "mwal",
+    theme: "dark"
+  });
     const { data: session } = useSession()
     // console.log(session)
 
@@ -49,11 +68,36 @@ const BookingDetailsForm = ({
       })
 
      async function onSubmit(values: z.infer<typeof bookingDetailsFormSchema>) {
+      
+    //  initiate a transaction with tiny pesa
+    var url = " https://tinypesa.com/api/v1/express/initialize";
+     try{
 
-      console.log(values)
-      }
+      
+const x = await fetch(url, {
+    method: "POST",
+    headers: {
+      Apikey: "0gcPeVqzSHr",
+      "Content-Type": "application/json",
+    },
+    body: "amount=1&msisdn=0717355181&account_no=200",
+})
+    console.log(x)
+
+     } catch(err: any) {
+      throw new Error(err.message)
+     }    
+  }
   return (
     <div className="md:w-2/4 shadow-count rounded">
+      <button
+      onClick={notify}
+      >
+        click
+      </button>
+      <ToastContainer
+      closeButton={CloseButton}
+       />
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
       {error && (

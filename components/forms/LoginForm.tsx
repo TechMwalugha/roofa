@@ -36,6 +36,7 @@ const LoginForm = () => {
 
      async function onSubmit(values: z.infer<typeof loginFormSchema>) {
         form.reset()
+        setError("processing")
         try {
             const res = await signIn("credentials", {
                 redirect: false,
@@ -49,6 +50,7 @@ const LoginForm = () => {
                 setError(res.error)
                 return
             }
+            setError(" ")
 
             // Redirect to the home page after successful authentication
             router.push("/")
@@ -61,7 +63,7 @@ const LoginForm = () => {
     <div className="flex items-center justify-center h-screen bg-blue">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
-      {error && (
+      {error && error !== "processing" && (
             <div className="bg-red-500 text-white w-full text-center text-small-medium mx-auto text-sm py-1 px-3 rounded-md mt-2">
               {error}
             </div>
@@ -114,7 +116,31 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="rounded  bg-blue">Login</Button>
+        <Button type="submit" className="rounded  bg-blue">
+          
+          {error !=="processing" && ("Login")}
+          {error === "processing" && (
+            <h2 className="flex gap-2 items-center">
+            <svg
+              className="animate-spin -mr-1 ml-3 h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24">
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg> Processing...
+            </h2>
+          )}
+        </Button>
         <Link
         href='/register'
         className="mt-4 text-subtle-medium"

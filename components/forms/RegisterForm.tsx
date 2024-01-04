@@ -20,6 +20,8 @@ import Link from "next/link"
 import { FcGoogle } from 'react-icons/fc'
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterForm = () => {
     const [error, setError] = useState("");
@@ -35,8 +37,10 @@ const RegisterForm = () => {
         },
       })
 
+
      async function onSubmit(values: z.infer<typeof registerFormSchema>) {
         form.reset()
+        setError("processing")
       setEmail(values.email)
         try {
             const res = await fetch("api/register", {
@@ -55,6 +59,14 @@ const RegisterForm = () => {
               const data = await res.json();
               
               setError(data.message)
+              const notifyError = () => toast.error(data.message, {
+                position: toast.POSITION.TOP_RIGHT,
+                toastId: "mwal",
+                theme: "dark"
+              });
+              if (data.message !== "User registered.") {
+                notifyError()
+              }
       
             
         } catch (error: any) {
@@ -65,11 +77,14 @@ const RegisterForm = () => {
     <div className="flex items-center justify-center h-screen bg-blue">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
-      {error && error !== "User registered." && (
+      {/* {error && error !== "User registered." && (
             <div className="bg-red-500 text-white w-full mx-auto text-sm py-1 px-3 rounded-md mt-2">
               {error}
             </div>
-          )}
+          )} */}
+
+      <ToastContainer
+       />
           {error === "User registered." && (
             <div className="bg-green-200 flex flex-col text-white w-full text-center mx-auto text-sm py-1 px-3 rounded-md mt-2">
               <p className="">{error}</p>
@@ -140,7 +155,30 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="rounded-md bg-blue hover:bg-blue-gray-500">Register</Button>
+        <Button type="submit" className="rounded-md bg-blue hover:bg-blue-gray-500">
+          {error !=="processing" && ("Register")}
+          {error === "processing" && (
+            <h2 className="flex gap-2 items-center">
+            <svg
+              className="animate-spin -mr-1 ml-3 h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24">
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg> Processing...
+            </h2>
+          )}
+          </Button>
         <Link
         href='/login'
         className="mt-4 text-subtle-medium"
