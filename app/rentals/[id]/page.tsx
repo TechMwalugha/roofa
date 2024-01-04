@@ -13,6 +13,7 @@ import { getServerSession } from 'next-auth';
 import { fetchUserByEmail } from '@/lib/actions/user.actions';
 import { TiTick } from "react-icons/ti";
 import SaveRental from '@/components/cards/SaveRental';
+import UnsaveRental from '@/components/cards/UnsaveRental';
 
 
 const page = async ({ params } : { params: { id: ObjectId}}) => {
@@ -47,9 +48,13 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
           )}
 
          { session && user && user?.favorites?.includes(rental.id) && (
-            <button
-            className='flex items-center gap-2 bg-primary text-subtle-semibold p-1 rounded'
-            ><TiTick /><span className=''>Saved</span></button>
+          <UnsaveRental
+          id={user.id}
+          rentalId = {rental.id}
+          />
+            // <button
+            // className='flex items-center gap-2 bg-primary text-subtle-semibold p-1 rounded'
+            // ><TiTick /><span className=''>Saved</span></button>
           )}
         </div>
       </div>

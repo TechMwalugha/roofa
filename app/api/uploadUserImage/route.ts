@@ -35,12 +35,12 @@ export async function POST(request: NextRequest) {
 
     // With the file data in the buffer, you can do whatever you want with it.
     // For this, we'll just write it to the filesystem in a new location
-    const path = join('/', 'public', 'userImages', newFileName)
+    const path = join('/', 'RealProjects', 'roofa', 'public', 'userImages', newFileName)
   
     await writeFile(path, buffer)
 
     updateUserImage({id, newFileName})
-    const preImagePath: string = join('/', 'public', preImage)
+    const preImagePath: string = join('/', 'RealProjects', 'roofa', 'public', preImage)
     const isDelete = await fileExists(preImagePath)
 
     if(isDelete) {

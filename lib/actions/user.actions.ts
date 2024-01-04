@@ -276,9 +276,19 @@ export async function addFavoriteRental({ id, rentalId, path} : { id: ObjectId, 
             return
         }
 
+        console.log(user.favorites)
         if(user.favorites.includes(rentalId)) {
-            return
+           const index =  user.favorites.indexOf(rentalId)
+
+            user.favorites.splice(index, 1)
+
+            await user.save()
+
+            revalidatePath(path)
+
+            return true
         }
+
 
         user.favorites.push(rentalId)
 

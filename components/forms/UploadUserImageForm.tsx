@@ -4,6 +4,8 @@ import Image from "next/image"
 import { useState } from "react"
 import { usePathname } from "next/navigation"
 import { formatDateString } from "@/lib/utils"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const UploadUserImageForm =(
@@ -15,11 +17,13 @@ const UploadUserImageForm =(
     }) => {
         const [file, setFile] = useState<File>()
         const [error, setError] = useState('')
+        const [loader, setLoader] = useState('')
         
         const path = usePathname()
 
         const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault()
+  
             if(e.target){
               const form = e.target as HTMLFormElement;
               form.reset();
@@ -45,16 +49,26 @@ const UploadUserImageForm =(
               data.set('id', id)
               data.set('path', path)
               data.set('image', image)
+
+              setLoader("loading")
         
               const res = await fetch('/api/uploadUserImage', {
                 method: 'POST',
                 body: data
               })
 
+              setLoader("")
     
               // handle the error
               if (!res.ok) throw new Error(await res.text())
 
+              const notifySuccess = () => toast.success("image uploaded successfully", {
+                position: toast.POSITION.TOP_RIGHT,
+                toastId: "mwal",
+                theme: "dark"
+              });
+
+              notifySuccess()
               
             
             } catch (e: any) {
@@ -65,6 +79,7 @@ const UploadUserImageForm =(
 
     return (
         <main className='mb-5 shadow p-5 rounded-lg'>
+          <ToastContainer />
     <div className='flex gap-2 items-center mb-3 w-full'>
        <div className='w-16 h-16 relative'>
        <Image
@@ -84,7 +99,7 @@ const UploadUserImageForm =(
        accept="image/*"
        onChange={(e) => setFile(e.target.files?.[0])}
        />
-       <input type="submit" value="Upload" className='bg-transparent border p-2 rounded cursor-pointer border-blue' />
+       <input type="submit" value={`${loader ? "uploading..." : "Upload"}`} className='bg-transparent border p-2 rounded cursor-pointer border-blue' />
      </form>
 
      <p className="text-subtle-medium text-right mt-4">Joined on: {formatDateString(createdAt)}</p>

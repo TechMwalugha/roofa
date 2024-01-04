@@ -46,7 +46,7 @@ export default function DropdownMenuDemo() {
       <DropdownMenuSeparator />
       <DropdownMenuRadioGroup value={position} onValueChange={setPosition} className='text-small-medium tracking-wider'>
         <DropdownMenuRadioItem value="one" 
-        onClick={() => alert('hello')}
+        onClick={() => router.push('/user/favorites')}
         className='cursor-pointer hover:bg-gray-200'
         >Notifications</DropdownMenuRadioItem>
         <DropdownMenuRadioItem value="two" 
