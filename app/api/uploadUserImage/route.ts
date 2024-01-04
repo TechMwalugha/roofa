@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     await writeFile(path, buffer)
 
     updateUserImage({id, newFileName})
-    const preImagePath: string = join('/', 'RealProjects', 'roofa', 'public', preImage)
+    const preImagePath: string = join('/', 'public', preImage)
     const isDelete = await fileExists(preImagePath)
 
     if(isDelete) {
