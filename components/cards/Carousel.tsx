@@ -70,7 +70,7 @@ function Carousel({
         {/* apartment detalils */}
 
         <Link 
-        href={`rentals/${id}`}
+        href={`/rentals/${id}`}
         >
            <div className='flex gap-2 items-center mt-8 justify-between'> 
                 <div>

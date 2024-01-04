@@ -46,24 +46,24 @@ export default function DropdownMenuDemo() {
       <DropdownMenuSeparator />
       <DropdownMenuRadioGroup value={position} onValueChange={setPosition} className='text-small-medium tracking-wider'>
         <DropdownMenuRadioItem value="one" 
-        onClick={() => router.push('/user/favorites')}
+        onClick={() => router.push('/user/notifications')}
         className='cursor-pointer hover:bg-gray-200'
         >Notifications</DropdownMenuRadioItem>
         <DropdownMenuRadioItem value="two" 
-        onClick={() => alert('hello')}
+        onClick={() => alert('hello bookings')}
         className='cursor-pointer hover:bg-gray-200'
         >Bookings</DropdownMenuRadioItem>
         <DropdownMenuRadioItem value="three" 
-        onClick={() => alert('hello')}
+        onClick={() => router.push('/user/favorites')}
         className='cursor-pointer hover:bg-gray-200'
         >Favorites</DropdownMenuRadioItem>
         <hr className='my-3'/>
-        <DropdownMenuRadioItem value="three" 
+        <DropdownMenuRadioItem value="four" 
         onClick={() => router.push('/user/account-settings')}
         className='cursor-pointer hover:bg-gray-200'
         >Account</DropdownMenuRadioItem>
         <hr className='my-3'/>
-        <DropdownMenuRadioItem value="four" 
+        <DropdownMenuRadioItem value="five" 
         onClick={() => router.push('/api/auth/signout')}
         className='cursor-pointer hover:bg-gray-200'
         >Log Out</DropdownMenuRadioItem>

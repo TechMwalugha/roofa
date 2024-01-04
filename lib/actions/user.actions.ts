@@ -276,7 +276,6 @@ export async function addFavoriteRental({ id, rentalId, path} : { id: ObjectId, 
             return
         }
 
-        console.log(user.favorites)
         if(user.favorites.includes(rentalId)) {
            const index =  user.favorites.indexOf(rentalId)
 

@@ -50,10 +50,11 @@ const LoginForm = () => {
                 setError(res.error)
                 return
             }
-            setError(" ")
+            setError("Welcome back.")
 
             // Redirect to the home page after successful authentication
             router.push("/")
+
             
         } catch (error: any) {
             throw new Error(`An error occurred: ${error.message}`)
