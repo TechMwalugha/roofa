@@ -71,6 +71,7 @@ const page = async ({
       return getSecondsDifference(user.createdAt) < 3600 * 24 * 30 && user.role !== 'roofa-agent' && user.role !== 'admin'
      })
 
+
      
     
   return (
@@ -106,7 +107,7 @@ const page = async ({
             <p className="text-base1-semibold capitalize">new users</p>
             </div>
 
-            <p className="text-x-small-semibold">(this month)</p>
+            <p className="text-x-small-semibold">(past 30 days)</p>
             <h3 className="text-heading3-bold mt-2">
               {newUsers.length}
             </h3>
