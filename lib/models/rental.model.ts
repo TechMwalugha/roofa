@@ -80,7 +80,19 @@ const rentalSchema = new mongoose.Schema({
         required: true,
         defualt: true,
     },
+    createdAt: {
+        type: Date,
+        default: () => new Date()
+    },
+    updatedAt: {
+        type: Date,
+        default: () => new Date()
+    }
+})
 
+rentalSchema.pre('save', function(next) {
+    this.updatedAt = Date.now() as any
+    next()
 })
 
 const Rental = mongoose.models.Rental || mongoose.model('Rental', rentalSchema)
