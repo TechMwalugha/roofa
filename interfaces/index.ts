@@ -49,3 +49,11 @@ export interface createNewRental {
     rentalStatus: boolean;
 
 }
+
+export interface createNewNotification {
+    from: mongoose.Schema.Types.ObjectId;
+    to: mongoose.Schema.Types.ObjectId;
+    subject: string;
+    message: string;
+    read: boolean;
+}
