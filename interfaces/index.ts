@@ -55,5 +55,4 @@ export interface createNewNotification {
     to: mongoose.Schema.Types.ObjectId;
     subject: string;
     message: string;
-    read: boolean;
 }

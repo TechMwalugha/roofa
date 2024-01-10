@@ -3,16 +3,22 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
   } from "@/components/ui/collapsible"
-  import { FaArrowAltCircleDown } from "react-icons/fa";
+import { FaArrowAltCircleDown } from "react-icons/fa";
+import NotificationCollapsible from "./collapsibleCards/NotificationCollapsible";
+import BookingCollapsible from "./collapsibleCards/BookingCollapsible";
+import RentalHistoryCollapsible from "./collapsibleCards/RentalHistoryCollapsible";
+import { ObjectId } from "mongoose";
 
 const CollapsibleCon = (
     {
         title,
-        content
+        content,
+        userId
     }:
     {
         title: string,
-        content: any[]
+        content: any[],
+        userId: ObjectId
     }
 ) => {
   return (
@@ -24,8 +30,22 @@ const CollapsibleCon = (
    <FaArrowAltCircleDown size={25} />
    </CollapsibleTrigger>
   <CollapsibleContent className="">
-    Yes. Free to use for personal and commercial projects. No attribution
-    required.
+    { title === 'Bookings' && (
+        <BookingCollapsible
+        />
+      )}
+
+    { title === 'Notifications' && (
+      <NotificationCollapsible
+      userId = {userId}
+      content = {content}
+      />
+    )}
+
+    { title === 'Rental History' && (
+          <RentalHistoryCollapsible
+          />
+        )}
   </CollapsibleContent>
 </Collapsible>
   )

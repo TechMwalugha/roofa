@@ -9,6 +9,10 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth";
 import SuspendUser from "@/components/admin/cards/SuspendUser"
+import Notification from "@/lib/models/notification.model"
+import { ObjectId } from "mongoose"
+import { connectToDB } from "@/lib/mongoose"
+import User from "@/lib/models/user.model"
 
 
 const page = async ({
@@ -37,13 +41,13 @@ const page = async ({
   }
 
 
-  const user = await fetchUserById(params.id as any)
+  const user = await fetchUserNotification(params.id as any)
+ 
 
-  
   if(!user) {
     redirect('/admin/users')
   }
-  
+
   return (
     <section>
       <div className="flex items-center gap-3 text-primary mb-4">
@@ -153,13 +157,13 @@ const page = async ({
       content = {
         []
       }
+      userId = {user._id}
       />
 
      <CollapsibleCon 
       title="Notifications"
-      content = {
-        []
-      }
+      content = {user.notifications}
+      userId = {user._id}
       />
 
     <CollapsibleCon 
@@ -167,6 +171,7 @@ const page = async ({
       content = {
         []
       }
+      userId = {user._id}
       />
       </div>
       </div>
@@ -175,3 +180,21 @@ const page = async ({
 }
 
 export default page
+
+
+async function fetchUserNotification(id: ObjectId) {
+  try {
+
+    connectToDB()
+
+    const user = await User.findById(id)
+    .populate({
+      path: 'notifications',
+      model: Notification,
+    })
+
+    return user
+  } catch (error: any) {
+    throw new Error(`${error.message}`)
+  }
+}

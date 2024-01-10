@@ -1,3 +1,5 @@
+"use server"
+
 import { createNewNotification } from "@/interfaces";
 import { connectToDB } from "../mongoose";
 import Notification from "../models/notification.model";
@@ -8,18 +10,16 @@ export async function createNewNotification({
     to,
     subject,
     message,
-    read,
 }: createNewNotification) {
 
     try {
         connectToDB()
-
+        
        const notification =  new Notification({
         from,
         to, 
         subject,
         message,
-        read
         })
 
         await notification.save()

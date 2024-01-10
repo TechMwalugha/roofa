@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 
 const notificationSchema = new mongoose.Schema({
     from: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
     to: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
     subject: {
@@ -36,6 +36,6 @@ notificationSchema.pre('save', function(next) {
     next()
 })
 
-const Notification = mongoose.models.Notification || mongoose.model('Notification', notificationSchema)
+const Notification = mongoose.models.Notification || mongoose.model('Notification', notificationSchema);
 
-export default Notification
+export default Notification;
