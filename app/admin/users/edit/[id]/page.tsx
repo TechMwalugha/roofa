@@ -13,6 +13,7 @@ import Notification from "@/lib/models/notification.model"
 import { ObjectId } from "mongoose"
 import { connectToDB } from "@/lib/mongoose"
 import User from "@/lib/models/user.model"
+import ReloadBar from "@/components/shared/ReloadBar"
 
 
 const page = async ({
@@ -60,6 +61,12 @@ const page = async ({
         href="/admin/users"
         className="underline"
         >user</Link>
+
+        <div
+        className="flex ml-auto"
+        >
+          <ReloadBar />
+        </div>
       </div>
       <div className="p-3 shadow-groups" >
         <div className="flex items-center justify-between gap-3">
