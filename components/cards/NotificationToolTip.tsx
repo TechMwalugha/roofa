@@ -19,9 +19,11 @@ const NotificationToolTip = ({
 }) => {
 
    async function readNotification() {
-       await readNotificationAction(notificationId as unknown as ObjectId)
+       if(!read) {
+        await readNotificationAction(notificationId as unknown as ObjectId)
 
-       alert('message updated as read')
+        alert('message updated as read')
+       }
       }
 
   return (
