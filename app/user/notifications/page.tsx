@@ -10,6 +10,12 @@ const page = async () => {
   const userId = await fetchUserByEmail(session?.user?.email as string)
   const user = await fetchUserNotification(userId._id)
 
+  const numberOfUnreadMessages = user.notifications.map((message: any) => {
+    if(!message.read) {
+      return message
+    }
+  })
+
   return (
   <div className=" md:flex md:items-center md:justify-center">
     <div className="mx-3 md:w-3/4">
@@ -23,7 +29,7 @@ const page = async () => {
 
           <span
           className="bg-warning px-3 py-1 rounded-lg text-small-regular text-white"
-          >0</span>
+          >{numberOfUnreadMessages.length}</span>
         </h3>
 
         <p

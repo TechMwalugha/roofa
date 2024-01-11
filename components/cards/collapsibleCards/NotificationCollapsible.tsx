@@ -14,6 +14,7 @@ import { ObjectId } from "mongoose"
 import { getServerSession } from "next-auth"
 import Image from "next/image"
 import { redirect } from "next/navigation"
+import NotificationCard from "../NotificationCard"
 
 
 const NotificationCollapsible = async ({
@@ -57,11 +58,15 @@ const NotificationCollapsible = async ({
         <div>
           {content.map((message, index) => {
             return (
-              <div
+              <NotificationCard
               key={index}
-              >
-                
-              </div>
+              image={message.from.image}
+              name={message.from.name}
+              subject={message.subject}
+              message={message.message}
+              read={message.read}
+              date={message.createdAt}
+               />
             )
           })}
         </div>
