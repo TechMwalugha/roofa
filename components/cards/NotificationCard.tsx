@@ -1,29 +1,36 @@
 import { formatDateDifference } from "@/lib/utils"
 import Image from "next/image"
 
+import { ObjectId } from "mongoose"
+import NotificationToolTip from "./NotificationToolTip"
+import DeleteNotificationCard from "./DeleteNotificationCard"
+
 interface notificationDetails {
+  notificationId: ObjectId
   image: string
   name: string
   subject: string
   message: string
   read: boolean
   date: string
+  owner: boolean
 }
 
 const NotificationCard = ({
+  notificationId,
   image,
   name,
   subject,
   message,
   read,
-  date
+  date,
+  owner
 }: notificationDetails) => {
-
 
 
   return (
     <div
-    className="flex items-start gap-4 my-3"
+    className={`flex items-start gap-4 my-3 ${!read ? 'bg-slate-100 p-3' : ''}`}
     >
         <div
         className="w-16 h-16"
@@ -49,7 +56,7 @@ const NotificationCard = ({
             </h4>
             <p className="text-subtle-medium mb-5">{formatDateDifference(date as unknown as Date)}</p>
 
-            <section 
+            {!owner && ( <section 
             className="border  p-3 rounded-md border-danger hover:bg-blue cursor-pointer transition-all"
             >
             <p
@@ -57,7 +64,19 @@ const NotificationCard = ({
             >
                 {message}
             </p>
-            </section>
+            </section> )}
+
+          {owner && (
+          <NotificationToolTip 
+          notificationId={notificationId.toString()}
+          message={message}
+          read={read}
+          />
+          )}
+
+          <DeleteNotificationCard
+          notificationId={notificationId.toString()}
+           />
         </div>
       </div>
   )

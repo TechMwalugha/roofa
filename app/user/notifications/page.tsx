@@ -1,7 +1,7 @@
 import NotificationCard from "@/components/cards/NotificationCard"
 import { fetchUserByEmail, fetchUserNotification } from "@/lib/actions/user.actions"
 import { getServerSession } from "next-auth"
-import Image from "next/image"
+import { TbMessage2Off } from "react-icons/tb";
 
 const page = async () => {
   const session = await getServerSession()
@@ -9,6 +9,8 @@ const page = async () => {
   if(!session) return 
   const userId = await fetchUserByEmail(session?.user?.email as string)
   const user = await fetchUserNotification(userId._id)
+
+  // console.log(userId._id)
 
   const numberOfUnreadMessages = user.notifications.map((message: any) => {
     if(!message.read) {
@@ -38,19 +40,35 @@ const page = async () => {
       </div>
 
       {
-        user.notifications.map((message: any, index: number) =>{
+       user.notifications.length > 0 && user.notifications.map((message: any, index: number) =>{
+
           return (
             <NotificationCard
             key={index}
+            notificationId={message._id}
             image={message.from.image}
             name={message.from.name}
             subject={message.subject}
             message={message.message}
             read={message.read}
             date={message.createdAt}
+            owner={message.to.email == user.email ? true : false}
             />
           )
         })
+      }
+
+      {
+        user.notifications.length < 0 && (
+          <div
+          className="flex flex-col items-center justify-center"
+          >
+            <TbMessage2Off size={30} />
+            <p
+            className="text-subtle-medium"
+            > No notifications</p>
+          </div>
+        )
       }
       
     </div>

@@ -102,7 +102,7 @@ export async function fetchUserById(id: mongoose.Schema.Types.ObjectId) {
     try {
         connectToDB()
 
-        const user = await User.findById(id)
+        const user: any = await User.findById(id)
 
         return user
     } catch (error: any) {
@@ -113,17 +113,14 @@ export async function fetchUserById(id: mongoose.Schema.Types.ObjectId) {
 export async function deleteUser(userId: mongoose.Schema.Types.ObjectId) {
     try {
         connectToDB()
-        console.log(userId)
 
         const user = await User.findById(userId)
-        console.log(user)
         
     
         const deletedUser = await User.findOneAndDelete({ 
             _id: userId
         });
 
-        console.log(deletedUser)
         
     } catch (error: any) {
         throw new Error(`An error occurred: ${error.message}`)

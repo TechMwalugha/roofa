@@ -4,6 +4,7 @@ import { createNewNotification } from "@/interfaces";
 import { connectToDB } from "../mongoose";
 import Notification from "../models/notification.model";
 import { fetchUserById } from "./user.actions";
+import { ObjectId } from "mongoose";
 
 export async function createNewNotification({
     from,
@@ -44,3 +45,29 @@ export async function createNewNotification({
     }
 }
 
+export async function readNotificationAction(id: ObjectId){
+
+    try {
+        const notification = await Notification.findById(id)
+
+        notification.read = true
+
+        await notification.save()
+
+
+    } catch (error: any) {
+        throw new Error(`An error occurred reading Notification: ${error.message}`)
+    }
+}
+
+export async function deleteNotificationAction(id: ObjectId) {
+    try {
+        connectToDB()
+
+        await Notification.findOneAndDelete({ _id: id})
+
+        return true
+    } catch (error: any) {
+        throw new Error(`An error occurred deleting Notification: ${error.message}`)
+    }
+}
