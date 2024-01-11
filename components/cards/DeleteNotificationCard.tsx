@@ -13,11 +13,15 @@ const DeleteNotificationCard = ({
     const router = useRouter()
 
     async function deleteNotificationFun() {
+      const confirmWithUser = confirm('Are you sure on deleting this message?')
+      if(confirmWithUser){
         await deleteNotificationAction(notificationId as unknown as ObjectId)
 
         alert('deleted successfully')
 
-        router.refresh()
+      router.refresh()
+      }
+
     }
   return (
     <div 

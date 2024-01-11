@@ -15,9 +15,9 @@ const MarkAllAsReadCard = ({
     async function markAllAsReadFun(){
         const confirmWithUser = confirm('Are you sure you\'ve\ read them all?')
         if(confirmWithUser){
-        await readAllUserNotification(userId as unknown as ObjectId) 
+        const res = await readAllUserNotification(userId as unknown as ObjectId) 
 
-        alert('Read all successfully')
+        alert(res === undefined ? 'successfully read all messages': res)
 
         router.refresh()
         }

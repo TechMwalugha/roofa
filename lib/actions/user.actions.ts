@@ -347,11 +347,19 @@ export async function readAllUserNotification(id: ObjectId) {
             }
         })
 
+        const allMessagesMarked = user.notifications.every((message: any) => message.read === true)
+
+       if(allMessagesMarked){
+              return 'Sorry, they are all read.'
+       } else {
         user.notifications.forEach(async (notification: any) => {
             notification.read = true
 
             await notification.save()
+
+            return 'successfully read all messages'
         })
+       }
 
         await user.save()
 
