@@ -1,6 +1,7 @@
 "use client"
 import { deleteNotificationAction } from "@/lib/actions/notification.action";
 import { ObjectId } from "mongoose";
+import { useRouter } from "next/navigation";
 import { MdDeleteOutline } from "react-icons/md";
 
 const DeleteNotificationCard = ({
@@ -9,18 +10,22 @@ const DeleteNotificationCard = ({
     notificationId: string
 }) => {
 
+    const router = useRouter()
+
     async function deleteNotificationFun() {
         await deleteNotificationAction(notificationId as unknown as ObjectId)
 
         alert('deleted successfully')
+
+        router.refresh()
     }
   return (
     <div 
-    className="text-danger cursor-pointer p-2 rounded-full bg-blue w-12 h-12 mt-4 hover:bg-red-500 hover:text-blue"
+    className="flex items-center text-danger cursor-pointer p-2 rounded-full bg-blue w-8 h-8 mt-4 hover:bg-red-500 hover:text-blue"
     onClick={deleteNotificationFun}
     >
       <MdDeleteOutline 
-      size={30}
+      size={22}
       />
     </div>
   )

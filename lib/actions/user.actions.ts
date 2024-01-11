@@ -302,30 +302,60 @@ export async function addFavoriteRental({ id, rentalId, path} : { id: ObjectId, 
 }
 
 export async function fetchUserNotification(id: ObjectId) {
-    try {
-  
-      connectToDB()
-  
-      const user: any = await User.findById(id)
-      .populate({
-        path: 'notifications',
-        model: Notification,
-        populate: [
-          {
-            path: 'from',
-            model: User,
-            select: 'name email image'
-          },
-          {
-            path: 'to',
-            model: User,
-            select: 'name email image'
-          }
-        ]
-      })
-      
-      return user
-    } catch (error: any) {
-      throw new Error(`${error.message}`)
+        try {
+    
+            connectToDB()
+    
+            const user: any = await User.findById(id)
+            .populate({
+                path: 'notifications',
+                model: Notification,
+                populate: [
+                    {
+                        path: 'from',
+                        model: User,
+                        select: 'name email image'
+                    },
+                    {
+                        path: 'to',
+                        model: User,
+                        select: 'name email image'
+                    }
+                ],
+                options: {
+                    sort: { createdAt: -1 }
+                }
+            })
+
+            return user
+        } catch (error: any) {
+            throw new Error(`${error.message}`)
+        }
     }
-  }
+
+export async function readAllUserNotification(id: ObjectId) {
+    try {
+
+        connectToDB()
+
+        const user: any = await User.findById(id)
+        .populate({
+            path: 'notifications',
+            model: Notification,
+            options: {
+                sort: { createdAt: -1 }
+            }
+        })
+
+        user.notifications.forEach(async (notification: any) => {
+            notification.read = true
+
+            await notification.save()
+        })
+
+        await user.save()
+
+    } catch (error: any) {
+        throw new Error(`${error.message}`)
+    }
+}

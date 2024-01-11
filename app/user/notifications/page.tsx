@@ -1,3 +1,4 @@
+import MarkAllAsReadCard from "@/components/cards/MarkAllAsReadCard";
 import NotificationCard from "@/components/cards/NotificationCard"
 import { fetchUserByEmail, fetchUserNotification } from "@/lib/actions/user.actions"
 import { getServerSession } from "next-auth"
@@ -12,9 +13,11 @@ const page = async () => {
 
   // console.log(userId._id)
 
-  const numberOfUnreadMessages = user.notifications.map((message: any) => {
+    let numberOfUnreadMessages = 0
+  user.notifications.forEach((message: any) => {
+
     if(!message.read) {
-      return message
+      numberOfUnreadMessages =+ 1
     }
   })
 
@@ -31,12 +34,12 @@ const page = async () => {
 
           <span
           className="bg-warning px-3 py-1 rounded-lg text-small-regular text-white"
-          >{numberOfUnreadMessages.length}</span>
+          >{numberOfUnreadMessages}</span>
         </h3>
 
-        <p
-        className="text-gray-1 tracking-wider text-subtle-semibold hover:text-black cursor-pointer"
-        >mark all as read</p>
+        <MarkAllAsReadCard
+        userId={userId._id.toString()}
+        />
       </div>
 
       {
@@ -59,7 +62,7 @@ const page = async () => {
       }
 
       {
-        user.notifications.length < 0 && (
+        user.notifications.length <= 0 && (
           <div
           className="flex flex-col items-center justify-center"
           >
