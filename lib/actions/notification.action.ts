@@ -43,3 +43,4 @@ export async function createNewNotification({
         throw new Error(`An error occurred creating new Notification: ${error.message}`)
     }
 }
+

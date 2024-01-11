@@ -12,6 +12,7 @@ import { createNewNotification } from "@/lib/actions/notification.action"
 import { fetchUserByEmail } from "@/lib/actions/user.actions"
 import { ObjectId } from "mongoose"
 import { getServerSession } from "next-auth"
+import Image from "next/image"
 import { redirect } from "next/navigation"
 
 
@@ -56,7 +57,11 @@ const NotificationCollapsible = async ({
         <div>
           {content.map((message, index) => {
             return (
-              <h3 key={index}>hello</h3>
+              <div
+              key={index}
+              >
+                
+              </div>
             )
           })}
         </div>

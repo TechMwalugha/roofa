@@ -2,7 +2,7 @@ import DeleteUser from "@/components/admin/cards/DeleteUser"
 import UserToAgent from "@/components/admin/cards/UserToAgent"
 import CollapsibleCon from "@/components/cards/Collapsible"
 import HorizontalLine from "@/components/shared/utils/HorizontalLine"
-import { fetchUserByEmail, fetchUserById } from "@/lib/actions/user.actions"
+import { fetchUserByEmail, fetchUserById, fetchUserNotification } from "@/lib/actions/user.actions"
 import { formatDateString } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
@@ -42,7 +42,8 @@ const page = async ({
 
 
   const user = await fetchUserNotification(params.id as any)
- 
+
+
 
   if(!user) {
     redirect('/admin/users')
@@ -182,19 +183,4 @@ const page = async ({
 export default page
 
 
-async function fetchUserNotification(id: ObjectId) {
-  try {
 
-    connectToDB()
-
-    const user = await User.findById(id)
-    .populate({
-      path: 'notifications',
-      model: Notification,
-    })
-
-    return user
-  } catch (error: any) {
-    throw new Error(`${error.message}`)
-  }
-}

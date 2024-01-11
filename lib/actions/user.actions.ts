@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache'
 import sendEmail from '../emailing/nodemailer.email'
 import { FilterQuery } from 'mongoose'
 import { updateUserProps } from '@/interfaces'
+import Notification from '../models/notification.model'
 
 interface createUserProps {
     name: string,
@@ -302,3 +303,32 @@ export async function addFavoriteRental({ id, rentalId, path} : { id: ObjectId, 
          throw error.message;
        }
 }
+
+export async function fetchUserNotification(id: ObjectId) {
+    try {
+  
+      connectToDB()
+  
+      const user: any = await User.findById(id)
+      .populate({
+        path: 'notifications',
+        model: Notification,
+        populate: [
+          {
+            path: 'from',
+            model: User,
+            select: 'name email image'
+          },
+          {
+            path: 'to',
+            model: User,
+            select: 'name email image'
+          }
+        ]
+      })
+      
+      return user
+    } catch (error: any) {
+      throw new Error(`${error.message}`)
+    }
+  }

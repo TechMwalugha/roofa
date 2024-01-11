@@ -1,7 +1,15 @@
 import NotificationCard from "@/components/cards/NotificationCard"
+import { fetchUserByEmail, fetchUserNotification } from "@/lib/actions/user.actions"
+import { getServerSession } from "next-auth"
 import Image from "next/image"
 
-const page = () => {
+const page = async () => {
+  const session = await getServerSession()
+
+  if(!session) return 
+  const userId = await fetchUserByEmail(session?.user?.email as string)
+  const user = await fetchUserNotification(userId._id)
+
   return (
   <div className=" md:flex md:items-center md:justify-center">
     <div className="mx-3 md:w-3/4">
@@ -23,14 +31,22 @@ const page = () => {
         >mark all as read</p>
       </div>
 
-      <NotificationCard />
-      <NotificationCard />
-      <NotificationCard />
-      <NotificationCard />
-      <NotificationCard />
-      <NotificationCard />
-      <NotificationCard />
-      <NotificationCard />
+      {
+        user.notifications.map((message: any, index: number) =>{
+          return (
+            <NotificationCard
+            key={index}
+            image={message.from.image}
+            name={message.from.name}
+            subject={message.subject}
+            message={message.message}
+            read={message.read}
+            date={message.createdAt}
+            />
+          )
+        })
+      }
+      
     </div>
   </div>
   )
