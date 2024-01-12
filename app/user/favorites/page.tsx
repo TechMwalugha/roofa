@@ -1,5 +1,5 @@
 import Carousel from "@/components/cards/Carousel"
-import { fetchUserByEmail } from "@/lib/actions/user.actions"
+import Rental from "@/lib/models/rental.model"
 import User from "@/lib/models/user.model"
 import { connectToDB } from "@/lib/mongoose"
 import { getServerSession } from "next-auth"
@@ -15,7 +15,6 @@ const page = async () => {
 
     const user = await fetchUserFavourites(session.user?.email as string)
 
-    console.log(user)
     if(!user) redirect("/login")
 
   return (
@@ -72,7 +71,7 @@ async function fetchUserFavourites(email: string){
     const user = await User.findOne({ email: email })
     .populate({
       path: 'favorites',
-      model: "Rental",
+      model: Rental,
       select: "title location price images"
     })
 

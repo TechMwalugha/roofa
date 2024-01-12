@@ -35,7 +35,7 @@ const NotificationCard = ({
 
   let isRoofaAgent: boolean = false
 
-  if(fromRole === 'admin' || fromRole === 'agent') {
+  if(fromRole === 'admin' || fromRole === 'roofa-agent') {
     isRoofaAgent = true
   }
 
