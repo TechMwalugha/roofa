@@ -4,6 +4,11 @@ import Link from "next/link"
 import SearchBar from "../forms/SearchBar"
 import DropMenu from "../cards/DropMenu"
 import { IoBedSharp } from 'react-icons/io5'
+import { BiBorderAll } from "react-icons/bi";
+import { MdLocationPin } from "react-icons/md";
+import { SiPlaystation } from "react-icons/si";
+import { MdRoofing } from "react-icons/md";
+import { FaWifi } from "react-icons/fa";
 import { useEffect, useState } from "react"
 import SearchUser from "../admin/forms/SearchUser"
 
@@ -35,6 +40,9 @@ const TopBar = () => {
 
         <div className="flex items-center justify-between gap-3  overflow-x-scroll hide-scrollbar mt-4">
           <div>
+            <Link href='/' className="flex gap-2 items-center justify-center"><BiBorderAll/> All</Link>
+          </div>
+          <div>
             <Link href='/?q=single room' className="flex gap-2 items-center justify-center"><IoBedSharp/> <span>Single</span> <span>Room</span></Link>
           </div>
           <div>
@@ -47,22 +55,22 @@ const TopBar = () => {
             <Link href='/?q=two bedroom' className="flex gap-2 items-center justify-center"><IoBedSharp/> <span>Two</span> <span>Bedroom</span></Link>
           </div>
           <div>
-            <Link href='#' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
+            <Link href='/?q=nakuru rafiki' className="flex gap-2 items-center justify-center"><MdLocationPin/> <span>Nakuru</span> <span>Rafiki</span></Link>
           </div>
           <div>
-            <Link href='#' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
+            <Link href='/?q=nakuru kampi' className="flex gap-2 items-center justify-center"><MdLocationPin/> <span>Nakuru</span> <span>Kampi</span></Link>
           </div>
           <div>
-            <Link href='#' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
+            <Link href='/?q=nakuru town' className="flex gap-2 items-center justify-center"><MdLocationPin/> <span>Nakuru</span> <span>Town</span></Link>
           </div>
           <div>
-            <Link href='#' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
+            <Link href='/?q=play station' className="flex gap-2 items-center justify-center"><SiPlaystation/> <span>Play</span> <span>Station</span> </Link>
           </div>
           <div>
-            <Link href='#' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
+            <Link href='/?q=internet' className="flex gap-2 items-center justify-center"><FaWifi/> Internet</Link>
           </div>
           <div>
-            <Link href='#' className="flex gap-2 items-center justify-center"><IoBedSharp/> Bedsitter</Link>
+            <Link href='/?q=Rooftop Terrace' className="flex gap-2 items-center justify-center"><MdRoofing/> <span>Rooftop</span> <span>Terrace</span> </Link>
           </div>
         </div>
     </nav>

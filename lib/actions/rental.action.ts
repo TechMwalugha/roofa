@@ -76,6 +76,7 @@ export async function fetchAllRentals({
           { title: { $regex: regex } },
           { location: { $regex: regex } },
           { rentalType: { $regex: regex } },
+          { amenities: { $regex: regex } },
         ];
       }
   
