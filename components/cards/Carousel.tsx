@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
-import { MdEventAvailable } from "react-icons/md";
+import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import Link from 'next/link';
 
 
@@ -78,8 +78,8 @@ function Carousel({
                     <h4 className='text-gray-500'>{location}</h4>
                     <p className='text-gray-400'>Ksh. {price}</p>
                 </div>
-                <div className=' text-blue'>
-                <MdEventAvailable size={30} />
+                <div className=' text-blue hover:text-danger'>
+                <MdOutlineShoppingCartCheckout size={30} />
                 </div>
             </div>
         </Link>
