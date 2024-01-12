@@ -7,8 +7,11 @@ import DeleteNotificationCard from "./DeleteNotificationCard"
 
 interface notificationDetails {
   notificationId: ObjectId
-  image: string
-  name: string
+  fromImage: string
+  fromName: string
+  fromRole: string
+  toImage: string
+  toName: string
   subject: string
   message: string
   read: boolean
@@ -18,8 +21,11 @@ interface notificationDetails {
 
 const NotificationCard = ({
   notificationId,
-  image,
-  name,
+  fromImage,
+  fromName,
+  fromRole,
+  toImage,
+  toName,
   subject,
   message,
   read,
@@ -27,21 +33,28 @@ const NotificationCard = ({
   owner
 }: notificationDetails) => {
 
+  let isRoofaAgent: boolean = false
+
+  if(fromRole === 'admin' || fromRole === 'agent') {
+    isRoofaAgent = true
+  }
+
 
   return (
     <div
     className={`flex items-start gap-4 my-3 ${!read ? 'bg-slate-100 p-3' : ''}`}
     >
         <div
-        className="w-16 h-16"
+        className="w-16 h-16 relative"
         >
           <Image 
-          src={image}
+          src={owner ? fromImage : toImage}
           width={42}
           height={42}
           alt="Senders image"
           className="w-full h-full object-cover rounded-full"
           />
+          {isRoofaAgent && owner && (<p className="bg-warning flex items-center justify-center w-8 h-8 absolute -top-3 -right-3 p-2 rounded-full text-tiny-medium">{fromRole}</p>)}
         </div>
 
         <div className="w-full">
@@ -50,8 +63,8 @@ const NotificationCard = ({
             >
                 <span
                 className="capitalize text-[#111e88] cursor-pointer hover:text-[#8691f4]"
-                >{name} </span> 
-                sent you a private message
+                >{owner ? fromName : toName}  </span> 
+                {owner ? 'sent you a private message' : 'you sent this message'}
                 <b className="normal-case"> {subject}</b>
             </h4>
             <p className="text-subtle-medium mb-5">{formatDateDifference(date as unknown as Date)}</p>

@@ -314,7 +314,7 @@ export async function fetchUserNotification(id: ObjectId) {
                     {
                         path: 'from',
                         model: User,
-                        select: 'name email image'
+                        select: 'name email image role'
                     },
                     {
                         path: 'to',
@@ -342,6 +342,13 @@ export async function readAllUserNotification(id: ObjectId) {
         .populate({
             path: 'notifications',
             model: Notification,
+            populate: [
+                {
+                    path: 'to',
+                    model: User,
+                    select: 'email'
+                }
+            ],
             options: {
                 sort: { createdAt: -1 }
             }
@@ -353,11 +360,13 @@ export async function readAllUserNotification(id: ObjectId) {
               return 'Sorry, they are all read.'
        } else {
         user.notifications.forEach(async (notification: any) => {
-            notification.read = true
+            if(notification.to.email === user.email) {
+                notification.read = true
 
-            await notification.save()
+                await notification.save()
 
-            return 'successfully read all messages'
+                return 'successfully read all messages'
+            }
         })
        }
 
