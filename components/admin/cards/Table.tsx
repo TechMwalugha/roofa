@@ -99,7 +99,7 @@ import { FiEdit } from "react-icons/fi";
                   </span>
                 )
                 }
-                {!user.accountStatus || !user.isEmailVerified && (
+                {(!user.accountStatus || !user.isEmailVerified) && (
                   <span className="text-sm bg-danger p-2 rounded-sm font-semibold">
                     Suspended
                   </span>
