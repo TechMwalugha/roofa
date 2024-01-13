@@ -41,6 +41,7 @@ const handler = NextAuth({
                     if(!user.isEmailVerified) {
                         throw new Error('Email is not verified')
                     }
+                    if(!user.accountStatus) throw new Error('This account is Suspended!')
 
 
                     return user
@@ -85,6 +86,10 @@ const handler = NextAuth({
                 const user = await fetchUserByEmail(profile.email)
 
                 if(user.signInType !== 'google') throw new Error('Email uses credentials to sign in')
+
+                if(!user.accountStatus) throw new Error('This account is Suspended!')
+
+                
 
                 return true
 

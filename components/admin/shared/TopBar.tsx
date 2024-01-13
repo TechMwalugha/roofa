@@ -1,8 +1,13 @@
 import Image from "next/image"
 import Logout from "../Logout"
 import MenuBar from "../MenuBar"
+import { getServerSession } from "next-auth"
 
-const TopBar = () => {
+const TopBar = async () => {
+  const session = await getServerSession()
+
+  if(!session) return 
+
   return (
     <div className="fixed top-0 flex items-center justify-between z-10 py-5 sm:px-5 inset-x-0 bg-gray-50 h-14 transition-position w-screen shadow">
       <div className="max-md:hidden">
@@ -15,11 +20,10 @@ const TopBar = () => {
       />
       </div>
       <MenuBar 
-      title={'Emmanuel Mwalugha'}
-      image='/assets/account-profile.png'
+      title={session.user?.name as string}
+      image={session.user?.image as string}
       content={[
-        'profile',
-        'settings',
+        'user/account-settings',
         'logout'
       ]}
       />

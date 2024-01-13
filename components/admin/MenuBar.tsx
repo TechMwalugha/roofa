@@ -8,6 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import Link from "next/link"
 
 const MenuBar = ({title, image, content }: menuBarType) => {
   return (
@@ -17,7 +18,7 @@ const MenuBar = ({title, image, content }: menuBarType) => {
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {content.map((item, index) => <DropdownMenuItem key={index}>{item}</DropdownMenuItem>)}
+          {content.map((item, index) => <Link key={index} href={`/${item}`} className="capitalize"><DropdownMenuItem >{`${item === 'user/account-settings' ? 'Account' : item}`}</DropdownMenuItem> </Link>)}
         </DropdownMenuContent>
     </DropdownMenu>
       <Image 
