@@ -1,11 +1,15 @@
 import SearchUser from "@/components/admin/forms/SearchUser";
+import Rental from "@/lib/models/rental.model";
 import Link from "next/link";
 import { FaHouseChimneyMedical } from "react-icons/fa6"
 import { MdOutlineNewLabel } from "react-icons/md";
 import { PiHouseDuotone } from "react-icons/pi";
 import { TbSum } from "react-icons/tb";
 
-const page = () => {
+const page = async () => {
+
+  const numberOfRentals = await Rental.countDocuments()
+
     return (
       <div>
         <div className="flex items-center justify-between bg-success p-2">
@@ -29,7 +33,7 @@ const page = () => {
             </div>
 
             <h3 className="text-heading3-bold mt-2">
-           121
+           {numberOfRentals}
             </h3>
           </div>
 
