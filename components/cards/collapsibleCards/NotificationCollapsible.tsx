@@ -62,16 +62,18 @@ const NotificationCollapsible = async ({
               <NotificationCard
               key={index}
               notificationId={message._id}
+              fromId={message.from._id}
               fromImage={message.from.image}
               fromName={message.from.name}
               fromRole={message.from.role}
+              toId={message.to._id}
               toImage={message.to.image}
               toName={message.to.name}
               subject={message.subject}
               message={message.message}
               read={message.read}
               date={message.createdAt}
-              owner={message.to.email == user.email ? true : false}
+              owner={message.to.email === user.email ? true : false}
                />
             )
           })}

@@ -7,9 +7,11 @@ import DeleteNotificationCard from "./DeleteNotificationCard"
 
 interface notificationDetails {
   notificationId: ObjectId
+  fromId: ObjectId
   fromImage: string
   fromName: string
   fromRole: string
+  toId: ObjectId
   toImage: string
   toName: string
   subject: string
@@ -21,9 +23,11 @@ interface notificationDetails {
 
 const NotificationCard = ({
   notificationId,
+  fromId,
   fromImage,
   fromName,
   fromRole,
+  toId,
   toImage,
   toName,
   subject,
@@ -48,7 +52,7 @@ const NotificationCard = ({
         className="w-16 h-16 relative"
         >
           <Image 
-          src={owner ? fromImage : toImage}
+          src={fromImage}
           width={42}
           height={42}
           alt="Senders image"
@@ -63,8 +67,8 @@ const NotificationCard = ({
             >
                 <span
                 className="capitalize text-[#111e88] cursor-pointer hover:text-[#8691f4]"
-                >{owner ? fromName : toName}  </span> 
-                {owner ? 'sent you a private message' : 'you sent this message'}
+                >{fromName}  </span> 
+                {'sent you a private message'}
                 <b className="normal-case"> {subject}</b>
             </h4>
             <p className="text-subtle-medium mb-5">{formatDateDifference(date as unknown as Date)}</p>
@@ -77,6 +81,18 @@ const NotificationCard = ({
             >
                 {message}
             </p>
+
+            <span
+            className="flex items-center mt-4 text-subtle-medium lowercase"
+            >sent to: <Image
+            src={toImage} 
+            width={30}
+            height={30}
+            alt ={`sent user image`}
+            className="object-cover rounded-full w-6 h-6 mx-3"
+            />
+            <p>{toName}</p>
+            </span>
             </section> )}
 
           {owner && (
@@ -89,6 +105,8 @@ const NotificationCard = ({
 
           <DeleteNotificationCard
           notificationId={notificationId.toString()}
+          fromId={fromId.toString()}
+          toId={toId.toString()}
            />
         </div>
       </div>

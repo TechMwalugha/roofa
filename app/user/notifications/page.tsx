@@ -49,9 +49,11 @@ const page = async () => {
             <NotificationCard
             key={index}
             notificationId={message._id}
+            fromId={message.to._id}
             fromImage={message.from.image}
             fromName={message.from.name}
             fromRole={message.from.role}
+            toId={message.to._id}
             toImage={message.to.image}
             toName={message.to.name}
             subject={message.subject}

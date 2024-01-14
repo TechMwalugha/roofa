@@ -5,9 +5,13 @@ import { useRouter } from "next/navigation";
 import { MdDeleteOutline } from "react-icons/md";
 
 const DeleteNotificationCard = ({
-    notificationId
+    notificationId,
+    fromId,
+    toId
 }: {
     notificationId: string
+    fromId: string
+    toId: string
 }) => {
 
     const router = useRouter()
@@ -15,7 +19,11 @@ const DeleteNotificationCard = ({
     async function deleteNotificationFun() {
       const confirmWithUser = confirm('Are you sure on deleting this message?')
       if(confirmWithUser){
-        await deleteNotificationAction(notificationId as unknown as ObjectId)
+        await deleteNotificationAction({
+          notificationId: notificationId as unknown as ObjectId,
+          toId: toId as unknown as ObjectId,
+          fromId: fromId as unknown as ObjectId
+        })
 
         alert('deleted successfully')
 

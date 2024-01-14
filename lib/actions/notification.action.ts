@@ -60,11 +60,35 @@ export async function readNotificationAction(id: ObjectId){
     }
 }
 
-export async function deleteNotificationAction(id: ObjectId) {
+export async function deleteNotificationAction({ 
+    notificationId,
+    toId,
+    fromId
+}: {
+    notificationId: ObjectId
+    toId: ObjectId
+    fromId: ObjectId
+}) {
     try {
         connectToDB()
 
-        await Notification.findOneAndDelete({ _id: id})
+        const toUser = await fetchUserById(toId)
+
+        const fromUser = await fetchUserById(fromId)
+
+        toUser.notifications = toUser.notifications.filter((notification: ObjectId) => notification.toString() !== notificationId.toString())
+      
+        fromUser.notifications = fromUser.notifications.filter((notification: ObjectId) => notification.toString() !== notificationId.toString())
+
+
+        await toUser.save()
+
+        await fromUser.save()
+
+        console.log(toUser.notifications)
+        console.log(fromUser.notifications)
+
+        await Notification.findOneAndDelete({ _id: notificationId})
 
         return true
     } catch (error: any) {

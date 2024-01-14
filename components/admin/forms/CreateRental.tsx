@@ -12,11 +12,12 @@ import { createRental } from "@/lib/actions/rental.action";
 import mongoose from "mongoose";
 import Image from "next/image";
 
-const FileUploadForm = ({ users }: 
+const FileUploadForm = ({ users, allRentals }: 
   {
     users: any[]
+    allRentals: any[]
   }) => {
-    
+  
   const [images, setImages] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
 
@@ -73,8 +74,7 @@ const FileUploadForm = ({ users }:
         geoLocation: geoLocation,
         rentalRules: rentalRules,
         availableRooms: formData.get("availableRooms") as any,
-        // rentalsNear: formData.getAll("rentalsNear") as any,
-        rentalsNear: ['655cf3447e3a1a8e59b082c7', '655cf3447e3a1a8e59b082c1'] as any,
+        rentalsNear: formData.getAll("rentalsNear") as any,
         serviceFee: {
           paidBy: formData.get("paidBy") as string,
           amount: formData.get("amount") as any,
@@ -213,13 +213,18 @@ const FileUploadForm = ({ users }:
               disabled
               className="text-small-medium pb-2 border-b-2"
               >select rental near **hold ctrl + click to select multiple**</option>
-              <option value="single room">Single Room</option>
-              <option value="bedsitter">Bedsitter</option>
-              <option value="One Bedroom">One Bedroom</option>
-              <option value="Two Bedroom">Two Bedroom</option>
-              <option value="Three Bedroom">Three Bedroom</option>
-              <option value="Four Bedroom">Four Bedroom</option>
-              <option value="Five Bedroom">Five Bedroom</option>
+              {allRentals.map((rental: any, index: number) =>{
+                return (
+                  <option 
+                  key={rental._id} 
+                  value={rental._id}
+                  className="lowercase my-2 shadow p-3 rounded cursor-pointer"
+                  >
+                  {index}. {rental.title},
+                     {rental.location}
+                  </option>
+                )
+              })}
       </select>
 
       <div>
