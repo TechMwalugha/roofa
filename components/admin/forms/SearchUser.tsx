@@ -41,7 +41,7 @@ const SearchUser = ({routeType}: Props) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder={`${
-            routeType === "/" ? "Search name, location" : routeType
+            routeType === "/" ? "Search name, location" : `search ${routeType}`
         }`}
         className='no-focus searchbar_input'
         />

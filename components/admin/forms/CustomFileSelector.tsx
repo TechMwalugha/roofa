@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import classNames from "classNames";
 import React, { ComponentPropsWithRef } from "react";
 
 type Props = ComponentPropsWithRef<"input">;
