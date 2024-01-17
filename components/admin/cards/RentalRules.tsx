@@ -36,7 +36,7 @@ const RentalRules = ( { rentalRules, setRentalRules } : { rentalRules: string[],
                 <div key={index} className="flex items-center gap-2 mb-2">
                     <input 
                         type="text" 
-                        placeholder={`${index}.`}
+                        placeholder={`${index}. ${rule}`}
                         className="w-full p-3  outline-none border-none rounded shadow-count" 
                         onChange={e=>handleInputChange(e, index)}
                     />

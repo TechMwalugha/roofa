@@ -56,3 +56,35 @@ export interface createNewNotification {
     subject: string;
     message: string;
 }
+
+export interface UpdateRentalSchema {
+    title: string;
+    description: string;
+    rentalType: string[];
+    price: number;
+    location: string;
+    images: string[];
+    amenities: string[];
+    geoLocation: {
+        name: string,
+        address: string,
+        latitude: number,
+        longitude: number
+    };
+    rentalRules: string[];
+    availableRooms: number;
+    rentalsNear: {
+        title: string;
+        price: number;
+        location: string;
+        images: string[];
+    }[];
+    serviceFee: {
+        paidBy: 'customer' | 'owner';
+        amount: number;
+    };
+    bookings: [];
+    rentalStatus: boolean;
+    createdAt: Date ;
+    updatedAt: Date ; 
+}
