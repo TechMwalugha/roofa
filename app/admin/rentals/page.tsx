@@ -51,7 +51,7 @@ const page = async ({
 
             <h3 className="text-heading3-bold mt-2">
            {/* {numberOfRentals} */}
-           21
+           25
             </h3>
           </div>
          
