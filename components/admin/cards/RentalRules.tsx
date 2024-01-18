@@ -7,6 +7,7 @@ const RentalRules = ( { rentalRules, setRentalRules } : { rentalRules: string[],
         setRentalRules([...rentalRules, ""])
         
     }
+    
     function handleRemoveAmenity(index: number) {
         const list = [...rentalRules]
         list.splice(index, 1)
