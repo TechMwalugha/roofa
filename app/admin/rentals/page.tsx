@@ -17,7 +17,7 @@ const page = async ({
   }
 }) => {
 
-  const numberOfRentals = await Rental.countDocuments()
+  // const numberOfRentals = await Rental.countDocuments()
 
   const rentalResults: any = await fetchAllRentals({
     searchString: searchParams?.q,
@@ -50,7 +50,8 @@ const page = async ({
             </div>
 
             <h3 className="text-heading3-bold mt-2">
-           {numberOfRentals}
+           {/* {numberOfRentals} */}
+           25
             </h3>
           </div>
          
