@@ -3,7 +3,7 @@ import React, { FormEvent, useState } from "react";
 import CustomFileSelector from "./CustomFileSelector";
 
 // import axios from "axios";
-import classNames from "classNames";
+import classNames from "classnames";
 import ImagePreview from "../cards/ImagePreview";
 import Amenities from "../cards/Amenities";
 import GeoLocation from "../cards/GeoLocation";

@@ -1,5 +1,5 @@
 import Image from "next/image"
-import classNames from 'classNames'
+import classNames from 'classnames'
 import { TfiMoreAlt } from "react-icons/tfi";
 import {
     Tooltip,
