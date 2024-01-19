@@ -18,7 +18,7 @@ const UpdateRentalAmenitiesCard = ({ updateAmenities, setUpdateAmenities} : {
   }
 
   function handleInputChange(e: ChangeEvent, index: number) {
-    const value = e.target as unknown as string
+    const {value} = e.target as any
 
     updateAmenities[index] = value
   }
@@ -41,6 +41,7 @@ const UpdateRentalAmenitiesCard = ({ updateAmenities, setUpdateAmenities} : {
           >
           <input 
           type="text" 
+          onChange={e => handleInputChange(e, index)}
           min={4}
           placeholder={index + 1 + '. ' + amenity}
           className="border-none outline-none shadow-count p-3 rounded-lg capitalize placeholder:text-slate-400 placeholder:italic mt-2 w-full"

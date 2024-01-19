@@ -57,6 +57,7 @@ export interface createNewNotification {
 }
 
 export interface UpdateRentalSchema {
+    rentalId: string;
     title: string;
     description: string;
     rentalType: string[];

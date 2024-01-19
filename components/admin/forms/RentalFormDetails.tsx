@@ -1,14 +1,23 @@
 "use client"
 
 import { UpdateRentalSchema } from "@/interfaces"
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import UpdateRentalAmenitiesCard from "../cards/updateRental/UpdateRentalAmenitiesCard"
 import RentalRules from "../cards/RentalRules"
 import classNames from "classnames";
 import { formatDateString } from "@/lib/utils"
+import { updateRental } from "@/lib/actions/rental.action"
+import { ObjectId } from "mongoose"
+import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+import { Noto_Serif_Yezidi } from "next/font/google"
+import { useRouter } from "next/navigation"
 
 
 const RentalFormDetails = ({
+    rentalId,
     title,
     description,
     rentalType,
@@ -30,6 +39,14 @@ const RentalFormDetails = ({
     owner
 }: UpdateRentalSchema) => {
 
+    const notify = () => {
+        toast.success(`${title} updated successfully`, {
+            position: "top-right"
+          });
+    }
+
+    const [loading, setLoading] = useState<boolean>(false)
+    const router = useRouter()
     
     const [updateAmenities, setUpdateAmenities] = useState(() => {
         if(amenities){
@@ -46,15 +63,46 @@ const RentalFormDetails = ({
     })
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) =>{
+        setLoading(true)
         e.preventDefault()
+        
         const formData = new FormData(e.currentTarget)
 
+        updateRental({
+            rentalId: rentalId as unknown as ObjectId,
+            title: formData.get('title') === '' ? title : formData.get('title') as string ,
+            description: formData.get('description') === "" ? description : formData.get('description') as string,
+            rentalType: formData.getAll('rentalType').length < 1 ? rentalType : formData.getAll('rentalType') as string[],
+            price: Number(formData.get('price')) < 1000 ? price : Number(formData.get('price')),
+            location: formData.get('location') === "" ? location : formData.get('location') as string,
+            owner: formData.get('owner') as unknown as  ObjectId,
+            amenities: updateAmenities,
+            geoLocation: {
+                name: formData.get('geoLocationName') === "" ? geoLocation.name : formData.get('geoLocationName') as string,
+                address: formData.get('geoLocationAddress') === "" ? geoLocation.address : formData.get('geoLocationAddress') as string,
+                latitude: formData.get('geoLocationLatitude') === "" ? geoLocation.latitude :  Number(formData.get('geoLocationLatitude')) ,
+                longitude: formData.get('geoLocationLongitude') === "" ? geoLocation.longitude : Number(formData.get('geoLocationLongitude')) 
+            },
+            rentalRules: updateRentalRules,
+            availableRooms: formData.get('availableRooms') === "" ? availableRooms : Number(formData.get('availableRooms')),
+            rentalsNear: formData.getAll('rentalsNear').length < 1 ? rentalsNear.map(rental => rental._id as unknown as ObjectId) : formData.getAll('rentalsNear') as unknown as ObjectId[],
+            serviceFee: {
+                paidBy: formData.get('paidBy') === "" ? serviceFee.paidBy :  formData.get('paidBy') as string,
+                amount: formData.get('amount') === "" ? serviceFee.amount : Number(formData.get('amount'))
+            },
+            rentalStatus: formData.get('rentalStatus') === 'on' ? true : false,
+        })
+
+        notify()
+        setLoading(false)
+        router.refresh()
     }
 
   return (
    <form onSubmit={handleSubmit} 
    className="bg-white shadow-md rounded-sm p-4"
    >
+    <ToastContainer />
     <p className="text-subtle-medium">
         created on: {formatDateString(createdAt.toString())}
     </p>
@@ -272,7 +320,7 @@ const RentalFormDetails = ({
     className="flex flex-col justify-center my-5"
     >
         <select 
-       name="rentalType"
+       name="rentalsNear"
        className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
        multiple
        >
@@ -347,7 +395,7 @@ const RentalFormDetails = ({
     <select 
        name="owner"
        className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
-       multiple
+    //    multiple
        >
         <option 
         value="" 
@@ -375,9 +423,18 @@ const RentalFormDetails = ({
 
     <button
     type="submit"
-    className="bg-blue p-3 w-full rounded-sm hover:text-warning mt-4"
+    className={classNames({
+        "bg-blue p-3 w-full rounded-sm hover:text-warning mt-4": true,
+        "bg-slate-300": loading
+    })}
+    disabled = {loading}
     >
-        Update
+        {!loading ? 'Update' : ''}
+        {loading && (
+            <div className="flex items-center justify-center">
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+            </div>
+        )}
     </button>
    </form>
   )

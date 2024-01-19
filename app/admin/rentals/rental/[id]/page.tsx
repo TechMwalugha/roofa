@@ -53,6 +53,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
     <div>
       
       <RentalFormDetails
+      rentalId={rentalDetails._id.toString()}
       title={rentalDetails.title}
       description={rentalDetails.description}
       rentalType = {rentalDetails.rentalType}

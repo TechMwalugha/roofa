@@ -126,3 +126,21 @@ export function openShareDialog(url: string): void {
   // Open the share dialog in a new window or redirect the current window
   window.open(url, '_blank');
 }
+
+// compare arrays
+export function arraysAreEqual(arr1: any[], arr2: any[]) {
+  // Check if arrays have the same length
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  // Check if all elements have the same value
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+
+  // If both conditions pass, arrays are equal
+  return true;
+}

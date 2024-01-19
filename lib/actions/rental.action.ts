@@ -5,6 +5,7 @@ import { connectToDB } from "../mongoose"
 import Rental from "../models/rental.model"
 import User from "../models/user.model"
 import { FilterQuery, ObjectId, SortOrder } from "mongoose"
+import mongoose from "mongoose"
 
 export async  function createRental({
             title,
@@ -123,5 +124,72 @@ export async function fetchSingleRental({ id }: { id : ObjectId}) {
 
   } catch(error: any) {
     throw new Error(`${error.message}`)
+  }
+}
+
+export async function updateRental({
+            rentalId,
+            title,
+            description,
+            rentalType,
+            price,
+            location,
+            owner,
+            amenities,
+            geoLocation,
+            rentalRules,
+            availableRooms,
+            rentalsNear,
+            serviceFee,
+            rentalStatus,
+}: {
+    rentalId: mongoose.Schema.Types.ObjectId;
+    title: string;
+    description: string;
+    rentalType: string[]
+    price: number;
+    location: string;
+    owner: mongoose.Schema.Types.ObjectId;
+    amenities: string[];
+    geoLocation: {
+            name: string,
+            address: string,
+            latitude: number,
+            longitude: number
+    };
+    rentalRules: string[];
+    availableRooms: number;
+    rentalsNear: mongoose.Schema.Types.ObjectId[];
+    serviceFee: {
+        paidBy: string;
+        amount: number;
+    };
+    rentalStatus: boolean;
+}) {
+
+  try{
+    connectToDB()
+
+    const rental = await Rental.findById(rentalId)
+
+    if(!rental) return 
+
+    rental.title = title
+    rental.description = description
+    rental.rentalType = rentalType
+    rental.price = price
+    rental.location = location
+    rental.owner = owner
+    rental.amenities = amenities
+    rental.geoLocation = geoLocation
+    rental.rentalRules = rentalRules
+    rental.availableRooms = availableRooms
+    rental.rentalsNear = rentalsNear
+    rental.serviceFee = serviceFee
+    rental.rentalStatus = rentalStatus
+
+    await rental.save()
+  } catch(error: any) {
+    throw new Error(`could not update rental: ${error.messagae}`)
   }
 }
