@@ -47,7 +47,6 @@ export interface createNewRental {
         amount: number;
     };
     rentalStatus: boolean;
-
 }
 
 export interface createNewNotification {
@@ -74,10 +73,9 @@ export interface UpdateRentalSchema {
     rentalRules: string[];
     availableRooms: number;
     rentalsNear: {
+        _id: string;
         title: string;
-        price: number;
         location: string;
-        images: string[];
     }[];
     serviceFee: {
         paidBy: 'customer' | 'owner';
@@ -87,4 +85,16 @@ export interface UpdateRentalSchema {
     rentalStatus: boolean;
     createdAt: Date ;
     updatedAt: Date ; 
+    allRentals: {
+        _id: string;
+        title: string;
+        location: string;
+    }[];
+    users: {
+        _id: string;
+        name: string;
+        email: string;
+        image: string;
+    }[];
+    owner: string
 }

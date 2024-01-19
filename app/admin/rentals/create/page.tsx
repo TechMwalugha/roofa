@@ -1,4 +1,5 @@
 import CreateRental from "@/components/admin/forms/CreateRental"
+import { fetchUsersNotAgents } from "@/lib/actions/user.actions"
 import Rental from "@/lib/models/rental.model"
 import User from "@/lib/models/user.model"
 import { connectToDB } from "@/lib/mongoose"
@@ -9,7 +10,7 @@ import { getServerSession } from "next-auth"
 const page = async () => {
   const session = await getServerSession()
 
-  const users: any = await fetchUsers(session?.user?.email as string)
+  const users: any = await fetchUsersNotAgents()
  
   const rentalResults = await Rental.find({}).select('title location')
 
@@ -40,17 +41,4 @@ const page = async () => {
 }
 
 
-async function fetchUsers(userEmail: string) {
-  try{
-    connectToDB()
-  return await User.find({
-    email: { $ne: userEmail },
-    $and: [ {role: { $ne: 'roofa-agent'} }, { role: { $ne: 'admin'}}]
-  }).select("name email image").lean().sort({ createdAt: "desc"})
-
-
-  } catch(error: any) {
-    throw new Error(`${error.message}`)
-  }
-}
 export default page

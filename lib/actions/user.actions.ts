@@ -29,7 +29,7 @@ export async function createUser({
     try {
        connectToDB()
 
-        const user = new User({
+        const user: any = new User({
             name: name,
             email: email,
             image: image,
@@ -374,5 +374,18 @@ export async function readAllUserNotification(id: ObjectId) {
 
     } catch (error: any) {
         throw new Error(`${error.message}`)
+    }
+}
+
+export async function fetchUsersNotAgents() {
+    try{
+        connectToDB()
+
+        const users = await User.find({ role: 'user' }).select("name email image").lean().sort({ createdAt: "desc"})
+
+        return users
+
+    } catch(err: any) {
+
     }
 }

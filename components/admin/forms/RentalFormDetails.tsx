@@ -4,6 +4,8 @@ import { UpdateRentalSchema } from "@/interfaces"
 import { FormEvent, useState } from "react"
 import UpdateRentalAmenitiesCard from "../cards/updateRental/UpdateRentalAmenitiesCard"
 import RentalRules from "../cards/RentalRules"
+import classNames from "classnames";
+import { formatDateString } from "@/lib/utils"
 
 
 const RentalFormDetails = ({
@@ -22,8 +24,13 @@ const RentalFormDetails = ({
     bookings,
     rentalStatus,
     createdAt,
-    updatedAt
+    updatedAt,
+    allRentals,
+    users,
+    owner
 }: UpdateRentalSchema) => {
+
+    
     const [updateAmenities, setUpdateAmenities] = useState(() => {
         if(amenities){
             return amenities
@@ -48,6 +55,12 @@ const RentalFormDetails = ({
    <form onSubmit={handleSubmit} 
    className="bg-white shadow-md rounded-sm p-4"
    >
+    <p className="text-subtle-medium">
+        created on: {formatDateString(createdAt.toString())}
+    </p>
+    <p className="text-subtle-medium">
+        updated on: {formatDateString(updatedAt.toString())}
+    </p>
     <div
     className="flex flex-col justify-center my-5"
     >
@@ -252,6 +265,114 @@ const RentalFormDetails = ({
         className="border-none outline-none shadow-count p-3 rounded-lg placeholder:text-slate-400 placeholder:italic mt-2"
         />
     </div>
+
+    {/* rentals Near */}
+
+    <div
+    className="flex flex-col justify-center my-5"
+    >
+        <select 
+       name="rentalType"
+       className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
+       multiple
+       >
+        <option 
+        value="" 
+        disabled
+        className="text-small-medium pb-2 border-b-2"
+        >select rental Near **hold ctrl + click to select multiple**</option>
+        {allRentals.map((rental: {_id: string, title: string, location: string}, index: number) => {
+
+            return (
+                <option 
+                key={index}
+                value={rental._id}
+                className={classNames({
+                    "p-2 rounded-sm shadow-sm cursor-pointer my-1": true,
+                    "bg-blue": rentalsNear.some(item => item._id === rental._id),
+                })}
+                >{rental.title}  {rental.location}</option>
+            )
+        })}
+       </select>
+    </div>
+
+    {/* Service fee */}
+
+    <div className="border p-3 mb-2">
+      <h3 className="text-subtle-medium text-center mb-3">Service Fee</h3>
+
+      <select 
+      name="paidBy" 
+      id="paidBy"
+      className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
+      >
+        <option value="" className="text-subtle-medium" disabled>who pays? currently: {serviceFee.paidBy}</option>
+        <option 
+        value="customer"
+        className="p-2 rounded-sm shadow-sm cursor-pointer my-1"
+        >
+            Customer
+        </option>
+        <option 
+        value="owner"
+        className={classNames({
+            "p-2 rounded-sm shadow-sm cursor-pointer my-1": true,
+        })}
+        >
+            Owner
+        </option>
+      </select>
+
+      <input 
+       type="number"
+       name="amount"
+       className="w-full p-3  outline-none border-none rounded shadow-count mb-2" 
+       placeholder={"Ksh. " + serviceFee.amount.toString()}
+       />
+    </div>
+
+    <div
+      className="w-full p-3 flex items-center gap-3  outline-none border-none rounded shadow-count mb-2"
+      >
+      <input 
+       type="checkbox"
+       name="rentalStatus"
+       defaultChecked = {rentalStatus} 
+       />
+       <p>Status</p>
+    </div>
+
+    {/* owner */}
+    <select 
+       name="owner"
+       className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
+       multiple
+       >
+        <option 
+        value="" 
+        disabled
+        className="text-small-medium pb-2 border-b-2"
+        >update the landlord</option>
+        { users.map((user, index) => {
+
+        
+          return (
+            <option 
+            key={user._id} 
+            value={user._id}
+            className={classNames({
+                "lowercase my-2 shadow p-3 rounded cursor-pointer": true,
+                "bg-blue": owner === user._id
+            })}
+            >
+            {index}. {user.name},
+               {user.email} 
+            </option>
+          )
+        })}
+       </select>
+
     <button
     type="submit"
     className="bg-blue p-3 w-full rounded-sm hover:text-warning mt-4"
