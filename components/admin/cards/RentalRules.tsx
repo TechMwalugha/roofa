@@ -43,6 +43,7 @@ const RentalRules = ( { rentalRules, setRentalRules } : { rentalRules: string[],
                     />
                     { rentalRules.length !== 1 && (
                         <button 
+                        type="button"
                         className="p-3 bg-danger rounded"
                         onClick={() => handleRemoveAmenity(index)}
                         >remove</button>

@@ -30,6 +30,7 @@ const UpdateRentalAmenitiesCard = ({ updateAmenities, setUpdateAmenities} : {
 
       <Button
       onClick={handleAddAmenity}
+      type="button"
       >
         Add
       </Button>

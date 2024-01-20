@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Noto_Serif_Yezidi } from "next/font/google"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 
 const RentalFormDetails = ({
@@ -103,12 +104,27 @@ const RentalFormDetails = ({
    className="bg-white shadow-md rounded-sm p-4"
    >
     <ToastContainer />
-    <p className="text-subtle-medium">
-        created on: {formatDateString(createdAt.toString())}
-    </p>
-    <p className="text-subtle-medium">
-        updated on: {formatDateString(updatedAt.toString())}
-    </p>
+    <div
+    className="flex items-center justify-between"
+    >
+       <div>
+        <p className="text-subtle-medium mb-2 bg-blue">
+                created on: {formatDateString(createdAt.toString())}
+        </p>
+        <p className="text-subtle-medium bg-warning">
+                updated on: {formatDateString(updatedAt.toString())}
+        </p>
+       </div>
+
+       <div>
+            <Link
+            href={`/admin/rentals/rental/images/${rentalId}`}
+            className="bg-danger p-3 rounded self-start text-white lowercase hover:text-slate-100"
+            >
+                Images
+            </Link>
+       </div>
+    </div>
     <div
     className="flex flex-col justify-center my-5"
     >
