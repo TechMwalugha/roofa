@@ -12,7 +12,6 @@ import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
-import { Noto_Serif_Yezidi } from "next/font/google"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 
@@ -40,10 +39,16 @@ const RentalFormDetails = ({
     owner
 }: UpdateRentalSchema) => {
 
-    const notify = () => {
+    const notifySuccess = () => {
         toast.success(`${title} updated successfully`, {
             position: "top-right"
           });
+    }
+
+    const notifyError = () => {
+        toast.error(`not updated. values are equal`, {
+            position: 'bottom-right'
+        })
     }
 
     const [loading, setLoading] = useState<boolean>(false)
@@ -69,7 +74,7 @@ const RentalFormDetails = ({
         
         const formData = new FormData(e.currentTarget)
 
-        updateRental({
+       const result = updateRental({
             rentalId: rentalId as unknown as ObjectId,
             title: formData.get('title') === '' ? title : formData.get('title') as string ,
             description: formData.get('description') === "" ? description : formData.get('description') as string,
@@ -93,9 +98,14 @@ const RentalFormDetails = ({
             },
             rentalStatus: formData.get('rentalStatus') === 'on' ? true : false,
         })
-
-        notify()
         setLoading(false)
+
+        if(!result) {
+            notifyError()
+            return
+        }
+
+        notifySuccess()
         router.refresh()
     }
 

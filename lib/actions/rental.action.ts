@@ -172,7 +172,12 @@ export async function updateRental({
 
     const rental = await Rental.findById(rentalId)
 
-    if(!rental) return 
+    if(!rental) return
+
+    //check if the new values are equal to the old values
+    if(rental.title === title) {
+      return false
+    }
 
     rental.title = title
     rental.description = description
@@ -191,5 +196,23 @@ export async function updateRental({
     await rental.save()
   } catch(error: any) {
     throw new Error(`could not update rental: ${error.messagae}`)
+  }
+}
+
+export async function deleteRentalImages({ image, rentalId} : { image: string; rentalId: ObjectId}) {
+  try {
+    connectToDB()
+
+    const rental = await Rental.findById(rentalId)
+    .select('images')
+    if (!rental || !rental.images?.length) {
+      throw new Error("Rental not found")
+    }
+    rental.images = rental.images.filter((img: string) => img !== image)
+    await rental.save()
+
+  } catch (error: any) {
+    throw new Error(`Unable to fetch rental to delete image: ${error.message}`)
+    
   }
 }

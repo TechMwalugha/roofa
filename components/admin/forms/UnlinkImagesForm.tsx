@@ -1,15 +1,37 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { useEffect, useState } from "react";
+import { deleteRentalImages } from "@/lib/actions/rental.action";
+import { ObjectId } from "mongoose";
+import { useRouter } from "next/navigation";
+import React, {  useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const UnlinkImagesForm = (props: {image: string}) => {
-  const [loading, setLoading] = useState<boolean>()
+const UnlinkImagesForm =  (props: {image: string; rentalId: string}) => {
+  const [loading, setLoading] = useState<boolean>(false)
+  const router = useRouter()
 
-    async function handleSubmit() {
-        console.log('submitted')
+  function notify() {
+    toast.success('image deleted', {
+      position: 'bottom-right'
+    })
+  }
+
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault()
+        const confirmWithUser = confirm('Are you sure you want to delete this image?')
+        if(!confirmWithUser) return
         setLoading(true)
+
+        await deleteRentalImages({ 
+          image: props.image, 
+          rentalId: props.rentalId as unknown as ObjectId
+        })
+        setLoading(false)
+        notify()
+        router.refresh()
     }
 
   
@@ -19,6 +41,7 @@ const UnlinkImagesForm = (props: {image: string}) => {
     onSubmit={handleSubmit}
     className="flex items-center justify-between my-5"
     >
+      <ToastContainer />
         <img
         src={`/rentalImages/${props.image}`} 
         alt="rental image"
