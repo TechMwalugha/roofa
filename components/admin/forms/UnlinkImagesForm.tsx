@@ -19,7 +19,7 @@ const UnlinkImagesForm =  (props: {image: string; rentalId: string}) => {
     })
   }
 
-    async function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         const confirmWithUser = confirm('Are you sure you want to delete this image?')
         if(!confirmWithUser) return

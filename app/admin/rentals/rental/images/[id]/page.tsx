@@ -2,6 +2,7 @@ import Rental from "@/lib/models/rental.model"
 import { ObjectId } from "mongoose"
 import UnlinkImagesForm from "@/components/admin/forms/UnlinkImagesForm"
 import HorizontalLine from "@/components/shared/utils/HorizontalLine"
+import UpdateRentalImages from "@/components/admin/forms/UpdateRentalImages"
 
 
 const page = async ({ params } : { params: { id: string }}) => {
@@ -31,6 +32,13 @@ const page = async ({ params } : { params: { id: string }}) => {
           )
         })}
       </div>
+        <HorizontalLine />
+        <UpdateRentalImages
+        rentalId={rental._id.toString()}
+        images={rental.images}
+        title={rental.title}
+        location={rental.location}
+         />
     </div>
   )
 }

@@ -6,6 +6,8 @@ import Rental from "../models/rental.model"
 import User from "../models/user.model"
 import { FilterQuery, ObjectId, SortOrder } from "mongoose"
 import mongoose from "mongoose"
+import { join } from "path"
+import { unlink } from "fs/promises"
 
 export async  function createRental({
             title,
@@ -205,14 +207,40 @@ export async function deleteRentalImages({ image, rentalId} : { image: string; r
 
     const rental = await Rental.findById(rentalId)
     .select('images')
+
+    const path = join('/', 'RealProjects', 'roofa', 'public', 'rentalImages', image)
+
     if (!rental || !rental.images?.length) {
       throw new Error("Rental not found")
     }
+
     rental.images = rental.images.filter((img: string) => img !== image)
     await rental.save()
+
+    //delete image completely from the computer
+    await unlink(path)
 
   } catch (error: any) {
     throw new Error(`Unable to fetch rental to delete image: ${error.message}`)
     
+  }
+}
+
+export async function updateRentalImagesAction({ rentalId, images}: { rentalId: ObjectId, images: string[]}) {
+  try {
+    connectToDB()
+
+    const rental = await Rental.findById(rentalId).
+    select('images')
+
+    if(!rental) throw new Error(`Rental not found!`)
+
+    images.map((image: string) => {
+      rental.images?.push(image)
+    })
+
+    await rental.save()
+  } catch (error: any) {
+    throw new Error(`Unable to update images: ${error.message}`)
   }
 }
