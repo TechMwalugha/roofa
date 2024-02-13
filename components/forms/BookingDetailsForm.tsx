@@ -54,9 +54,7 @@ const BookingDetailsForm = ({
     toastId: "mwal",
     theme: "dark"
   });
-    const { data: session } = useSession()
-
-    if(!session) return 
+    const { data: session } = useSession() 
 
 
     const form = useForm<z.infer<typeof bookingDetailsFormSchema>>({
@@ -73,7 +71,7 @@ const BookingDetailsForm = ({
 
      async function onSubmit(values: z.infer<typeof bookingDetailsFormSchema>) {
       try{
-        const res = await fetch("/api/payments/transactMpesa", {
+        const res = await fetch("/api/payments/transact", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -76,7 +76,7 @@ export async function POST(req: any) {
 
     } catch(error: any) {
         return NextResponse.json(
-            { message: "An error occurred while generating token. Retry" },
+            { message: "An error occurred while generating token. Retry" + error.message },
             { status: 500 }
           );
     }
