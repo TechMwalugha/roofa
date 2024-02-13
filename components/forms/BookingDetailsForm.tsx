@@ -54,8 +54,6 @@ const BookingDetailsForm = ({
     toastId: "mwal",
     theme: "dark"
   });
-    const { data: session } = useSession() 
-
 
     const form = useForm<z.infer<typeof bookingDetailsFormSchema>>({
         resolver: zodResolver(bookingDetailsFormSchema),

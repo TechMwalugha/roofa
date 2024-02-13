@@ -1,3 +1,4 @@
+
 import { createPayment, getAccessToken } from "@/lib/actions/payment.action";
 import { NextResponse } from "next/server";
 import moment from 'moment'
@@ -76,7 +77,7 @@ export async function POST(req: any) {
 
     } catch(error: any) {
         return NextResponse.json(
-            { message: "An error occurred while generating token. Retry" + error.message },
+            { message: "An error occurred while initiating transaction. Retry" + error.message },
             { status: 500 }
           );
     }

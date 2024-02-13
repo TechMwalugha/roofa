@@ -1,21 +1,24 @@
+"use server"
+
 import { createPaymentInterface } from '@/interfaces';
 import axios from 'axios'
 import { connectToDB } from '../mongoose';
 import Payment from '../models/payment.model'
-import { getServerSession } from 'next-auth';
-import User from '../models/user.model';
+
 export async function getAccessToken () {
     const url = "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
 
     const auth = Buffer.from(process.env.CONSUMER_KEY + ":" + process.env.CONSUMER_SECRET).toString("base64")
+
     try {
         const response = await axios.get(url, {
             headers: {
               authorization: `Basic ${auth}`,
             },
-          });
-          const accessToken = response.data.access_token;
+          })
 
+          const accessToken = response.data.access_token;
+          
           return accessToken
         
         
