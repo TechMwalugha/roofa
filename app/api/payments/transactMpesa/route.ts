@@ -42,7 +42,7 @@ export async function POST(req: any) {
             PhoneNumber: "254717355181",
             CallBackURL: "https://roofa-git-master-techmwalughas-projects.vercel.app/api/payments/callback",
             AccountReference: fullName,
-            TransactionDesc: "Mpesa Daraja API stk push test",
+            TransactionDesc: "Booking rental Payment",
         },
         {
             headers: {
