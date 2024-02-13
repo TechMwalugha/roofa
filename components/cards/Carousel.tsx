@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
@@ -42,10 +42,12 @@ function Carousel({
     <section
     className='flex-auto w-72 mb-10'>
         <div className=' h-[250px] w-full relative group'>
-        <div
-            style={{ backgroundImage: `url(/rentalImages/${images[currentIndex]})` }}
-            className='w-full h-full rounded-md bg-center bg-cover duration-500'
-        ></div>
+        <Suspense fallback={<div>Loading</div>}>
+            <div
+                style={{ backgroundImage: `url(/rentalImages/${images[currentIndex]})` }}
+                className='w-full h-full rounded-md bg-center bg-cover duration-500'
+            ></div>
+        </Suspense>
         {/* Left Arrow */}
         <div className='md:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
             <BsChevronCompactLeft onClick={prevSlide} size={30} />

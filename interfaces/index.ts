@@ -1,4 +1,5 @@
-import mongoose from "mongoose"
+import mongoose, { ObjectId } from "mongoose"
+import { string } from "zod"
 
 export type menuBarType = {
     title: string,
@@ -98,4 +99,26 @@ export interface UpdateRentalSchema {
         image: string;
     }[];
     owner: string
+}
+
+export interface createPaymentInterface {
+    MerchantRequestID: string;
+    CheckoutRequestID: string;
+    ResultCode: string;
+    ResultDesc: string;
+    amount: number;
+    mpesaReceiptNumber: string;
+    transactionDate: Date;
+    mpesaPhoneNumber: string;
+    typeOfPayment: string;
+}
+
+export interface createBookingInterface {
+    MerchantRequestID: string;
+    apartmentBooked: ObjectId;
+    email: string;
+    fullName: string;
+    reportingDate: Date;
+    identityNumber: string;
+    gender: 'Male' | 'Female';
 }

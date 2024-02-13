@@ -23,6 +23,7 @@ const BookingDetails = async ({
       <BookingDetailsForm 
       email={session?.user?.email as string}
       name={session?.user?.name as string}
+      rentalId={id.toString()}
       />
       
     </div>

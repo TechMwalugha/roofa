@@ -25,13 +25,17 @@ import { FcGoogle } from 'react-icons/fc'
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { MdOutlineClose } from "react-icons/md";
+import axios from 'axios';
+
 
 const BookingDetailsForm = ({
   email,
-  name
+  name,
+  rentalId
 }: {
   email: string
   name: string
+  rentalId: string
 }) => {
 
 
@@ -43,15 +47,16 @@ const BookingDetailsForm = ({
     </div>
   )
 
-  const notify = () => toast("house booked successfully !", {
+  const notify = () => toast("payment initiated !", {
     position: toast.POSITION.TOP_RIGHT,
     toastId: "mwal",
     theme: "dark"
   });
     const { data: session } = useSession()
-    // console.log(session)
 
+    if(!session) return 
 
+    
     const [error, setError] = useState("");
     const router = useRouter();
 
@@ -68,25 +73,31 @@ const BookingDetailsForm = ({
       })
 
      async function onSubmit(values: z.infer<typeof bookingDetailsFormSchema>) {
-      
-    //  initiate a transaction with tiny pesa
-    var url = " https://tinypesa.com/api/v1/express/initialize";
-     try{
+      try{
+        const res = await fetch("/api/payments/transactMpesa", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-      
-const x = await fetch(url, {
-    method: "POST",
-    headers: {
-      Apikey: "0gcPeVqzSHr",
-      "Content-Type": "application/json",
-    },
-    body: "amount=1&msisdn=0717355181&account_no=200",
-})
-    console.log(x)
+          body: JSON.stringify({
+            email: values.email,
+            fullName: values.fullName,
+            reportingDate: values.reportingDate,
+            mpesaPhoneNumber: values.mpesaPhoneNumber,
+            identityNumber: values.identityNumber,
+            gender: values.gender,
+            rentalId: rentalId
+          })
+        });
 
-     } catch(err: any) {
-      throw new Error(err.message)
-     }    
+        const data = await res.json()
+
+        console.log(data.message)
+        
+      }catch(error: any) {
+        throw error.message
+      }
   }
   return (
     <div className="md:w-2/4 shadow-count rounded">
@@ -202,7 +213,7 @@ const x = await fetch(url, {
         <FormField
           control={form.control}
           name="gender"
-          defaultValue="female"
+          // defaultValue="female"
           render={({ field }) => (
             <FormItem
             className='flex items-center gap-3'
@@ -223,7 +234,7 @@ const x = await fetch(url, {
        <FormField
           control={form.control}
           name="gender"
-          defaultValue="male"
+          // defaultValue="male"
           render={({ field }) => (
             <FormItem
             >
@@ -234,8 +245,8 @@ const x = await fetch(url, {
               <FormControl>
                 <Input placeholder="1234567" {...field} type="radio" value="male" />
               </FormControl>
-              </div>
               <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
+              </div>
             </FormItem>
           )}
         />

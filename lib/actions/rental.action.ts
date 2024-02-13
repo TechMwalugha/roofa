@@ -176,10 +176,7 @@ export async function updateRental({
 
     if(!rental) return
 
-    //check if the new values are equal to the old values
-    if(rental.title === title) {
-      return false
-    }
+    //TODO: check if the new values are equal to the old values
 
     rental.title = title
     rental.description = description
@@ -194,8 +191,10 @@ export async function updateRental({
     rental.rentalsNear = rentalsNear
     rental.serviceFee = serviceFee
     rental.rentalStatus = rentalStatus
-
+    console.log("updated successfully.")
     await rental.save()
+
+    
   } catch(error: any) {
     throw new Error(`could not update rental: ${error.messagae}`)
   }
