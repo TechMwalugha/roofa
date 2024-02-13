@@ -37,6 +37,8 @@ const BookingDetailsForm = ({
   name: string
   rentalId: string
 }) => {
+  const router = useRouter();
+  const [error, setError] = useState("");
 
 
   const CloseButton = ({ closeToast }: { closeToast: any}) => (
@@ -56,9 +58,6 @@ const BookingDetailsForm = ({
 
     if(!session) return 
 
-    
-    const [error, setError] = useState("");
-    const router = useRouter();
 
     const form = useForm<z.infer<typeof bookingDetailsFormSchema>>({
         resolver: zodResolver(bookingDetailsFormSchema),
@@ -94,7 +93,7 @@ const BookingDetailsForm = ({
         const data = await res.json()
 
         console.log(data.message)
-        
+
       }catch(error: any) {
         throw error.message
       }
