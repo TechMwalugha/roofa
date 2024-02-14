@@ -4,11 +4,13 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: any) {
     try {
-        const merchantRequestID = req.body.Body.stkCallback.MerchantRequestID;
-        const checkoutRequestID = req.body.Body.stkCallback.CheckoutRequestID;
-        const resultCode = req.body.Body.stkCallback.ResultCode;
-        const resultDesc = req.body.Body.stkCallback.ResultDesc;
-        const callbackMetadata = req.body.Body.stkCallback.CallbackMetadata;
+      const body = await req.json() 
+
+        const merchantRequestID = body.Body.stkCallback.MerchantRequestID;
+        const checkoutRequestID = body.Body.stkCallback.CheckoutRequestID;
+        const resultCode = body.Body.stkCallback.ResultCode;
+        const resultDesc = body.Body.stkCallback.ResultDesc;
+        const callbackMetadata = body.Body.stkCallback.CallbackMetadata;
         const amount = callbackMetadata.Item[0].Value;
         const mpesaReceiptNumber = callbackMetadata.Item[1].Value;
         const transactionDate = callbackMetadata.Item[3].Value;
@@ -41,11 +43,10 @@ export async function POST(req: any) {
           mpesaPhoneNumber: phoneNumber,
           typeOfPayment: 'Rental',
         })
-
           
           return NextResponse.json(
-            {message: "Check email, Link sent"},
-            {status: 300}
+            {message: "payment made successfully. Thank you for booking with us. We will get back to you soon."},
+            {status: 200}
           )
 
     } catch(error: any) {
