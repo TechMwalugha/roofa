@@ -49,6 +49,7 @@ export async function POST(req: any) {
           )
 
     } catch(error: any) {
+      console.log(error.message)
         return NextResponse.json(
             { message: "An error occurred while receiving the callback. retry" },
             { status: 500 }
