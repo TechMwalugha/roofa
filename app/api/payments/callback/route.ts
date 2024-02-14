@@ -5,47 +5,58 @@ import { NextResponse } from "next/server";
 export async function POST(req: any) {
     try {
       const body = await req.json() 
+      console.log(body)
 
         const merchantRequestID = body.Body.stkCallback.MerchantRequestID;
         const checkoutRequestID = body.Body.stkCallback.CheckoutRequestID;
         const resultCode = body.Body.stkCallback.ResultCode;
         const resultDesc = body.Body.stkCallback.ResultDesc;
-        const callbackMetadata = body.Body.stkCallback.CallbackMetadata;
-        const amount = callbackMetadata.Item[0].Value;
-        const mpesaReceiptNumber = callbackMetadata.Item[1].Value;
-        const transactionDate = callbackMetadata.Item[3].Value;
-        const phoneNumber = callbackMetadata.Item[4].Value;
+        
 
-        if(resultCode !== '0') {
+
+        if(resultCode === 0) {
+          const callbackMetadata = body.Body.stkCallback.CallbackMetadata;
+          const amount = callbackMetadata.Item[0].Value;
+          const mpesaReceiptNumber = callbackMetadata.Item[1].Value;
+          const transactionDate = callbackMetadata.Item[3].Value;
+          const phoneNumber = callbackMetadata.Item[4].Value;
 
           await updateBookingOnPayment({
             MerchantRequestID: merchantRequestID,
-            isPayment: false,
+            isPayment: true,
             isPaymentReason: resultDesc,
           })
+          
+          await createPayment({
+            MerchantRequestID: merchantRequestID,
+            CheckoutRequestID: checkoutRequestID,
+            ResultCode: resultCode,
+            ResultDesc: resultDesc,
+            amount: amount,
+            mpesaReceiptNumber: mpesaReceiptNumber,
+            transactionDate: transactionDate,
+            mpesaPhoneNumber: phoneNumber,
+            typeOfPayment: 'Rental',
+          })
 
-        }
-
-        await updateBookingOnPayment({
-          MerchantRequestID: merchantRequestID,
-          isPayment: true,
-          isPaymentReason: resultDesc,
-        })
-
-        await createPayment({
-          MerchantRequestID: merchantRequestID,
-          CheckoutRequestID: checkoutRequestID,
-          ResultCode: resultCode,
-          ResultDesc: resultDesc,
-          amount: amount,
-          mpesaReceiptNumber: mpesaReceiptNumber,
-          transactionDate: transactionDate,
-          mpesaPhoneNumber: phoneNumber,
-          typeOfPayment: 'Rental',
-        })
           
           return NextResponse.json(
             {message: "payment made successfully. Thank you for booking with us. We will get back to you soon."},
+            {status: 200}
+          )
+          
+        }
+        
+        
+        // failed transaction
+        await updateBookingOnPayment({
+          MerchantRequestID: merchantRequestID,
+          isPayment: false,
+          isPaymentReason: resultDesc,
+        })
+        
+        return NextResponse.json(
+            {message: "Transaction failed."},
             {status: 200}
           )
 

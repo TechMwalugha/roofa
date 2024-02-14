@@ -73,26 +73,31 @@ const BookingDetailsForm = ({
 
       
       try{
-        const res = await fetch("/api/payments/transact", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+        // const res = await fetch("/api/payments/transact", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
 
-          body: JSON.stringify({
-            email: values.email,
-            fullName: values.fullName,
-            reportingDate: values.reportingDate,
-            mpesaPhoneNumber: values.mpesaPhoneNumber,
-            identityNumber: values.identityNumber,
-            gender: values.gender,
-            rentalId: rentalId
-          })
-        });
+        //   body: JSON.stringify({
+        //     email: values.email,
+        //     fullName: values.fullName,
+        //     reportingDate: values.reportingDate,
+        //     mpesaPhoneNumber: values.mpesaPhoneNumber,
+        //     identityNumber: values.identityNumber,
+        //     gender: values.gender,
+        //     rentalId: rentalId
+        //   })
+        // });
 
-        const data = await res.json()
+        // const data = await res.json()
 
-        console.log(data.message)
+        // if(data.message !== "Success. Request accepted for processing") {
+        //   setError("Transaction failed please try again")
+        //   setLoading(false)
+        //   return 
+        // }
+        // Redirect to payment page with transaction id
 
         setLoading(false)
 

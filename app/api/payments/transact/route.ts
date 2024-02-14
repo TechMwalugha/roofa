@@ -72,7 +72,7 @@ export async function POST(req: any) {
 
           return NextResponse.json(
             {message: "Success. Request accepted for processing"},
-            {status: 300}
+            {status: 200}
           )
 
     } catch(error: any) {
