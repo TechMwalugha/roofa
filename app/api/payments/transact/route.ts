@@ -47,7 +47,7 @@ export async function POST(req: any) {
         },
         {
             headers: {
-                Authorization: auth,
+                "Authorization": auth,
             }
         })
         

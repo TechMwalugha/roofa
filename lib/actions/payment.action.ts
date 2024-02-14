@@ -8,12 +8,12 @@ import Payment from '../models/payment.model'
 export async function getAccessToken () {
     const url = "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
 
-    const auth = Buffer.from(process.env.CONSUMER_KEY + ":" + process.env.CONSUMER_SECRET).toString("base64")
+    const auth = Buffer.from(process.env.CONSUMER_KEY + ":" + process.env.CONSUMER_SECRET).toString("base64");
 
     try {
         const response = await axios.get(url, {
             headers: {
-              authorization: `Basic ${auth}`,
+              Authorization: `Basic ${auth}`,
             },
           })
 
@@ -23,6 +23,7 @@ export async function getAccessToken () {
         
         
     } catch (error: any) {
+      console.log(error.message)
         throw new Error(`An error occurred generating access token: ${error.message}`)
     }
 }
