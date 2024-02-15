@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { fetchUserByEmail } from "./user.actions";
 import User from "../models/user.model";
 import { ObjectId } from "mongoose";
+import Rental from "../models/rental.model";
 
 export async function createNewBooking({
     MerchantRequestID,
@@ -20,11 +21,14 @@ export async function createNewBooking({
 
         const session = await getServerSession()
 
-        if(!session) return
+        const userId = await User.findOne({email: session?.user?.email as string}).select('_id')
+        let bookedBy: (ObjectId | null)
 
-        const userId = await User.find({email: session?.user?.email as string}).select('_id')
-        const bookedBy: ObjectId = userId[0]._id
-
+        if (session) {
+            bookedBy = userId._id
+        } else {
+            bookedBy = null
+        }
         
 
         const booking = new Booking({
@@ -70,5 +74,26 @@ export async function updateBookingOnPayment({
     } catch (error: any) {
         throw new Error(`unable to update booking: ${error.message}`)
         
+    }
+}
+
+export async function fetchOneBooking(id: string) {
+    try {
+        connectToDB()
+
+        const booking = await Booking.findOne({ MerchantRequestID: id })
+        .populate({
+            path: "bookedBy",
+            model: User
+        })
+        .populate({
+            path: "apartmentBooked",
+            model: Rental
+        })
+
+        return booking
+        
+    } catch (error: any) {
+        throw new Error(`An error occurred fetching rental: ${error.message}`)
     }
 }

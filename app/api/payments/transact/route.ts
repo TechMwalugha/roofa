@@ -19,7 +19,10 @@ export async function POST(req: any) {
 
         const token = await getAccessToken()
 
-        if(!token) return
+        if(!token) return NextResponse.json(
+        {message: "Transaction failed. Try again"},
+        {status: 500}
+      )
 
         const url = "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
         const auth = `Bearer ${token}`
@@ -50,12 +53,13 @@ export async function POST(req: any) {
                 "Authorization": auth,
             }
         })
+
         
         //check if the transaction is initiated successfully
-        if(response.data.ResponseCode !== '0') {
+        if(response.data.ResponseCode !== "0") {
             return NextResponse.json(
                 {message: "Transaction failed. Try again"},
-                {status: 400}
+                {status: 500}
               )
         }
 
@@ -69,11 +73,10 @@ export async function POST(req: any) {
             gender: gender,
         })
 
-
-          return NextResponse.json(
-            {message: "Success. Request accepted for processing"},
-            {status: 200}
-          )
+    return NextResponse.json(
+        {message: "Request accepted for processing. Complete payment", id: response.data.MerchantRequestID},
+        {status: 200}
+      )
 
     } catch(error: any) {
         return NextResponse.json(

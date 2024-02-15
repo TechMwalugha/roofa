@@ -38,7 +38,7 @@ const BookingDetailsForm = ({
   rentalId: string
 }) => {
   const router = useRouter();
-  const [error, setError] = useState("");
+  const [transactionResponse, setTransactionResponse] = useState("");
   const [loading, setLoading] = useState<boolean>(false)
 
   const CloseButton = ({ closeToast }: { closeToast: any}) => (
@@ -49,9 +49,15 @@ const BookingDetailsForm = ({
     </div>
   )
 
-  const notify = () => toast("payment initiated check phone!", {
+  const notifyError = (message: string) => toast.error(message, {
     position: toast.POSITION.TOP_RIGHT,
     toastId: "mwal",
+    theme: "dark"
+  });
+
+  const notifySuccess = (message: string) => toast.success(message, {
+    position: toast.POSITION.TOP_RIGHT,
+    toastId: "mwalsuccess",
     theme: "dark"
   });
 
@@ -69,37 +75,38 @@ const BookingDetailsForm = ({
 
      async function onSubmit(values: z.infer<typeof bookingDetailsFormSchema>) {
       setLoading(true)
-      notify()
-
       
       try{
-        // const res = await fetch("/api/payments/transact", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
+        const res = await fetch("/api/payments/transact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-        //   body: JSON.stringify({
-        //     email: values.email,
-        //     fullName: values.fullName,
-        //     reportingDate: values.reportingDate,
-        //     mpesaPhoneNumber: values.mpesaPhoneNumber,
-        //     identityNumber: values.identityNumber,
-        //     gender: values.gender,
-        //     rentalId: rentalId
-        //   })
-        // });
+          body: JSON.stringify({
+            email: values.email,
+            fullName: values.fullName,
+            reportingDate: values.reportingDate,
+            mpesaPhoneNumber: values.mpesaPhoneNumber,
+            identityNumber: values.identityNumber,
+            gender: values.gender,
+            rentalId: rentalId
+          })
+        });
 
-        // const data = await res.json()
+        const data = await res.json()
+        console.log(data)
 
-        // if(data.message !== "Success. Request accepted for processing") {
-        //   setError("Transaction failed please try again")
-        //   setLoading(false)
-        //   return 
-        // }
+        if(data.message !== "Request accepted for processing. Complete payment") {
+          notifyError('An error occurred. Please try again')
+          setLoading(false)
+          return 
+        }
         // Redirect to payment page with transaction id
 
         setLoading(false)
+        setTransactionResponse(data.id)
+
 
       }catch(error: any) {
         throw error.message
@@ -107,21 +114,26 @@ const BookingDetailsForm = ({
   }
   return (
     <div className="md:w-2/4 shadow-count rounded">
-      <button
-      onClick={notify}
-      >
-        click
-      </button>
       <ToastContainer
       closeButton={CloseButton}
        />
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
-      {error && (
-            <div className="bg-red-500 text-white w-full text-center text-small-medium mx-auto text-sm py-1 px-3 rounded-md mt-2">
-              {error}
+      <form onSubmit={form.handleSubmit(onSubmit)} className=" bg-white p-5 rounded-lg flex flex-col">
+          <div className={`w-full h-full bg-[rgba(0,0,0,0.4)] fixed z-10 ${transactionResponse ? 'top-1/2' : '-top-1/2'} left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center p-3 transition-all ease delay-4000`}>
+            <div className="w-1/2 h-1/2 bg-white max-sm:w-full text-center text-small-medium text-sm py-1 px-3 rounded shadow-sm flex items-center justify-center flex-col">
+              <div>
+                <img src='/assets/success-gif.gif' className='w-24'/>
+              </div>
+                  <h6>Payment initiated successfully.</h6> 
+              <p className='text-subtle-medium lowercase mt-2'>please check your phone and enter the pin to complete the transaction, if you have completed the transaction click the button below. </p>
+                <Link 
+                href={`/payments/rental-payment/${transactionResponse}`}
+                className='bg-blue p-3 rounded mt-4 shadow'
+                >
+                  Confirm Transaction
+                </Link>
             </div>
-          )}
+          </div>
         <Link 
         href='/'
         className="mx-auto mb-4 flex items-center gap-2 text-heading3-bold"
