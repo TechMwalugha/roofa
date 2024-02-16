@@ -126,6 +126,7 @@ const page = async ({ params }: { params : { id: string}}) => {
     >
       <h3 className='text-body-bold text-center'>Booking successfully</h3>
       <p className='text-center text-subtle-medium'>Your booking was successfully made. Please check your email for more information</p>
+      <p className='text-center text-subtle-medium'>If you have not received the email, please check your spam folder. Or click the button below to resend the email.</p>
 
       <div className='flex justify-center mt-5'>
         <button 
