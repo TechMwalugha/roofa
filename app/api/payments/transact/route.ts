@@ -56,7 +56,7 @@ export async function POST(req: any) {
 
         
         //check if the transaction is initiated successfully
-        if(response.data.ResponseCode !== "0") {
+        if(response.data.ResponseCode !== "0" || response.data.ResponseCode !== 0) {
             return NextResponse.json(
                 {message: "Transaction failed. Try again"},
                 {status: 500}
