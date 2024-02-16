@@ -1,12 +1,14 @@
+import Danger from '@/components/shared/alerts/Danger'
 import HorizontalLine from '@/components/shared/utils/HorizontalLine'
 import { fetchOneBooking } from '@/lib/actions/booking.action'
 import { formatDateString } from '@/lib/utils'
 import React from 'react'
 
+
+
 const page = async ({ params }: { params : { id: string}}) => {
 
   const booking = await fetchOneBooking(params.id)
-
 
   return (
     <div 
@@ -17,8 +19,10 @@ const page = async ({ params }: { params : { id: string}}) => {
       <h3 className='text-center text-heading3-medium'>Details of the booking</h3>
       <HorizontalLine />
 
-      <div className=''>
-        <div className='bg-gray-100 rounded-md w-full p-2 flex justify-center flex-col'>
+      <div 
+      className='lg:flex lg:gap-5 justify-between'
+      >
+        <div className='bg-gray-100 rounded-md p-2 flex justify-center flex-col flex-auto'>
           {booking.bookedBy && (
             <div className='w-24 h-24 rounded-full cursor-pointer mx-auto mt-4'>
               <img 
@@ -57,7 +61,8 @@ const page = async ({ params }: { params : { id: string}}) => {
           </div>
         </div>
 
-        <div className='bg-gray-100 rounded-md w-full p-2 flex justify-center flex-col mt-10'>
+       <div className='flex-auto flex flex-col gap-4 max-lg:mt-5'>
+       <div className='bg-gray-100 rounded-md w-full p-2 flex justify-center flex-col flex-auto'>
           <h4 className='text-base1-semibold text-center'>Rental booked</h4>
 
           <div className='flex items-center justify-between'>
@@ -81,23 +86,53 @@ const page = async ({ params }: { params : { id: string}}) => {
           </div>
         </div>
 
-        <div className='bg-gray-100 rounded-md w-full p-2 flex justify-center flex-col mt-10'>
+        <div className='bg-gray-100 rounded-md w-full p-2 flex justify-center flex-col'>
           <div className='flex items-center  flex-col'>
             <img 
-            src={`${booking.isPaymentMade.isMade ? '/assets/verified-image.png' : '/assets/unverified-image.jpg'}`} alt="icon"
+            src={`${booking.isPaymentMade.isMade ? '/assets/verified-image.png' : '/assets/reject-button.svg'}`} alt="icon"
             className="w-20 h-20 object-cover"
             />
 
-            <p>
+            <p className="">
             {`${booking.isPaymentMade.isMade ? 'Your payment is confirmed. Please generate receipt' : 'Payment not confirmed.'}`}
             </p>
 
-            <span>{booking.isPaymentMade.reason}</span>
+            <span 
+            className="text-subtle-medium"
+            >{booking.isPaymentMade.reason}</span>
           </div>
         </div>
+       </div>
       </div>
     </>
     )}
+
+    {/* if the booking has been settled already */}
+
+    {
+      booking && booking.isPaymentMade.isMade && booking.isBookingSettled && (
+        <div 
+        className='mt-10'
+        >
+          <Danger
+          text="This booking has already been settled. Contact us for more information"
+          />
+        </div>
+      )
+    }
+
+    <div 
+    className='mt-10'
+    >
+      <h3 className='text-body-bold text-center'>Booking successfully</h3>
+      <p className='text-center text-subtle-medium'>Your booking was successfully made. Please check your email for more information</p>
+
+      <div className='flex justify-center mt-5'>
+        <button 
+        className='bg-green-500 text-white px-3 py-1 rounded-sm'
+        >Generate receipt</button>
+      </div>
+    </div>
 
       {/* no booking found */}
       {
