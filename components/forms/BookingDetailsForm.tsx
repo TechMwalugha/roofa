@@ -98,6 +98,7 @@ const BookingDetailsForm = ({
         console.log(data)
 
         if(data.message !== "Request accepted for processing. Complete payment") {
+          console.log(data.message)
           notifyError('An error occurred. Please try again')
           setLoading(false)
           return 
