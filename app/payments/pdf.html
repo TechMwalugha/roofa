@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    h1 {
+        font-size: 1.2rem;
+        margin-bottom: 0;
+    }
+    h2{
+        font-size: 1rem;
+    }
+    h1, h2, p {
+        margin: 0;
+        margin-bottom: .3rem;
+    }
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo img {
+        width: 80px;
+        height: 80px;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .client-details, .apartment-booked{
+        margin-top: 1rem;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: .5em;
+        border-radius: 5px;
+    }
+    .client-details h2, .apartment-booked h2 {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .client-details .item, .apartment-booked .item{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: .5rem;
+    }
+    table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1rem;
+    }
+
+    td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+
+    .payment-details {
+        display: flex;
+        margin-top: 1rem;
+        font-weight: bold;
+    }
+</style>
+<body>
+    <div class="logo">
+        <img src="/public/assets/roofalogo.png" />
+    </div>
+    <header>
+        <div>
+            <h1>Roofa Housing PLC</h1>
+            <p>Nakuru, kenya</p>
+            <p>info@roofa.co.ke</p>
+        </div>
+        <div>
+            <h1>Payment Receipt</h1>
+            <p>Receipt No: 0001</p>
+            <p>Date: 12/12/2020</p>
+        </div>
+    </header>
+
+    <hr />
+
+    <main>
+        <div class="client-details">
+            <h2>Client Details</h2>
+            <div class="item">
+                <b>Name</b>
+                <p>John Doe</p>
+            </div>
+            <div class="item">
+                <b>Email</b>
+                <p>emmanuelmwalugha001@gmail.com</p>
+            </div>
+            <div class="item">
+                <b>Identity Number</b>
+                <p>40203008</p>
+            </div>
+            <div class="item">
+                <b>Gender</b>
+                <p>Male</p>
+            </div>
+            <div class="item">
+                <b>Reporting Date</b>
+                <p>John Doe</p>
+            </div>
+            <p style="font-size: 12px; text-align: center;">kindly report within the specified date. incase of anything kindly reach us</p>
+        </div>
+
+        <div class="apartment-booked">
+            <h2>Apartment Booked</h2>
+            <div class="item">
+                <b>Name</b>
+                <p>GrassLands Apartments</p>
+            </div>
+
+            <div class="item">
+                <b>Location</b>
+                <p>John Doe</p>
+            </div>
+
+            <div class="item">
+                <b>Price</b>
+                <p>Ksh. 5000</p>
+            </div>
+        </div>
+
+        <table>
+            <tr>
+              <th>Description</th>
+              <th>Total</th>
+            </tr>
+            <tr>
+              <td>Mpesa Receipt Number</td>
+              <td>212121212</td>
+            </tr>
+            <tr>
+              <td>Transaction Date</td>
+              <td>12/12/2025</td>
+            </tr>
+            <tr>
+              <td>Mpesa Phone Number</td>
+              <td>0717355181</td>
+            </tr>
+          </table>
+
+          <div class="payment-details">
+                <h2 style="text-align: center;">Payment Details:</h2>
+                <hr>
+                <p>Amount Paid: Ksh. 5000</p>
+                <hr>
+                <p>Payment Method: Mpesa</p>
+          </div>
+
+          <footer style="margin-top: 1rem; text-align: center;">
+            <div>
+
+            </div>
+                <p>Thank you for choosing Roofa Housing PLC</p>
+          </footer>
+    </main>
+
+</body>
+</html>

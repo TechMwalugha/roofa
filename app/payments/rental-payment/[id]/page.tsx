@@ -1,14 +1,36 @@
 import Danger from '@/components/shared/alerts/Danger'
 import HorizontalLine from '@/components/shared/utils/HorizontalLine'
 import { fetchOneBooking } from '@/lib/actions/booking.action'
+import { fetchOnePayment } from '@/lib/actions/payment.action'
+import generatePdf from '@/lib/emailing/pdf'
 import { formatDateString } from '@/lib/utils'
-import React from 'react'
-
+import puppeteer from 'puppeteer'
 
 
 const page = async ({ params }: { params : { id: string}}) => {
 
   const booking = await fetchOneBooking(params.id)
+
+  const payment = await fetchOnePayment({ id: booking.MerchantRequestID})
+
+  if(booking && booking.isPaymentMade.isMade && !booking.isBookingSettled && payment) {
+      await generatePdf({
+        receiptNo: payment._id.toString(),
+        date: new Date(),
+        name: booking.fullName,
+        email: booking.email,
+        identityNumber: booking.identityNumber,
+        gender: booking.gender,
+        reportingDate: booking.reportingDate,
+        apartmentName: booking.apartmentBooked.title,
+        apartmentLocation: booking.apartmentBooked.location,
+        apartmentPrice: booking.apartmentBooked.price,
+        mpesaReciptNumber: payment.mpesaReceiptNumber,
+        transactionDate: payment.transactionDate,
+        mpesaPhoneNumber: payment.mpesaPhoneNumber,
+        amountPaid: payment.amount,
+        })
+    }
 
   return (
     <div 
@@ -23,10 +45,10 @@ const page = async ({ params }: { params : { id: string}}) => {
       className='lg:flex lg:gap-5 justify-between'
       >
         <div className='bg-gray-100 rounded-md p-2 flex justify-center flex-col flex-auto'>
-          {booking.bookedBy && (
+          {booking && booking.bookedBy && (
             <div className='w-24 h-24 rounded-full cursor-pointer mx-auto mt-4'>
               <img 
-              src={`${booking.bookedBy.image}`} 
+              src={`${booking && booking.bookedBy.image}`} 
               alt="user image"
               className="w-full h-full object-cover rounded-full"
               />

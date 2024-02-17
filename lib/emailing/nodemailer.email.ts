@@ -4,9 +4,10 @@ interface Props {
     subject: string
     heading: string
     content: string
+    pdfFilePath: string
 }
 
-const sendEmail = async ({email, subject, heading, content}: Props) =>{
+const sendEmail = async ({email, subject, heading, content, pdfFilePath}: Props) =>{
     try {
         const transporter = nodeMailer.createTransport({
             // host: Number(process.env.HOST) || 0,
@@ -21,7 +22,7 @@ const sendEmail = async ({email, subject, heading, content}: Props) =>{
             }
         })
 
-        await transporter.sendMail({
+        const mailOptions: nodeMailer.SendMailOptions = {
             from: process.env.USER,
             to: email,
             subject: subject,
@@ -30,8 +31,19 @@ const sendEmail = async ({email, subject, heading, content}: Props) =>{
                    <h1>${heading}</h1>
                     <p>${content}</p><br>
                     </div>
-                   </div>`
-        })
+                   </div>`,
+        }
+
+        //conditionally add the attachment if pdfFilePath exists
+
+        if (pdfFilePath) {
+            mailOptions.attachments = [{
+                filename: 'your-pdf-file-name.pdf',
+                path: pdfFilePath // Path to the PDF file
+            }];
+        }
+
+        await transporter.sendMail(mailOptions);
         console.log('email sent')
 
     } catch (error) {

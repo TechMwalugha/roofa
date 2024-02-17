@@ -59,33 +59,14 @@ export async function createPayment({
   }
 }
 
-// export async function updatePayment({
-//   MerchantRequestID,
-//   CheckoutRequestID,
-//   ResultCode,
-//   ResultDesc,
-//   amount,
-//   mpesaReceiptNumber,
-//   transactionDate,
-//   mpesaPhoneNumber,
-// }: {
-//   MerchantRequestID: string;
-//   CheckoutRequestID: string;
-//   ResultCode: string;
-//   ResultDesc: string;
-//   amount: number;
-//   mpesaReceiptNumber: string,
-//   transactionDate: Date;
-//   mpesaPhoneNumber: string
-// }) {
-//   try {
-//     connectToDB()
+export async function fetchOnePayment({ id }: {id: string}) {
+  try {
+    connectToDB()
 
-//     const payment = Payment.find({ MerchantRequestID: MerchantRequestID})
+    const payment = await Payment.findOne({ MerchantRequestID: id})
 
-//     console.log(payment)
-    
-//   } catch (error: any) {
-//     throw new Error('Unable to save the payment after callback' + error.message)
-//   }
-// }
+    return payment
+  }catch(err: any) {
+    throw new Error(`An error occurred fetching payment: ${err.message}`)
+  }
+}
