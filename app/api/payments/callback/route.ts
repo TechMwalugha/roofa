@@ -21,12 +21,6 @@ export async function POST(req: any) {
           const transactionDate = callbackMetadata.Item[3].Value;
           const phoneNumber = callbackMetadata.Item[4].Value;
 
-          await updateBookingOnPayment({
-            MerchantRequestID: merchantRequestID,
-            isPayment: true,
-            isPaymentReason: resultDesc,
-          })
-          
           await createPayment({
             MerchantRequestID: merchantRequestID,
             CheckoutRequestID: checkoutRequestID,
@@ -38,6 +32,13 @@ export async function POST(req: any) {
             mpesaPhoneNumber: phoneNumber,
             typeOfPayment: 'Rental',
           })
+
+          await updateBookingOnPayment({
+            MerchantRequestID: merchantRequestID,
+            isPayment: true,
+            isPaymentReason: resultDesc,
+          })
+        
 
           
           return NextResponse.json(
