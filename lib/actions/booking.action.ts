@@ -6,6 +6,7 @@ import { fetchUserByEmail } from "./user.actions";
 import User from "../models/user.model";
 import { ObjectId } from "mongoose";
 import Rental from "../models/rental.model";
+import Payment from "../models/payment.model";
 
 export async function createNewBooking({
     MerchantRequestID,
@@ -63,6 +64,29 @@ export async function updateBookingOnPayment({
         connectToDB()
 
         const booking = await Booking.find({MerchantRequestID: MerchantRequestID})
+
+        if(isPayment && booking[0].bookedBy) {
+            const user = await User.findById(booking[0].bookedBy)
+            .select('bookings payments')
+            const payment = await Payment.findOne({MerchantRequestID: MerchantRequestID})
+            .select('_id')
+
+            if(payment && user) {
+                user.payments.push(payment._id)
+                user.bookings.push(booking[0]._id)
+                await user.save()
+            }
+
+        }
+
+        if(isPayment && booking[0].apartmentBooked) {
+            const rental = await Rental.findById(booking[0].apartmentBooked)
+            .select('bookings')
+            if(rental) {
+                rental.bookings.push(booking[0]._id)
+                await rental.save()
+            }
+        }
 
         booking[0].isPaymentMade = {
             isMade: isPayment,

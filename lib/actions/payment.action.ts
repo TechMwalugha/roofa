@@ -63,7 +63,7 @@ export async function fetchOnePayment({ id }: {id: string}) {
   try {
     connectToDB()
 
-    const payment = await Payment.findOne({ MerchantRequestID: id})
+    const payment: any = await Payment.findOne({ MerchantRequestID: id})
 
     return payment
   }catch(err: any) {

@@ -1,3 +1,4 @@
+import GenerateReceipt from '@/components/forms/GenerateReceipt'
 import Danger from '@/components/shared/alerts/Danger'
 import HorizontalLine from '@/components/shared/utils/HorizontalLine'
 import { fetchOneBooking } from '@/lib/actions/booking.action'
@@ -10,26 +11,25 @@ import puppeteer from 'puppeteer'
 const page = async ({ params }: { params : { id: string}}) => {
 
   const booking = await fetchOneBooking(params.id)
-
-  const payment = await fetchOnePayment({ id: booking.MerchantRequestID})
+   const payment: any = await fetchOnePayment({ id: params.id})
 
   if(booking && booking.isPaymentMade.isMade && !booking.isBookingSettled && payment) {
-      await generatePdf({
-        receiptNo: payment._id.toString(),
-        date: new Date(),
-        name: booking.fullName,
-        email: booking.email,
-        identityNumber: booking.identityNumber,
-        gender: booking.gender,
-        reportingDate: booking.reportingDate,
-        apartmentName: booking.apartmentBooked.title,
-        apartmentLocation: booking.apartmentBooked.location,
-        apartmentPrice: booking.apartmentBooked.price,
-        mpesaReciptNumber: payment.mpesaReceiptNumber,
-        transactionDate: payment.transactionDate,
-        mpesaPhoneNumber: payment.mpesaPhoneNumber,
-        amountPaid: payment.amount,
-        })
+      // await generatePdf({
+      //   receiptNo: payment._id.toString(),
+      //   date: new Date(),
+      //   name: booking.fullName,
+      //   email: booking.email,
+      //   identityNumber: booking.identityNumber,
+      //   gender: booking.gender,
+      //   reportingDate: booking.reportingDate,
+      //   apartmentName: booking.apartmentBooked.title,
+      //   apartmentLocation: booking.apartmentBooked.location,
+      //   apartmentPrice: booking.apartmentBooked.price,
+      //   mpesaReciptNumber: payment.mpesaReceiptNumber,
+      //   transactionDate: payment.transactionDate,
+      //   mpesaPhoneNumber: payment.mpesaPhoneNumber,
+      //   amountPaid: payment.amount,
+      //   })
     }
 
   return (
@@ -143,19 +143,11 @@ const page = async ({ params }: { params : { id: string}}) => {
       )
     }
 
-    <div 
-    className='mt-10'
-    >
-      <h3 className='text-body-bold text-center'>Booking successfully</h3>
-      <p className='text-center text-subtle-medium'>Your booking was successfully made. Please check your email for more information</p>
-      <p className='text-center text-subtle-medium'>If you have not received the email, please check your spam folder. Or click the button below to resend the email.</p>
-
-      <div className='flex justify-center mt-5'>
-        <button 
-        className='bg-green-500 text-white px-3 py-1 rounded-sm'
-        >Generate receipt</button>
-      </div>
-    </div>
+   {booking && booking.isPaymentMade.isMade && !booking.isBookingSettled && payment &&( 
+    <GenerateReceipt 
+    merchantRequestId={params.id}
+     />
+   )}
 
       {/* no booking found */}
       {

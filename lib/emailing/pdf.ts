@@ -45,6 +45,9 @@ export default async function generatePdf({
       <title>Document</title>
   </head>
   <style>
+  body {
+    padding: 1rem;
+  }
       h1 {
           font-size: 1.2rem;
           margin-bottom: 0;
