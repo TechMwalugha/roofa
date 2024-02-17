@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 export async function POST(req: any) {
     try {
       const body = await req.json() 
-      console.log(body)
 
         const merchantRequestID = body.Body.stkCallback.MerchantRequestID;
         const checkoutRequestID = body.Body.stkCallback.CheckoutRequestID;
