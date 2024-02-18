@@ -224,7 +224,28 @@ export default async function generatePdf({
         email: email, 
         subject: 'Payment Receipt', 
         heading: `${apartmentName} booked succesfully`, 
-        content: 'Thank you for booking with Roofa. Kindly carry your ID card while checking in. Also ensure to check in with the specified date', 
+        content: `Dear ${name}, <br />
+
+        We hope this email finds you well and excited for booking with Roofa!
+        
+        First and foremost, we want to extend our warmest congratulations on successfully booking your desired accommodation through our platform. We are thrilled to have helped you secure an apartment and are committed to ensuring your stay is comfortable and memorable.
+        
+        As your check-in date approaches, we kindly want to remind you of a few important details to ensure a smooth and hassle-free experience:
+        
+        Bring Matching Credentials: Please remember to carry identification credentials that match the information provided during the booking process. This typically includes your ID card or passport, as well as any additional documentation such as the M-Pesa message if applicable. Ensuring your credentials match the details on your receipt will help expedite the check-in process.
+        
+        Check-In Date: Please ensure you arrive at the specified accommodation on the designated check-in date as indicated in your booking confirmation. This helps us coordinate your arrival efficiently and ensures that your accommodation is ready for you to settle in comfortably.
+        
+        If you have any questions or require further assistance before your arrival, please do not hesitate to reach out to our customer support team. We are here to help make your stay as enjoyable as possible.
+        
+        Once again, congratulations on securing your booking with Roofa. We look forward to hosting you and providing you with a memorable experience. <br />
+
+        Find the attached booking receipt below, please present this while checking in. <br />
+        <br />
+        Warm regards,<br />
+        
+        Roofa Bookings <br />
+        Roofa Customer Support Team`, 
         pdfFilePath: `public/receipts/Roof-${receiptNo}.pdf`
     })
  } catch (error: any) {

@@ -3,10 +3,12 @@ import { connectToDB } from '@/lib/mongoose'
 import User from '../models/user.model'
 import mongoose, { ObjectId, SortOrder } from 'mongoose'
 import { revalidatePath } from 'next/cache'
-import sendEmail from '../emailing/nodemailer.email'
 import { FilterQuery } from 'mongoose'
 import { updateUserProps } from '@/interfaces'
 import Notification from '../models/notification.model'
+import Payment from '../models/payment.model'
+import Booking from '../models/booking.model'
+import Rental from '../models/rental.model'
 
 interface createUserProps {
     name: string,
@@ -389,3 +391,56 @@ export async function fetchUsersNotAgents() {
 
     }
 }
+
+export async function fetchUserPayments({email}: {email: string}) {
+    try {
+        connectToDB()
+
+        const user = await User.findOne({ email: email })
+        .populate({
+            path: 'payments',
+            model: Payment,
+            options: {
+                sort: { createdAt: -1 }
+            }
+        
+        })
+        .select('name email isEmailVerified accountStatus payments')
+
+        return user
+        
+    } catch (error: any) {
+        throw new Error(`An error occurred fetching payments: ${error.message}`)
+    }
+}
+
+export async function fetchUserBookings({email}: {email: string}) {
+    try {
+        connectToDB()
+
+        const user = await User.findOne({ email: email})
+        .populate({
+            path: 'bookings',
+            model: Booking,
+            options: {
+                sort: { createdAt: -1 }
+            },
+            populate: {
+                        path: 'apartmentBooked',
+                        model: Rental,
+                        select: 'title location price images'
+                     }
+            
+        })
+        .populate({
+            path: 'payments',
+            model: Payment,
+            select: 'MerchantRequestID typeOfPayment mpesaReceiptNumber amount createdAt mpesaPhoneNumber'
+        })
+        .select('name email isEmailVerified accountStatus payments bookings')
+
+        return user
+    } catch (error: any) { 
+        throw new Error(`An error occurred while fetching user bookings: ${error.message}`)
+     }
+}     

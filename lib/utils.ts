@@ -144,3 +144,9 @@ export function arraysAreEqual(arr1: any[], arr2: any[]) {
   // If both conditions pass, arrays are equal
   return true;
 }
+
+export function returnPayment({ payments, MerchantRequestID}: { payments: any[]; MerchantRequestID: string}) {
+
+  const payment = payments.find((payment) => payment.MerchantRequestID === MerchantRequestID);
+  return payment;
+}
