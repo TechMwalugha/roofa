@@ -65,21 +65,26 @@ export async function updateBookingOnPayment({
 
         const booking = await Booking.find({MerchantRequestID: MerchantRequestID})
 
-        if(isPayment && booking[0].bookedBy) {
+        if(booking[0].bookedBy) {
             const user = await User.findById(booking[0].bookedBy)
             .select('bookings payments')
-            const payment = await Payment.findOne({MerchantRequestID: MerchantRequestID})
-            .select('_id')
 
-            if(payment && user) {
-                user.payments.push(payment._id)
+            if(user) {
+
+                if(isPayment) {
+                    const payment = await Payment.findOne({MerchantRequestID: MerchantRequestID})
+                .select('_id')
+                payment ? user.payments.push(payment._id) : null
+                }
+
                 user.bookings.push(booking[0]._id)
                 await user.save()
+
             }
 
         }
 
-        if(isPayment && booking[0].apartmentBooked) {
+        if(booking[0].apartmentBooked) {
             const rental = await Rental.findById(booking[0].apartmentBooked)
             .select('bookings')
             if(rental) {

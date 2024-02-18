@@ -16,7 +16,7 @@ const page = async () => {
     const user: any = await fetchUserBookings({email: sessionUser.user?.email as string})
 
     const isConfirmedBooking = user.bookings.some((booking: any) => !booking.isBookingSettled && booking.isPaymentMade.isMade)
-    const isNotConfirmedBooking = user.bookings.some((booking: any) => !booking.isBookingSettled && !booking.isPaymentMade.isMade)
+    const isNotConfirmedBooking = user.bookings.some((booking: any) => !booking.isBookingSettled)
     const isSettledBooking = user.bookings.some((booking: any) => booking.isBookingSettled && booking.isPaymentMade.isMade)
 
   return (
