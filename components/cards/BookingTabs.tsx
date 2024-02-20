@@ -112,7 +112,7 @@ const BookingTabs = ({
             }
 
             {
-                !isNotConfirmedBooking && (
+                (!isNotConfirmedBooking || isNotConfirmedBooking.length ===0) && (
                     <div className="flex items-center justify-center flex-col">
                         <img src="/assets/reject-button.svg" className="w-24 h-24 object-cover" />
                         <h2 className="text-center text-body1-bold">Sorry you have no booking here</h2>
@@ -212,7 +212,7 @@ const BookingTabs = ({
             }
 
             {
-                !isConfirmedBooking && (
+                (!isConfirmedBooking || isConfirmedBooking.length == 0) && (
                     <div className="flex items-center justify-center flex-col">
                         <img src="/assets/reject-button.svg" className="w-24 h-24 object-cover" />
                         <h2 className="text-center text-body1-bold">Sorry no confirmed booking found</h2>
@@ -312,7 +312,7 @@ const BookingTabs = ({
             }
 
             {
-                !isSettledBooking && (
+                (!isSettledBooking || isSettledBooking.length === 0) && (
                     <div className="flex items-center justify-center flex-col">
                         <img src="/assets/reject-button.svg" className="w-24 h-24 object-cover" />
                         <h2 className="text-center text-body1-bold">Sorry no settled booking found</h2>
