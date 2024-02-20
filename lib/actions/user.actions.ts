@@ -418,26 +418,28 @@ export async function fetchUserBookings({email}: {email: string}) {
     try {
         connectToDB()
 
-        const user = await User.findOne({ email: email})
+        const user = await User.findOne({ email: email}, { _id: 0})
         .populate({
             path: 'bookings',
             model: Booking,
             options: {
                 sort: { createdAt: -1 }
             },
+            select: "-_id -isPaymentMade._id -updatedAt -__v",
             populate: {
                         path: 'apartmentBooked',
                         model: Rental,
-                        select: 'title location price images'
+                        select: 'title location price images -_id'
                      }
             
         })
         .populate({
             path: 'payments',
             model: Payment,
-            select: 'MerchantRequestID typeOfPayment mpesaReceiptNumber amount createdAt mpesaPhoneNumber'
+            select: 'MerchantRequestID typeOfPayment mpesaReceiptNumber amount createdAt mpesaPhoneNumber -_id'
         })
         .select('name email isEmailVerified accountStatus payments bookings')
+        .lean()
 
         return user
     } catch (error: any) { 

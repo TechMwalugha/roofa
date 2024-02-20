@@ -15,67 +15,16 @@ import { MdCloudDone } from "react-icons/md";
 import PaymentCard from "./PaymentCard";
 
 interface BookingTabsInterface {
-    fullName: string,
-    email: string,
-    reportingDate: string,
-    identityNumber: string,
-    gender: string,
-    isBookingSettled: boolean,
-    createdAt: string,
-    isPaymentMade: {
-        isMade: boolean,
-        reason: string,
-    },
-    apartmentTitle: string, 
-    apartmentLocation:string,
-    apartmentPrice: number,
-    apartmentImage: string,
-    type: string | null, 
-    mpesaReceiptNumber: string | null,
-    amount: number | null, 
-    paymentMadeOn: string | null, 
-    mpesaPhoneNumber: string | null,
-    isNotConfirmedBooking: boolean,
-    isConfirmedBooking: boolean,
-    isSettledBooking: boolean
+    isNotConfirmedBooking: any[],
+    isConfirmedBooking: any[],
+    isSettledBooking: any[],
 }
 
 const BookingTabs = ({
-    fullName,
-    email,
-    reportingDate,
-    identityNumber,
-    gender,
-    isBookingSettled,
-    createdAt,
-    isPaymentMade,
-    apartmentTitle,
-    apartmentLocation,
-    apartmentPrice,
-    apartmentImage,
-    type, 
-    mpesaReceiptNumber, 
-    amount, 
-    paymentMadeOn, 
-    mpesaPhoneNumber,
+    isConfirmedBooking,
     isNotConfirmedBooking,
-    isConfirmedBooking, 
     isSettledBooking,
 }: BookingTabsInterface) => {
-
-    let isNotConfirmedBookingNo = []
-    let isConfirmedBookingNo = []
-    let isSettledBookingNo = []
-
-    if(isNotConfirmedBooking) {
-        isNotConfirmedBookingNo.push(isNotConfirmedBooking)
-    }
-    if(isConfirmedBooking) {
-        isConfirmedBookingNo.push(isConfirmedBooking)
-    }
-    if(isSettledBooking) {
-        isSettledBookingNo.push(isSettledBooking)
-    }
 
     
   return (
@@ -91,28 +40,28 @@ const BookingTabs = ({
          </TabsList>
          <TabsContent className="" value="not-confirmed">
          {
-                isNotConfirmedBooking && !isBookingSettled && !isPaymentMade.isMade && (
+                isNotConfirmedBooking.length > 0 && (
             
                     <div className="">
                         <h5 className="text-subtle-medium text-center">This are the bookings that you booked but did not complete payment.</h5>
 
                         <Accordion type="single" collapsible>
                         {
-                            isNotConfirmedBookingNo.map((b: boolean, index: number) => (
-                            <AccordionItem value={`item-${index}`}>
-                            <AccordionTrigger>{isNotConfirmedBookingNo.length}. {apartmentTitle} booking</AccordionTrigger>
+                            isNotConfirmedBooking.map((booking: any, index: number) => (
+                            <AccordionItem value={`item-${index}`} key={index}>
+                            <AccordionTrigger>{index + 1}. {booking.apartmentBooked.title} booking</AccordionTrigger>
                             <AccordionContent>
                             <div className="mt-5 shadow hover:shadow-count transition-all delay-2000 p-2 rounded cursor-pointer">
                             <div>
-                            <p className="bg-blue p-2 rounded-full w-10 h-10 flex items-center justify-center">{isNotConfirmedBookingNo.length}</p>
+                            <p className="bg-blue p-2 rounded-full w-10 h-10 flex items-center justify-center">{index + 1}</p>
                                 <h3 className="text-base-semibold text-center underline mb-4">Booking details</h3>
 
                                 <div>
-                                    <p className="text-small-regular">Name: <span className="text-danger capitalize ">{fullName}</span></p>
-                                    <p className="text-small-regular">Email: <span className="text-danger ">{email}</span></p>
-                                    <p className="text-small-regular">Identity Number: <span className="text-danger ">{identityNumber}</span></p>
-                                    <p className="text-small-regular">Gender: <span className="text-danger capitalize">{gender}</span></p>
-                                    <p className="text-small-regular">Reporting Date: <span className="text-danger ">{formatDateString(reportingDate)}</span></p>
+                                    <p className="text-small-regular">Name: <span className="text-danger capitalize ">{booking.fullName}</span></p>
+                                    <p className="text-small-regular">Email: <span className="text-danger ">{booking.email}</span></p>
+                                    <p className="text-small-regular">Identity Number: <span className="text-danger ">{booking.identityNumber}</span></p>
+                                    <p className="text-small-regular">Gender: <span className="text-danger capitalize">{booking.gender}</span></p>
+                                    <p className="text-small-regular">Reporting Date: <span className="text-danger ">{formatDateString(booking.reportingDate)}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -122,23 +71,23 @@ const BookingTabs = ({
                         <div className="mt-5 shadow hover:shadow-count transition-all delay-2000 p-2 rounded cursor-pointer lg:flex-1">
 
                          <div className="w-full h-36">
-                            <img src={`/rentalImages/${apartmentImage}`} alt={`${apartmentTitle} image`} className="w-full h-full object-cover rounded" />
+                            <img src={`/rentalImages/${booking.apartmentBooked.images[0]}`} alt={`${booking.apartmentBooked.title} image`} className="w-full h-full object-cover rounded" />
                          </div>
                          <h3 className="text-base-semibold text-center underline my-4">Apartment booked</h3>
 
                          <div className="flex items-center justify-between mb-2">
                             <p className="text-small-semibold">Title:</p>
-                            <p>{apartmentTitle}</p>
+                            <p>{booking.apartmentBooked.title}</p>
                          </div>
 
                          <div className="flex items-center justify-between mb-2">
                             <p className="text-small-semibold">Location:</p>
-                            <p>{apartmentLocation}</p>
+                            <p>{booking.apartmentBooked.location}</p>
                          </div>
 
                          <div className="flex items-center justify-between mb-2">
                             <p className="text-small-semibold">Price:</p>
-                            <p>Ksh. {apartmentPrice}</p>
+                            <p>Ksh. {booking.apartmentBooked.price}</p>
                          </div>
                        </div>
 
@@ -176,28 +125,28 @@ const BookingTabs = ({
          <TabsContent value="confirmed">
             {
                 
-                isConfirmedBooking && !isBookingSettled && isPaymentMade.isMade && (
+                isConfirmedBooking.length > 0 && (
                    
                     <div className="">
                         <h5 className="text-subtle-medium text-center">This are the bookings that have been confirmed but no settled.</h5>
 
                         <Accordion type="single" collapsible>
                             {
-                                isConfirmedBookingNo.map((b: boolean, index: number) => (  
-                                    <AccordionItem value={`item-${index}`}>
-                                <AccordionTrigger>{isConfirmedBookingNo.length}. {apartmentTitle} booking</AccordionTrigger>
+                                isConfirmedBooking.map((booking: any, index: number) => (  
+                                    <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{index + 1}. {booking.apartmentBooked.title} booking</AccordionTrigger>
                                 <AccordionContent>
                                 <div className="mt-5 shadow hover:shadow-count transition-all delay-2000 p-2 rounded cursor-pointer">
                             <div>
-                            <p className="bg-blue p-2 rounded-full w-10 h-10 flex items-center justify-center">{isConfirmedBookingNo.length}</p>
+                            <p className="bg-blue p-2 rounded-full w-10 h-10 flex items-center justify-center">{index + 1}</p>
                                 <h3 className="text-base-semibold text-center underline mb-4">Booking details</h3>
 
                                 <div>
-                                    <p className="text-small-regular">Name: <span className="text-danger capitalize ">{fullName}</span></p>
-                                    <p className="text-small-regular">Email: <span className="text-danger ">{email}</span></p>
-                                    <p className="text-small-regular">Identity Number: <span className="text-danger ">{identityNumber}</span></p>
-                                    <p className="text-small-regular">Gender: <span className="text-danger capitalize">{gender}</span></p>
-                                    <p className="text-small-regular">Reporting Date: <span className="text-danger ">{formatDateString(reportingDate)}</span></p>
+                                    <p className="text-small-regular">Name: <span className="text-danger capitalize ">{booking.fullName}</span></p>
+                                    <p className="text-small-regular">Email: <span className="text-danger ">{booking.email}</span></p>
+                                    <p className="text-small-regular">Identity Number: <span className="text-danger ">{booking.identityNumber}</span></p>
+                                    <p className="text-small-regular">Gender: <span className="text-danger capitalize">{booking.gender}</span></p>
+                                    <p className="text-small-regular">Reporting Date: <span className="text-danger ">{formatDateString(booking.reportingDate)}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -207,23 +156,23 @@ const BookingTabs = ({
                         <div className="mt-5 shadow hover:shadow-count transition-all delay-2000 p-2 rounded cursor-pointer lg:flex-1">
 
                          <div className="w-full h-36">
-                            <img src={`/rentalImages/${apartmentImage}`} alt={`${apartmentTitle} image`} className="w-full h-full object-cover rounded" />
+                            <img src={`/rentalImages/${booking.apartmentBooked.images[0]}`} alt={`${booking.apartmentBooked.title} image`} className="w-full h-full object-cover rounded" />
                          </div>
                          <h3 className="text-base-semibold text-center underline my-4">Apartment booked</h3>
 
                          <div className="flex items-center justify-between mb-2">
                             <p className="text-small-semibold">Title:</p>
-                            <p>{apartmentTitle}</p>
+                            <p>{booking.apartmentBooked.title}</p>
                          </div>
 
                          <div className="flex items-center justify-between mb-2">
                             <p className="text-small-semibold">Location:</p>
-                            <p>{apartmentLocation}</p>
+                            <p>{booking.apartmentBooked.location}</p>
                          </div>
 
                          <div className="flex items-center justify-between mb-2">
                             <p className="text-small-semibold">Price:</p>
-                            <p>Ksh. {apartmentPrice}</p>
+                            <p>Ksh. {booking.apartmentBooked.price}</p>
                          </div>
                        </div>
 
@@ -236,15 +185,15 @@ const BookingTabs = ({
                        </div>
 
                        {
-                        type && type && mpesaReceiptNumber && amount && paymentMadeOn && mpesaPhoneNumber && (
+                        booking.paymentDetails.typeOfPayment &&  booking.paymentDetails.mpesaReceiptNumber && booking.paymentDetails.amount  && (
                             <div>
                             <h3 className="text-base-semibold text-center underline my-4">Payment Information</h3>
                             <PaymentCard 
-                            type ={type as string}
-                            mpesaReceiptNumber = {mpesaReceiptNumber as string}
-                            amount ={ amount as number }
-                            paymentMadeOn ={paymentMadeOn as string}
-                            mpesaPhoneNumber = {mpesaPhoneNumber as string}
+                            type ={booking.paymentDetails.typeOfPayment as string}
+                            mpesaReceiptNumber = {booking.paymentDetails.mpesaReceiptNumber  as string}
+                            amount ={ booking.paymentDetails.amount as number }
+                            paymentMadeOn ={booking.paymentDetails.createdAt as string}
+                            mpesaPhoneNumber = {booking.paymentDetails.mpesaPhoneNumber as string}
                             />
                            </div>    
                         )
@@ -276,28 +225,28 @@ const BookingTabs = ({
          <TabsContent value="settled">
          {
                 
-                isSettledBooking && isBookingSettled && isPaymentMade.isMade && (
+                isSettledBooking.length > 0 && (
                    
                     <div className="">
                         <h5 className="text-subtle-medium text-center">This are the bookings that have been confirmed but settled.</h5>
 
                         <Accordion type="single" collapsible>
                             {
-                                isSettledBookingNo.map((b: boolean, index: number) => (  
-                                    <AccordionItem value={`item-${index}`}>
-                                <AccordionTrigger>{isSettledBookingNo.length}. {apartmentTitle} booking</AccordionTrigger>
+                                isSettledBooking.map((booking: any, index: number) => (  
+                                    <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger>{index + 1}. {booking.apartmentBooked.title} booking</AccordionTrigger>
                                 <AccordionContent>
                                 <div className="mt-5 shadow hover:shadow-count transition-all delay-2000 p-2 rounded cursor-pointer">
                             <div>
-                            <p className="bg-blue p-2 rounded-full w-10 h-10 flex items-center justify-center">{isSettledBookingNo.length}</p>
+                            <p className="bg-blue p-2 rounded-full w-10 h-10 flex items-center justify-center">{index + 1}</p>
                                 <h3 className="text-base-semibold text-center underline mb-4">Booking details</h3>
 
                                 <div>
-                                    <p className="text-small-regular">Name: <span className="text-danger capitalize ">{fullName}</span></p>
-                                    <p className="text-small-regular">Email: <span className="text-danger ">{email}</span></p>
-                                    <p className="text-small-regular">Identity Number: <span className="text-danger ">{identityNumber}</span></p>
-                                    <p className="text-small-regular">Gender: <span className="text-danger capitalize">{gender}</span></p>
-                                    <p className="text-small-regular">Reporting Date: <span className="text-danger ">{formatDateString(reportingDate)}</span></p>
+                                    <p className="text-small-regular">Name: <span className="text-danger capitalize ">{booking.fullName}</span></p>
+                                    <p className="text-small-regular">Email: <span className="text-danger ">{booking.email}</span></p>
+                                    <p className="text-small-regular">Identity Number: <span className="text-danger ">{booking.identityNumber}</span></p>
+                                    <p className="text-small-regular">Gender: <span className="text-danger capitalize">{booking.gender}</span></p>
+                                    <p className="text-small-regular">Reporting Date: <span className="text-danger ">{formatDateString(booking.reportingDate)}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -307,23 +256,23 @@ const BookingTabs = ({
                         <div className="mt-5 shadow hover:shadow-count transition-all delay-2000 p-2 rounded cursor-pointer lg:flex-1">
 
                          <div className="w-full h-36">
-                            <img src={`/rentalImages/${apartmentImage}`} alt={`${apartmentTitle} image`} className="w-full h-full object-cover rounded" />
+                            <img src={`/rentalImages/${booking.apartmentBooked.images[0]}`} alt={`${booking.apartmentBooked.title} image`} className="w-full h-full object-cover rounded" />
                          </div>
                          <h3 className="text-base-semibold text-center underline my-4">Apartment booked</h3>
 
                          <div className="flex items-center justify-between mb-2">
                             <p className="text-small-semibold">Title:</p>
-                            <p>{apartmentTitle}</p>
+                            <p>{booking.apartmentBooked.title}</p>
                          </div>
 
                          <div className="flex items-center justify-between mb-2">
                             <p className="text-small-semibold">Location:</p>
-                            <p>{apartmentLocation}</p>
+                            <p>{booking.apartmentBooked.location}</p>
                          </div>
 
                          <div className="flex items-center justify-between mb-2">
                             <p className="text-small-semibold">Price:</p>
-                            <p>Ksh. {apartmentPrice}</p>
+                            <p>Ksh. {booking.apartmentBooked.price}</p>
                          </div>
                        </div>
 
@@ -336,15 +285,15 @@ const BookingTabs = ({
                        </div>
 
                        {
-                        type && type && mpesaReceiptNumber && amount && paymentMadeOn && mpesaPhoneNumber && (
+                        booking.paymentDetails.typeOfPayment &&  booking.paymentDetails.mpesaReceiptNumber && booking.paymentDetails.amount  && (
                             <div>
                             <h3 className="text-base-semibold text-center underline my-4">Payment Information</h3>
                             <PaymentCard 
-                            type ={type as string}
-                            mpesaReceiptNumber = {mpesaReceiptNumber as string}
-                            amount ={ amount as number }
-                            paymentMadeOn ={paymentMadeOn as string}
-                            mpesaPhoneNumber = {mpesaPhoneNumber as string}
+                            type ={booking.paymentDetails.typeOfPayment as string}
+                            mpesaReceiptNumber = {booking.paymentDetails.mpesaReceiptNumber as string}
+                            amount ={ booking.paymentDetails.amount as number }
+                            paymentMadeOn ={booking.paymentDetails.createdAt as string}
+                            mpesaPhoneNumber = {booking.paymentDetails.mpesaPhoneNumber as string}
                             />
                            </div>    
                         )

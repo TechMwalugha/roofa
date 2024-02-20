@@ -15,9 +15,101 @@ const page = async () => {
     
     const user: any = await fetchUserBookings({email: sessionUser.user?.email as string})
 
-    const isConfirmedBooking = user.bookings.some((booking: any) => !booking.isBookingSettled && booking.isPaymentMade.isMade)
-    const isNotConfirmedBooking = user.bookings.some((booking: any) => !booking.isBookingSettled)
-    const isSettledBooking = user.bookings.some((booking: any) => booking.isBookingSettled && booking.isPaymentMade.isMade)
+    const isConfirmedBooking = user.bookings.filter((booking: any) => {
+        if(!booking.isBookingSettled && booking.isPaymentMade.isMade) {
+            return {
+                fullName: booking.fullName,
+                email: booking.email,
+                reportingDate: booking.reportingDate,
+                identityNumber: booking.identityNumber,
+                gender:  booking.gender,
+                isBookingSettled: booking.isBookingSettled,
+                createdAt: booking.createdAt,
+                isPaymentMade: {
+                    isMade: booking.isPaymentMade.isMade,
+                    reason: booking.isPaymentMade.reason,
+                },
+                MerchantRequestID: booking.MerchantRequestID,
+                apartmentBooked: booking.apartmentBooked,
+            }
+        }
+    })
+    const isNotConfirmedBooking = user.bookings.filter((booking: any) => {
+    if(!booking.isBookingSettled && !booking.isPaymentMade.isMade) {
+        return {
+            fullName: booking.fullName,
+            email: booking.email,
+            reportingDate: booking.reportingDate,
+            identityNumber: booking.identityNumber,
+            gender:  booking.gender,
+            isBookingSettled: booking.isBookingSettled,
+            createdAt: booking.createdAt,
+            isPaymentMade: {
+                isMade: booking.isPaymentMade.isMade,
+                reason: booking.isPaymentMade.reason,
+            },
+            MerchantRequestID: booking.MerchantRequestID,
+            apartmentBooked: booking.apartmentBooked,
+        }
+    }
+}
+    )
+    const isSettledBooking = user.bookings.filter((booking: any) => {
+        if(booking.isBookingSettled && booking.isPaymentMade.isMade) {
+            return {
+                fullName: booking.fullName,
+                email: booking.email,
+                reportingDate: booking.reportingDate,
+                identityNumber: booking.identityNumber,
+                gender:  booking.gender,
+                isBookingSettled: booking.isBookingSettled,
+                createdAt: booking.createdAt,
+                isPaymentMade: {
+                    isMade: booking.isPaymentMade.isMade,
+                    reason: booking.isPaymentMade.reason,
+                },
+                MerchantRequestID: booking.MerchantRequestID,
+                apartmentBooked: booking.apartmentBooked,
+            }
+        }
+    })
+
+    if(!user) return
+
+    if(user.payments.length > 0) {
+ 
+        if(isConfirmedBooking.length > 0) {
+            isConfirmedBooking.forEach((booking: any) => {
+                const payment = user.payments.find((payment: any) => payment.MerchantRequestID === booking.MerchantRequestID)
+    
+                if(payment) {
+                    // Convert Mongoose document to plain JavaScript object
+                // const paymentObject = payment.toObject();
+                    // Create a new object to merge initial booking values and payment details
+                const mergedBooking = { ...booking, paymentDetails: payment };
+    
+                    // Replace the existing booking object with the merged one
+                isConfirmedBooking[isConfirmedBooking.indexOf(booking)] = mergedBooking;
+                }
+            })
+        }
+
+        if(isSettledBooking.length > 0) {
+            isSettledBooking.forEach((booking: any) => {
+                const payment = user.payments.find((payment: any) => payment.MerchantRequestID === booking.MerchantRequestID)
+    
+                if(payment) {
+                    // Create a new object to merge initial booking values and payment details
+                const mergedBooking = { ...booking, paymentDetails: JSON.parse(JSON.stringify(payment)) };
+    
+                    // Replace the existing booking object with the merged one
+                isSettledBooking[isSettledBooking.indexOf(booking)] = mergedBooking;
+                }
+            })
+        }
+    
+
+    }
 
   return (
     <div className="lg:px-28 p-4">
@@ -41,50 +133,15 @@ const page = async () => {
 
             <div>
                 {
-                    user.bookings.length > 0 && user.bookings.map((booking: any, index: number) => {
-                        let type: (string | null) = null
-                        let mpesaReceiptNumber: (string | null) = null 
-                        let amount: (number | null) = null
-                        let paymentMadeOn: (string | null) = null 
-                        let mpesaPhoneNumber: (string | null) = null
-                        if(booking.isPaymentMade.isMade && user.payments.length > 0) {
-                            const payment = user.payments.filter((payment: any) => payment.MerchantRequestID === booking.MerchantRequestID);
-                            
-                            type = payment[0].typeOfPayment
-                            mpesaReceiptNumber = payment[0].mpesaReceiptNumber
-                            amount = payment[0].amount
-                            paymentMadeOn = payment[0].createdAt as unknown as string
-                            mpesaPhoneNumber = payment[0].mpesaPhoneNumber
-                        }
-                     return (
                         <BookingTabs 
-                        key={index}
-                        fullName = {booking.fullName}
-                        email ={booking.email}
-                        reportingDate ={booking.reportingDate}
-                        identityNumber = {booking.identityNumber}
-                        gender ={booking.gender}
-                        isBookingSettled ={booking.isBookingSettled}
-                        createdAt = {booking.createdAt as unknown as string}
-                        isPaymentMade = {{ 
-                            isMade: booking.isPaymentMade.isMade,
-                            reason: booking.isPaymentMade.reason 
-                        }}
-                        apartmentTitle = {booking.apartmentBooked.title}
-                        apartmentLocation = {booking.apartmentBooked.location}
-                        apartmentPrice = {booking.apartmentBooked.price}
-                        apartmentImage = {booking.apartmentBooked.images[0]}
-                        type = {type}
-                        mpesaReceiptNumber = {mpesaReceiptNumber}
-                        amount = {amount}
-                        paymentMadeOn = {paymentMadeOn}
-                        mpesaPhoneNumber = {mpesaPhoneNumber}
-                        isNotConfirmedBooking = {isNotConfirmedBooking}
-                        isConfirmedBooking = {isConfirmedBooking}
-                        isSettledBooking = {isSettledBooking}
+                        isNotConfirmedBooking = {JSON.parse(JSON.stringify(isNotConfirmedBooking))}
+                        isConfirmedBooking = {JSON.parse(JSON.stringify(isConfirmedBooking))}
+                        isSettledBooking = {JSON.parse(JSON.stringify(isSettledBooking))}
                         />
-                    ) })
+                    
                 }
+
+                
             </div>
 
         </section>
