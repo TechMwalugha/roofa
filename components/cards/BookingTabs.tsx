@@ -34,11 +34,11 @@ const BookingTabs = ({
          <TabsList
          className="w-full flex justify-between items-center bg-blue"
          >
-             <TabsTrigger value="not-confirmed">Not-confirmed</TabsTrigger>
-             <TabsTrigger value="confirmed">Confirmed</TabsTrigger>
+             <TabsTrigger value="failed">Failed</TabsTrigger>
+             <TabsTrigger value="pending">Pending</TabsTrigger>
              <TabsTrigger value="settled">Settled</TabsTrigger>
          </TabsList>
-         <TabsContent className="" value="not-confirmed">
+         <TabsContent className="" value="failed">
          {
                 isNotConfirmedBooking.length > 0 && (
             
@@ -122,7 +122,7 @@ const BookingTabs = ({
                     )
             }
          </TabsContent>
-         <TabsContent value="confirmed">
+         <TabsContent value="pending">
             {
                 
                 isConfirmedBooking.length > 0 && (
