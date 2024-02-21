@@ -29,7 +29,7 @@ const BookingTabs = ({
     
   return (
     <Tabs 
-     defaultValue="confirmed" 
+     defaultValue="pending" 
      className="w-full">
          <TabsList
          className="w-full flex justify-between items-center bg-blue"
