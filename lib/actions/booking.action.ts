@@ -4,7 +4,7 @@ import Booking from "../models/booking.model";
 import { getServerSession } from "next-auth";
 import { fetchUserByEmail } from "./user.actions";
 import User from "../models/user.model";
-import { ObjectId } from "mongoose";
+import { FilterQuery, ObjectId, SortOrder } from "mongoose";
 import Rental from "../models/rental.model";
 import Payment from "../models/payment.model";
 
@@ -126,3 +126,67 @@ export async function fetchOneBooking(id: string) {
         throw new Error(`An error occurred fetching rental: ${error.message}`)
     }
 }
+
+export async function fetchAllBookings({
+    searchString = "",
+    pageNumber = 1,
+    pageSize = 20,
+    sortBy = "desc",
+  }: {
+    searchString?: string;
+    pageNumber?: number;
+    pageSize?: number;
+    sortBy?: SortOrder;
+  }) {
+    try {
+      connectToDB();
+  
+      // Calculate the number of users to skip based on the page number and page size.
+      const skipAmount = (pageNumber - 1) * pageSize;
+  
+      // Create a case-insensitive regular expression for the provided search string.
+      const regex = new RegExp(searchString, "i");
+  
+      // Create an initial query object to filter users.
+      const query: FilterQuery<typeof Payment> = {
+  
+      };
+  
+      // If the search string is not empty, add the $or operator to match either name or email fields.
+      if (searchString.trim() !== "") {
+        query.$or = [
+          { email: { $regex: regex } },
+          { fullName: { $regex: regex } },
+          { identityNumber: { $regex: regex } },
+        ];
+      }
+  
+      // Define the sort options for the fetched users based on createdAt field and provided sort order.
+      const sortOptions = { createdAt: sortBy };
+  
+      const bookingsQuery: any = Booking.find(query)
+        .sort(sortOptions)
+        .skip(skipAmount)
+        .limit(pageSize)
+  
+      // Count the total number of users that match the search criteria (without pagination).
+      const totalBookingsCount = await Booking.countDocuments(query);
+      const pendingBooking = await Booking.countDocuments({"isBookingSettled": false,
+      "isPaymentMade.isMade": true})
+      const settledBooking = await Booking.countDocuments({"isBookingSettled": true,
+      "isPaymentMade.isMade": true})
+      const failedBooking = await Booking.countDocuments({
+        "isPaymentMade.isMade": false
+     });
+  
+      const bookings = await bookingsQuery.exec();
+  
+      // Check if there are more users beyond the current page.
+      const isNext = totalBookingsCount > skipAmount + bookings.length;
+  
+      return { bookings, isNext, pendingBooking, settledBooking, failedBooking };
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw error;
+    }
+  }

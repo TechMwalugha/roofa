@@ -52,12 +52,12 @@ const page = async ({
       redirect('/admin/dashboard')
     }
 
-    let roofaUsers = result.users.filter((user) => {
+    let roofaUsers = result.users.filter((user: any) => {
        return user.role === 'user'
       })
 
       
-    const roofaAgents = result.users.filter((user) => {
+    const roofaAgents = result.users.filter((user: any) => {
       return user.role === 'roofa-agent'
      })
 
@@ -67,7 +67,7 @@ const page = async ({
       users =  roofaUsers
      } 
 
-     const newUsers = result.users.filter((user) => {
+     const newUsers = result.users.filter((user: any) => {
       return getSecondsDifference(user.createdAt) < 3600 * 24 * 30 && user.role !== 'roofa-agent' && user.role !== 'admin'
      })
 

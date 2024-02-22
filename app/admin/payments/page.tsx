@@ -14,7 +14,7 @@ const page = async ({
     [key: string]: string | undefined
   }
 }) => {
-  const results = await fetchAllPayments({
+  const results: any = await fetchAllPayments({
       searchString: searchParams?.q,
       pageNumber: searchParams?.page ? +searchParams.page : 1,
       pageSize: 20,
