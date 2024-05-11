@@ -1,3 +1,5 @@
+'use server'
+
 import { createBookingInterface } from "@/interfaces";
 import { connectToDB } from "../mongoose";
 import Booking from "../models/booking.model";
@@ -7,6 +9,7 @@ import User from "../models/user.model";
 import { FilterQuery, ObjectId, SortOrder } from "mongoose";
 import Rental from "../models/rental.model";
 import Payment from "../models/payment.model";
+import sendEmail from "../emailing/nodemailer.email";
 
 export async function createNewBooking({
     MerchantRequestID,
@@ -127,6 +130,27 @@ export async function fetchOneBooking(id: string) {
     }
 }
 
+export async function fetchOneBookingId({ id }: { id: string} ) {
+    try{
+        connectToDB()
+
+        const booking = await Booking.findById(id as unknown as ObjectId)
+        .populate({
+            path: "bookedBy",
+            model: User
+        })
+        .populate({
+            path: "apartmentBooked",
+            model: Rental
+        })
+
+        return booking
+
+    } catch(error: any) {
+        throw new Error(`Cannot fetch the booking ${error.message}`)
+    }
+}
+
 export async function fetchAllBookings({
     searchString = "",
     pageNumber = 1,
@@ -190,3 +214,35 @@ export async function fetchAllBookings({
       throw error;
     }
   }
+
+export async function settleBookingAction({ id }: { id: ObjectId}) {
+    try {
+        connectToDB()
+        
+        const booking = await Booking.findById(id)
+
+        if(!booking) return false
+
+        console.log(booking.isBookingSettled)
+        if(booking.isPaymentMade.isMade) {
+            booking.isBookingSettled = !booking.isBookingSettled
+        }
+
+        console.log(booking.isBookingSettled)
+
+        await booking.save()
+
+        sendEmail({
+            email: booking.email, 
+            subject: 'Roofa Booking', 
+            heading: `Booking Settled successfully.`, 
+            content: `Dear ${booking.fullName} your booking for has been settled successfully.`, 
+            pdfFilePath: null ,
+        })
+
+        return true
+        
+    } catch (error: any) {
+        throw new Error(`Cannot update booking. ${error.message}`)
+    }
+}

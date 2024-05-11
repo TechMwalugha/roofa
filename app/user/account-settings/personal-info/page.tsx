@@ -15,6 +15,8 @@ const page = async () => {
 
     if(!user) redirect('/login')
 
+      console.log(user.image)
+
   return (
     <div className="flex gap-4 items-center justify-between p-3 sm:p-7">
       <div className="md:flex flex-col gap-3 hidden self-start">

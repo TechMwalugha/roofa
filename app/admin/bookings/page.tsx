@@ -21,7 +21,7 @@ const page = async ({
     pageSize: 20,
   })
 
-  // console.log(result)
+  console.log(result)
   return (
     <div>
       <div className="flex items-center gap-3 flex-wrap">
@@ -67,7 +67,7 @@ const page = async ({
             </div>
         {
           result.bookings.map((booking: any, index: number) => (
-            <Link key={booking._id} href={`/bookings/${booking._id.toString()}`} className={`flex items-center justify-between flex-wrap shadow-md p-3 rounded mb-3 hover:shadow-groups ${(booking.isBookingSettled && booking.isPaymentMade.isMade) ? 'bg-blue' : ''} ${(!booking.isBookingSettled && booking.isPaymentMade.isMade) ? 'bg-warning' : ''}`}>
+            <Link key={booking._id} href={`/admin/bookings/${booking._id.toString()}`} className={`flex items-center justify-between flex-wrap shadow-md p-3 rounded mb-3 hover:shadow-groups ${(booking.isBookingSettled && booking.isPaymentMade.isMade) ? 'bg-blue' : ''} ${(!booking.isBookingSettled && booking.isPaymentMade.isMade) ? 'bg-warning' : ''}`}>
               <div className="text-subtle-medium">
                 <h6>Booked by: <span className="text-gray-400 capitalize">{booking.fullName}</span></h6>
                 <p>Email: <span className="text-gray-400"> {booking.email}</span></p>

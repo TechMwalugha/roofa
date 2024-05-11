@@ -59,7 +59,11 @@ const page = async () => {
         </Link>
      </section>
 
-     <Warning/>
+     <Warning 
+     subject = "Unauthorized Access"
+     content = "This system is for authorized users only. Unauthorized access to or use of this system is strictly prohibited and may result in legal action, including prosecution under applicable laws. If you are not an authorized user, disconnect immediately. User accounts are provided solely for the use of the individual to whom they are assigned. Sharing of user credentials is strictly prohibited. Each user is responsible for maintaining the confidentiality of their account information and ensuring that it is not accessed by unauthorized individuals. All activities performed using user accounts are subject to monitoring and logging. Any unauthorized access or suspicious activity will be investigated, and appropriate action will be taken, including termination of access privileges and reporting to law enforcement authorities if necessary. By logging in to this system, you acknowledge that you have read, understood, and agree to comply with the terms and conditions outlined in this warning. Failure to comply may result in disciplinary action, up to and including termination of employment or legal action."
+     viewMoreUrl = "/roofa.co.ke"
+     />
 
      <div className="flex items-center justify-center flex-col">
             <p>Need to delete your account?</p>

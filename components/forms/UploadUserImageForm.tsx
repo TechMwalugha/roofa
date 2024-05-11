@@ -75,7 +75,10 @@ const UploadUserImageForm =(
               // Handle errors here
               console.error(e)
             }
+
+    
           }
+
 
     return (
         <main className='mb-5 shadow p-5 rounded-lg'>
@@ -88,6 +91,7 @@ const UploadUserImageForm =(
        alt="image"
        className='rounded-full object-cover'
        />
+
        </div>
        <h1>Update Your Image</h1>
     </div>

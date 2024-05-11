@@ -4,7 +4,7 @@ interface Props {
     subject: string
     heading: string
     content: string
-    pdfFilePath: string
+    pdfFilePath: string | null
 }
 
 const sendEmail = async ({email, subject, heading, content, pdfFilePath}: Props) =>{

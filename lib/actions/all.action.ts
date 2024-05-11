@@ -1,3 +1,4 @@
+'use server'
 import generatePdf from "../emailing/pdf"
 import { connectToDB } from "../mongoose"
 import { fetchOneBooking } from "./booking.action"

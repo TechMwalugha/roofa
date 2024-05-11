@@ -43,7 +43,7 @@ export async function POST(req: any) {
             Amount: "1",
             PartyA: phoneNumber,
             PartyB: shortcode,
-            PhoneNumber: "254717355181",
+            PhoneNumber: phoneNumber,
             CallBackURL: "https://roofa-git-master-techmwalughas-projects.vercel.app/api/payments/callback",
             AccountReference: fullName,
             TransactionDesc: "Booking rental Payment",
