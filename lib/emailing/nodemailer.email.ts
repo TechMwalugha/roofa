@@ -13,13 +13,13 @@ const sendEmail = async ({email, subject, heading, content, pdfFilePath}: Props)
             // host: Number(process.env.HOST) || 0,
             // service: process.env.SERVICE,
             // post: Number(process.env.EMAIL_PORT),
-            host: 'smtp.gmail.com',
+            host: 'smtp.zoho.com',
             port: 465,
             secure: true, // use SSL
             auth:{
                 user: process.env.USER,
                 pass: process.env.PASS
-            }
+            },
         })
 
         const mailOptions: nodeMailer.SendMailOptions = {

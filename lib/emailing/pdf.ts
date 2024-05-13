@@ -1,6 +1,8 @@
 import puppeteer from 'puppeteer'
 import { formatDateString } from '../utils';
 import sendEmail from './nodemailer.email';
+import { readFileSync } from 'fs';
+
 
 export default async function generatePdf({
     receiptNo,
@@ -114,7 +116,9 @@ export default async function generatePdf({
   </style>
   <body>
       <div class="logo">
-          <img src="localhost:3000/assets/roofalogo.png" />
+      <img src="data:image/jpeg;base64,${
+        readFileSync('public/assets/roofalogo.png').toString('base64')
+      }" alt="alt text" />
       </div>
       <header>
           <div>
