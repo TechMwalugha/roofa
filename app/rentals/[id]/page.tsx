@@ -14,10 +14,12 @@ import { fetchUserByEmail } from '@/lib/actions/user.actions';
 import { TiTick } from "react-icons/ti";
 import SaveRental from '@/components/cards/SaveRental';
 import UnsaveRental from '@/components/cards/UnsaveRental';
+import { containsGoogleusercontent } from '@/lib/utils';
 
 
 const page = async ({ params } : { params: { id: ObjectId}}) => {
   const id = params.id
+  let ownerImage
   
   const rental:any = await fetchSingleRental({id})
   const rentalImages = rental.images.slice(0,5)
@@ -25,6 +27,14 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
   const session = await getServerSession()
   
   const user:any = await fetchUserByEmail(session?.user?.email as any)
+
+  if(rental.owner.image && !containsGoogleusercontent(rental.owner.image as string)) {
+    ownerImage = `https://roofa.co.ke/images${rental.owner.image}`
+   } else if(rental.owner.image && containsGoogleusercontent(rental.owner.image as string)) {
+    ownerImage = rental.owner.image
+   } else {
+    ownerImage = '/assets/account-profile.png'
+   }
 
 
   return (
@@ -71,7 +81,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
           </div>
           <div className='w-16 h-16'>
             <img
-            src={`/images${rental.owner.image}`}
+            src={`/images${ownerImage}`}
             alt="user image"
             width={30}
             height={30}
