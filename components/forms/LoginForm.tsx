@@ -44,7 +44,7 @@ const LoginForm = () => {
                 password: values.password,
             })
 
-            if(res?.error === 'Email is not verified') router.push(`/verify/${values.email}`)
+            if(res?.error === 'Email is not verified, kindly wait as we redirect you.') router.push(`/verify/${values.email}`)
 
             if(res?.error) {
                 setError(res.error)
@@ -77,6 +77,12 @@ const LoginForm = () => {
                className="mb-3"
                />
                 <p>{error}</p>
+                <Button
+                className="shadow-md mt-3 bg-blue"
+                onClick={() => setError('')}
+                >
+                  Reload
+                </Button>
               </div>
             </div>
           )}
