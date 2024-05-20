@@ -1,29 +1,25 @@
 import  nodeMailer from 'nodemailer'
-interface Props {
-    email: string
-    subject: string
-    heading: string
-    content: string
-    pdfFilePath: string | null
+
+interface AccountsProps {
+    email: string;
+    subject: string;
+    heading: string;
+    content: string;
 }
-
-
-
-const sendEmail = async ({email, subject, heading, content, pdfFilePath}: Props) =>{
+export async function accountsEmail({email, subject, heading, content}: AccountsProps) {
     try {
-
-    const transporter = nodeMailer.createTransport({
-        host: 'smtp.zoho.com',
-        port: 465,
-        secure: true, // use SSL
-        auth:{
-            user: "reservations@roofa.co.ke",
-            pass: process.env.PASS,
-        },
-    })
+        const transporter = nodeMailer.createTransport({
+            host: 'smtp.zoho.com',
+            port: 465,
+            secure: true, // use SSL
+            auth:{
+                user: process.env.ACCOUNTS_EMAIL_USER,
+                pass: process.env.ACCOUNTS_EMAIL_PASS,
+            },
+        })
 
         const mailOptions: nodeMailer.SendMailOptions = {
-            from: '"Roofa Reservations" <reservations@roofa.co.ke>',
+            from: '"Roofah Accounts" <accounts@roofa.co.ke>',
             to: email,
             subject: subject,
             html: `<!-- Complete Email template -->
@@ -38,11 +34,13 @@ const sendEmail = async ({email, subject, heading, content, pdfFilePath}: Props)
                                     cellspacing="0" class="col-550" width="550"> 
                                     <tbody> 
                                         <tr> 
-                                            <td align="center" style="background-color: transparent; 
-                                                    height: 100px; width: 100px"> 
+                                            <td align="center"> 
             
-                                                <a href="roofa.co.ke" style="text-decoration: none;"> 
-                                                    <img src="https://roofa.co.ke/assets/roofalogo.png" style="height: 80px; width: 80px;" />
+                                                <a href="#" style="text-decoration: none;"> 
+                                                    <p style="color:white; 
+                                                            font-weight:bold; font-size: 22px"> 
+                                                        Roofa Accounts
+                                                    </p> 
                                                 </a> 
                                             </td> 
                                         </tr> 
@@ -187,28 +185,11 @@ const sendEmail = async ({email, subject, heading, content, pdfFilePath}: Props)
             `,
         }
 
-        //conditionally add the attachment if pdfFilePath exists
-
-        if (pdfFilePath) {
-            const filePath: string = pdfFilePath;
-            const parts: string[] = filePath.split('/'); // Split the string by '/'
-            const fileNameWithExtension: string = parts[parts.length - 1]; // Extract the last part which contains the file name with extension
-            const fileNameParts: string[] = fileNameWithExtension.split('.'); // Split the file name by '.'
-            const fileNameWithoutExtension: string = fileNameParts[0]; // Extract the part before the extension
-
-            mailOptions.attachments = [{
-                filename: `${fileNameWithoutExtension.slice(0, 10)}.pdf`,
-                path: pdfFilePath // Path to the PDF file
-            }];
-        }
-
         await transporter.sendMail(mailOptions);
         console.log('email sent')
 
-    } catch (error: any) {
+    } catch (error) {
         console.log("Email not sent")
-        console.error(error)
+        console.log(error)
     }
 }
-
-export default sendEmail

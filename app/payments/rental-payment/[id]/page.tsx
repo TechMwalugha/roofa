@@ -1,36 +1,43 @@
 import GenerateReceipt from '@/components/forms/GenerateReceipt'
+import Refresh from '@/components/forms/Refresh'
 import Danger from '@/components/shared/alerts/Danger'
 import HorizontalLine from '@/components/shared/utils/HorizontalLine'
 import { fetchOneBooking } from '@/lib/actions/booking.action'
 import { fetchOnePayment } from '@/lib/actions/payment.action'
 import generatePdf from '@/lib/emailing/pdf'
-import { formatDateString } from '@/lib/utils'
+import { containsGoogleusercontent, formatDateString } from '@/lib/utils'
 import puppeteer from 'puppeteer'
 
 
 const page = async ({ params }: { params : { id: string}}) => {
+  let image = 'https://roofa.co.ke/assets/account-profile.png'
 
   const booking = await fetchOneBooking(params.id)
    const payment: any = await fetchOnePayment({ id: params.id})
 
-  if(booking && booking.isPaymentMade.isMade && !booking.isBookingSettled && payment) {
-      await generatePdf({
-        receiptNo: payment._id.toString(),
-        date: new Date(),
-        name: booking.fullName,
-        email: booking.email,
-        identityNumber: booking.identityNumber,
-        gender: booking.gender,
-        reportingDate: booking.reportingDate,
-        apartmentName: booking.apartmentBooked.title,
-        apartmentLocation: booking.apartmentBooked.location,
-        apartmentPrice: booking.apartmentBooked.price,
-        mpesaReciptNumber: payment.mpesaReceiptNumber,
-        transactionDate: payment.transactionDate,
-        mpesaPhoneNumber: payment.mpesaPhoneNumber,
-        amountPaid: payment.amount,
-        })
-    }
+  // if(booking && booking.isPaymentMade.isMade && !booking.isBookingSettled && payment) {
+  //     await generatePdf({
+  //       receiptNo: payment._id.toString(),
+  //       date: new Date(),
+  //       name: booking.fullName,
+  //       email: booking.email,
+  //       identityNumber: booking.identityNumber,
+  //       gender: booking.gender,
+  //       reportingDate: booking.reportingDate,
+  //       apartmentName: booking.apartmentBooked.title,
+  //       apartmentLocation: booking.apartmentBooked.location,
+  //       apartmentPrice: booking.apartmentBooked.price,
+  //       mpesaReciptNumber: payment.mpesaReceiptNumber,
+  //       transactionDate: payment.transactionDate,
+  //       mpesaPhoneNumber: payment.mpesaPhoneNumber,
+  //       amountPaid: payment.amount,
+  //       })
+  //   }
+
+
+  if(booking && booking.isPaymentMade.isMade && !booking.isBookingSettled && booking.bookedBy && payment && !containsGoogleusercontent(booking.bookedBy.image as string)) {
+    image = `https://roofa.co.ke/images${booking.bookedBy.image}`
+  }
 
   return (
     <div 
@@ -45,10 +52,10 @@ const page = async ({ params }: { params : { id: string}}) => {
       className='lg:flex lg:gap-5 justify-between'
       >
         <div className='bg-gray-100 rounded-md p-2 flex justify-center flex-col flex-auto'>
-          {booking && booking.bookedBy && (
+          {booking && (
             <div className='w-24 h-24 rounded-full cursor-pointer mx-auto mt-4'>
               <img 
-              src={`${booking && booking.bookedBy.image}`} 
+              src={`${image}`} 
               alt="user image"
               className="w-full h-full object-cover rounded-full"
               />
@@ -154,6 +161,12 @@ const page = async ({ params }: { params : { id: string}}) => {
        !booking && (
          <div className='w-full text-center text-2xl text-gray-400 mb-10 mx-auto'>
             No such booking found.
+
+            <p
+            className="text-subtle-medium"
+            >
+              Please refresh below, if you are sure it is a mistake.</p>
+            <Refresh />
             <img src="/assets/sad-disappointed-emoji.gif" alt="" className="mx-auto" />
           </div>
         )

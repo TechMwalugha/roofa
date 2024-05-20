@@ -150,3 +150,7 @@ export function returnPayment({ payments, MerchantRequestID}: { payments: any[];
   const payment = payments.find((payment) => payment.MerchantRequestID === MerchantRequestID);
   return payment;
 }
+
+export function containsGoogleusercontent(str: string): boolean {
+  return str.includes("lh3.googleusercontent.com");
+}

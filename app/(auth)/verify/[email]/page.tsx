@@ -1,5 +1,5 @@
 import { fetchUserByEmail, updateUser } from "@/lib/actions/user.actions";
-import sendEmail from "@/lib/emailing/nodemailer.email";
+import { accountsEmail } from "@/lib/emailing/mailing.email";
 import { generateRandom32ByteString } from "@/lib/utils";
 import { getServerSession } from "next-auth"
 import Image from "next/image";
@@ -37,11 +37,11 @@ const Page = async  ({ params }: {params: {email: string}}) =>{
         accountStatus: user.accountStatus,
     })
 
-    sendEmail({
+    accountsEmail({
       email: user.email,
       subject: 'VERIFICATION',
       heading: 'Verify Email',
-      content: `click the link to verify email: <a href=https://roofa-git-master-techmwalughas-projects.vercel.app/verifytoken/${randomString}>Click here</a>`
+      content: `Click the link to verify email: <a href=https://roofa.co.ke/verifytoken/${randomString}>Click here</a> <br/> The token expires in 1 hour.`
     })
 }
   

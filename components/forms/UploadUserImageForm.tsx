@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useState } from "react"
 import { usePathname } from "next/navigation"
-import { formatDateString } from "@/lib/utils"
+import { containsGoogleusercontent, formatDateString } from "@/lib/utils"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,6 +20,12 @@ const UploadUserImageForm =(
         const [loader, setLoader] = useState('')
         
         const path = usePathname()
+
+        //check if its google image:
+
+        if(!containsGoogleusercontent(image as string)) {
+          image = `https://roofa.co.ke/images${image}`
+        }
 
         const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault()

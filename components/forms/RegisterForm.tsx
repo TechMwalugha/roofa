@@ -20,12 +20,15 @@ import Link from "next/link"
 import { FcGoogle } from 'react-icons/fc'
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterForm = () => {
     const [error, setError] = useState("");
     const [email, setEmail] = useState("");
+    const [seePassword, setSeePassword] = useState(false);
     const router = useRouter();
 
     const form = useForm<z.infer<typeof registerFormSchema>>({
@@ -34,6 +37,7 @@ const RegisterForm = () => {
             fullname: '',
             email: '',
             password: '',
+            confirmPassword: '',
         },
       })
 
@@ -59,13 +63,15 @@ const RegisterForm = () => {
               const data = await res.json();
               
               setError(data.message)
-              const notifyError = () => toast.error(data.message, {
+
+              const notifyError = (message: string) => toast.error(message, {
                 position: toast.POSITION.TOP_RIGHT,
                 toastId: "mwal",
                 theme: "dark"
               });
+
               if (data.message !== "User registered.") {
-                notifyError()
+                notifyError(data.message)
               }
       
             
@@ -74,21 +80,17 @@ const RegisterForm = () => {
         }
       }
   return (
-    <div className="flex items-center justify-center h-screen bg-blue">
+    <div className="flex items-center justify-center bg-blue sm:h-full sm:py-4">
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
-      {/* {error && error !== "User registered." && (
-            <div className="bg-red-500 text-white w-full mx-auto text-sm py-1 px-3 rounded-md mt-2">
-              {error}
-            </div>
-          )} */}
-
+      <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col h-full max-sm:w-full">
       <ToastContainer
        />
           {error === "User registered." && (
-            <div className="bg-green-200 flex flex-col text-white w-full text-center mx-auto text-sm py-1 px-3 rounded-md mt-2">
-              <p className="">{error}</p>
-              <Link href={`/verify/${email}`} className="block bg-primary-500 p-1 rounded-md text-small-medium">Verify Email</Link>
+            <div className="absolute top-0 bg-[rgba(0,0,0,0.5)] left-0 right-0 bottom-0 flex items-center justify-center flex-col">
+              <div className="p-4 bg-slate-200 rounded-lg">
+              <p className="text-center text-subtle-medium mb-4">Hello {email}, your account is registered please verify your email below.</p>
+              <Link href={`/verify/${email}`} className="bg-black text-white rounded-sm flex items-center justify-center py-2 px-3 transition-all">Verify Email</Link>
+              </div>
             </div>
           )}
           
@@ -149,7 +151,34 @@ const RegisterForm = () => {
             >
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="********" {...field} type="password" />
+                <Input placeholder="********" {...field} type={seePassword ? 'text' : 'password'} />
+              </FormControl>
+              <div 
+              className="flex items-center justify-end cursor-pointer"
+              onClick={() => {
+                setSeePassword((prev) => {
+                  return !prev
+                })
+              }}
+              >
+                {!seePassword && (<FaEye />)}
+                {seePassword && (<FaEyeSlash />)}
+              </div>
+              <FormMessage className="text-subtle-medium" />
+            </FormItem>
+          )}
+        />
+
+      <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem
+            className='mb-2'
+            >
+              <FormLabel>Confirm Password</FormLabel>
+              <FormControl>
+                <Input placeholder="********" {...field} type={seePassword ? 'text' : 'password'} />
               </FormControl>
               <FormMessage className="text-subtle-medium" />
             </FormItem>

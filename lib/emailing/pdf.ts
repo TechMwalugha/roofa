@@ -38,7 +38,7 @@ export default async function generatePdf({
  try {
     const newReceiptNumber = 'Roof-' + receiptNo.slice(6, 13)
 
-    const browser = await puppeteer.launch({ headless: true})
+    const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox']})
     const page = await browser.newPage()
     await page.setContent(`<html lang="en">
   <head>

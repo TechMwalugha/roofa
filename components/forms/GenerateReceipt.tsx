@@ -17,6 +17,12 @@ const GenerateReceipt = ({ merchantRequestId } : { merchantRequestId : string })
     theme: "dark"
   });
 
+  const notifyWarn = (message: string) => toast.warn(message, {
+    position: toast.POSITION.TOP_RIGHT,
+    toastId: "mwalWarn",
+    theme: "dark"
+  });
+
   const notifySuccess = (message: string) => toast.success(message, {
     position: toast.POSITION.TOP_RIGHT,
     toastId: "mwalsuccess",
@@ -40,7 +46,7 @@ const GenerateReceipt = ({ merchantRequestId } : { merchantRequestId : string })
 
   async function handleButtonClick() {
     setLoading(true)
-    notifySuccess("Request initiated, the estimated wait time is 10 seconds ")
+    notifyWarn("Request initiated, the estimated wait time is 10 seconds ")
     const response = await fetch('/api/payments/regenerateReceipt', {
       method: 'POST',
   
@@ -52,7 +58,8 @@ const GenerateReceipt = ({ merchantRequestId } : { merchantRequestId : string })
     })
 
     const data = await response.json()
-    if(response.status === 200 && data.message == 'Receipt not regenerated. Try again') {
+  
+    if(data.message == 'Receipt not regenerated. Try again') {
       notifyError(data.message)
     }
 
@@ -67,8 +74,8 @@ const GenerateReceipt = ({ merchantRequestId } : { merchantRequestId : string })
     >
       <ToastContainer />
         <h3 className='text-body-bold text-center'>Booking successfully</h3>
-        <p className='text-center text-subtle-medium'>Your booking was successfully made. Please check your email for more information</p>
-        <p className='text-center text-subtle-medium'>If you have not received the email, please check your spam folder. Or click the button below to resend the email.</p>
+        <p className='text-center text-subtle-medium'>Your booking was successfully made. Please click the button below and check your email for more information</p>
+        <p className='text-center text-subtle-medium'>If you have not received the email, please check your spam folder. Or click the button below again to resend the email.</p>
 
         <div className='flex justify-center mt-5'>
           

@@ -7,7 +7,7 @@ export async function POST(req: any) {
     const response = await regenerateReceipt({ id: merchantRequestId })
 
     return NextResponse.json({
-        message: response ? "Receipt sent successfully. Kindly check your email" : "Receipt not regenerated. Try again"
+        message: true ? "Receipt sent successfully. Kindly check your email" : "Receipt not regenerated. Try again"
     }, {
         status: 200
     })

@@ -21,6 +21,7 @@ import {
 import { RiAccountPinCircleLine } from 'react-icons/ri'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import { containsGoogleusercontent } from '@/lib/utils'
 
 export default function DropdownMenuDemo() {
   const { data: session } = useSession()
@@ -28,13 +29,20 @@ export default function DropdownMenuDemo() {
   const router = useRouter()
 
   const [position, setPosition] = React.useState("bottom")
+
+  let image = session?.user?.image 
+
+  //check if is a google image
+  if(image && !containsGoogleusercontent(image as string)) {
+   image = `https://roofa.co.ke/images${image}`
+  }
   return (
    session ? ( <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="outline" className="border-none outline-none no-focus">
         <Image
           className="inline-block w-8 h-8 rounded-full object-cover"
-          src={session?.user?.image as string}
+          src={image as string}
           alt="profile image"
           width={35}
           height={35}

@@ -59,7 +59,7 @@ const page = async () => {
         }
 
         {
-            !user && (<div className="flex flex-wrap items-center justify-center flex-col py-10">
+            user.payments.length == 0 && (<div className="flex flex-wrap items-center justify-center flex-col py-10">
             <h4 className="text-heading3-bold">No payments found</h4>
             <p className="text-subtle-medium">
                 Make a booking today ! 

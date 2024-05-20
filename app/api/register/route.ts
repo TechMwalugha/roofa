@@ -13,7 +13,7 @@ export async function POST(req: any) {
     createUser({
       name: name,
       email: email,
-      image: "/assets/account-profile.png",
+      image: "/userImages/account-profile.png",
       password: hashedPassword,
       signInType: 'credentials',
       isEmailVerified: false,      

@@ -1,4 +1,4 @@
-import { formatDateDifference } from "@/lib/utils"
+import { containsGoogleusercontent, formatDateDifference } from "@/lib/utils"
 import Image from "next/image"
 
 import { ObjectId } from "mongoose"
@@ -43,7 +43,14 @@ const NotificationCard = ({
     isRoofaAgent = true
   }
 
+  //check if are google images:
+  if(fromImage && !containsGoogleusercontent(fromImage as string)) {
+    fromImage = `https://roofa.co.ke/images${fromImage}`
+   }
 
+   if(toImage && !containsGoogleusercontent(toImage as string)) {
+    toImage = `https://roofa.co.ke/images${toImage}`
+   }
   return (
     <div
     className={`flex items-start gap-4 my-3 ${!read ? 'bg-slate-100 p-3' : ''}`}
