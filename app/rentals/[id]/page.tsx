@@ -28,7 +28,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
 
 
   return (
-    <div className='md:p-2'>
+    <div className='md:p-2 max-sm:px-1'>
       <div className=' flex items-center justify-between p-2'>
         <div>
         <h2 className="text-heading2-semibold">{rental.title}</h2>
@@ -70,8 +70,8 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
             <p className='capitalize'>{rental.rentalType.map((type: string, index: number) => `${index !== 0 ? ' . ' : '' } ${type}`)}</p>
           </div>
           <div className='w-16 h-16'>
-            <Image
-            src={rental.owner.image}
+            <img
+            src={`/images${rental.owner.image}`}
             alt="user image"
             width={30}
             height={30}
@@ -82,7 +82,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       <HorizontalLine />
       </div>
 
-      <div className=''>
+      <div className='max-sm:ml-2'>
           <h2 className='text-heading3-bold'>Ksh. {rental.price} / <span className='italic text-base-medium text-red-500'>month</span></h2>
       </div>
 

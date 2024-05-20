@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import sendEmail from "@/lib/emailing/nodemailer.email"
 import { fetchUserByEmail } from "@/lib/actions/user.actions";
+import { accountsEmail } from "@/lib/emailing/mailing.email";
 
 export async function POST(req: any) {
     const { email, subject, heading, content} = await req.json()
@@ -19,7 +20,7 @@ export async function POST(req: any) {
             )
         }
 
-        sendEmail({
+        accountsEmail({
             email: email,
             subject: subject,
             heading: heading,

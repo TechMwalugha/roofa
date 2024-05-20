@@ -48,8 +48,8 @@ const ReviewOrderCard = ({
         className="flex items-center gap-4"
         >
         <div>
-            <Image
-            src={`/rentalImages/${image}`} 
+            <img
+            src={`/images/rentalImages/${image}`} 
             width={40}
             height={40}
             alt={`${title} image`}

@@ -70,7 +70,7 @@ const ForgotPassword = () => {
             }
             if(user.signInType === "google") {
               setLoader(false)
-              setError
+              setError('Email uses google signin')
             }
 
             const randomString = generateRandom32ByteString()
@@ -96,7 +96,7 @@ const ForgotPassword = () => {
                         email: user.email,
                         subject: 'Password Update',
                         heading: 'Forgot password',
-                        content: `click the link to verify email: <a href=http://localhost:3000/forgotpassword/resetpassword/${randomString}>Click here</a>`,
+                        content: `click the link to to reset password: <a href=https://roofa.co.ke/forgotpassword/resetpassword/${randomString}>Click here</a>`,
                     }),
                   });
             

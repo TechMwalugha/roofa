@@ -30,9 +30,17 @@ export const registerFormSchema = z.object({
  })
 
  export const resetPasswordFormSchema = z.object({
-   password: z.string().min(2, {message: 'Too short'}).max(50, {message: 'too long'}),
+   password: z.string().min(2, {message: 'Too short'}).max(20, {message: 'too long'}).regex(passwordRegex, { message: "Password must contain at least one lowercase letter, one uppercase letter, one number and one special charater" }),
    confirmPassword: z.string().min(2, {message: 'Too short'}).max(50, {message: 'too long'}),
-   })
+   }).superRefine(({ confirmPassword, password }, ctx) => {
+    if (confirmPassword !== password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "The passwords did not match",
+        path: ['confirmPassword']
+      });
+    }
+  })
 
    //image rules
    const MAX_FILE_SIZE = 5 * 1024 * 1024;

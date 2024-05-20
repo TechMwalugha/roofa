@@ -44,7 +44,7 @@ function Carousel({
         <div className=' h-[250px] w-full relative group'>
         <Suspense fallback={<div>Loading</div>}>
             <div
-                style={{ backgroundImage: `url(/rentalImages/${images[currentIndex]})` }}
+                style={{ backgroundImage: `url(/images/rentalImages/${images[currentIndex]})` }}
                 className='w-full h-full rounded-md bg-center bg-cover duration-500'
             ></div>
         </Suspense>

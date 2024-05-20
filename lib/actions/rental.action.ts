@@ -92,14 +92,14 @@ export async function fetchAllRentals({
         .limit(pageSize)
   
       // Count the total number of users that match the search criteria (without pagination).
-      const totalUsersCount = await Rental.countDocuments(query);
+      const totalRentalsCount = await Rental.countDocuments(query);
   
       const rentals = await rentalsQuery.exec();
   
       // Check if there are more users beyond the current page.
-    const isNext = totalUsersCount > skipAmount + rentals.length;
+    const isNext = totalRentalsCount > skipAmount + rentals.length;
   
-      return { rentals, isNext };
+      return { rentals, totalRentalsCount, isNext };
     } catch (error) {
       console.error("Error fetching users:", error);
       throw error;
@@ -207,7 +207,7 @@ export async function deleteRentalImages({ image, rentalId} : { image: string; r
     const rental = await Rental.findById(rentalId)
     .select('images')
 
-    const path = join('/', 'RealProjects', 'roofa', 'public', 'rentalImages', image)
+    const path = join('/', 'var', 'www', 'html', 'images', 'rentalImages', image)
 
     if (!rental || !rental.images?.length) {
       throw new Error("Rental not found")

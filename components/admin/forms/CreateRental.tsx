@@ -9,14 +9,33 @@ import Amenities from "../cards/Amenities";
 import GeoLocation from "../cards/GeoLocation";
 import RentalRules from "../cards/RentalRules";
 import { createRental } from "@/lib/actions/rental.action";
-import mongoose from "mongoose";
-import Image from "next/image";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/navigation";
 
 const FileUploadForm = ({ users, allRentals }: 
   {
     users: any[]
     allRentals: any[]
   }) => {
+
+    //success notifications
+    const notifySuccess = (message: string) => {
+      toast.success(message, {
+          position: 'top-right',
+          toastId: 'RentalCreateSuccess'
+      })
+  }
+
+   //Error notifications
+   const notifyError = (message: string) => {
+    toast.success(message, {
+        position: 'top-right',
+        toastId: 'RentalCreateError'
+    })
+}
+
+  const router = useRouter()
   
   const [images, setImages] = useState<File[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -82,9 +101,15 @@ const FileUploadForm = ({ users, allRentals }:
         rentalStatus: formData.get("rentalStatus") == 'on' ? true : false,
       
       })
+
+      notifySuccess("Apartment created successfully")
+
+      router.refresh()
     } else {
       console.error('Server response indicates failure');
       // Handle error or provide user feedback
+
+      notifyError('Failed while uploading images. Try again')
     }
 
 
@@ -95,6 +120,7 @@ const FileUploadForm = ({ users, allRentals }:
   };
   return (
     <form className="w-full shadow-sm p-3" onSubmit={handleSubmit}>
+      <ToastContainer />
       <input 
       type="text" 
       name="title" 

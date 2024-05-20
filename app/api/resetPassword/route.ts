@@ -7,7 +7,7 @@ export async function POST(req: any) {
   try {
     const {  email, password } = await req.json();
     const user = await fetchUserByEmail(email)
-    if(!user) return NextResponse.json({ message: 'user exists'}, { status: 401})
+    if(!user) return NextResponse.json({ message: 'user does not exists'}, { status: 401})
     // hash the password before storing it in db
     const hashedPassword = await bcrypt.hash(password, 10);
     await updateUser({

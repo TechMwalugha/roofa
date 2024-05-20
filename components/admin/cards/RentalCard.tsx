@@ -29,8 +29,8 @@ const RentalCard = ({
     className="flex item-center gap-5 mt-5 shadow-sm"
     >
         <div>
-            <Image
-            src={`/rentalImages/${image}`}
+            <img
+            src={`/images/rentalImages/${image}`}
             width={30}
             height={30}
             alt={`rental image`}

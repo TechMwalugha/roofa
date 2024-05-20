@@ -80,9 +80,9 @@ const RegisterForm = () => {
         }
       }
   return (
-    <div className="flex items-center justify-center bg-blue sm:h-full sm:py-4">
+    <div className="flex items-center justify-center bg-blue h-screen sm:h-full sm:py-4">
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col h-full max-sm:w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 sm:rounded-lg flex flex-col h-full max-sm:w-full">
       <ToastContainer
        />
           {error === "User registered." && (

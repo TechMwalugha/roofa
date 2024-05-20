@@ -43,7 +43,7 @@ const UnlinkImagesForm =  (props: {image: string; rentalId: string}) => {
     >
       <ToastContainer />
         <img
-        src={`/rentalImages/${props.image}`} 
+        src={`/images/rentalImages/${props.image}`} 
         alt="rental image"
         className="object-cover w-1/2 h-32 fill"
         loading="lazy"

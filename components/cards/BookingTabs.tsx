@@ -71,7 +71,7 @@ const BookingTabs = ({
                         <div className="mt-5 shadow hover:shadow-count transition-all delay-2000 p-2 rounded cursor-pointer lg:flex-1">
 
                          <div className="w-full h-36">
-                            <img src={`/rentalImages/${booking.apartmentBooked.images[0]}`} alt={`${booking.apartmentBooked.title} image`} className="w-full h-full object-cover rounded" />
+                            <img src={`/images/rentalImages/${booking.apartmentBooked.images[0]}`} alt={`${booking.apartmentBooked.title} image`} className="w-full h-full object-cover rounded" />
                          </div>
                          <h3 className="text-base-semibold text-center underline my-4">Apartment booked</h3>
 
@@ -156,7 +156,7 @@ const BookingTabs = ({
                         <div className="mt-5 shadow hover:shadow-count transition-all delay-2000 p-2 rounded cursor-pointer lg:flex-1">
 
                          <div className="w-full h-36">
-                            <img src={`/rentalImages/${booking.apartmentBooked.images[0]}`} alt={`${booking.apartmentBooked.title} image`} className="w-full h-full object-cover rounded" />
+                            <img src={`/images/rentalImages/${booking.apartmentBooked.images[0]}`} alt={`${booking.apartmentBooked.title} image`} className="w-full h-full object-cover rounded" />
                          </div>
                          <h3 className="text-base-semibold text-center underline my-4">Apartment booked</h3>
 
@@ -256,7 +256,7 @@ const BookingTabs = ({
                         <div className="mt-5 shadow hover:shadow-count transition-all delay-2000 p-2 rounded cursor-pointer lg:flex-1">
 
                          <div className="w-full h-36">
-                            <img src={`/rentalImages/${booking.apartmentBooked.images[0]}`} alt={`${booking.apartmentBooked.title} image`} className="w-full h-full object-cover rounded" />
+                            <img src={`/images/rentalImages/${booking.apartmentBooked.images[0]}`} alt={`${booking.apartmentBooked.title} image`} className="w-full h-full object-cover rounded" />
                          </div>
                          <h3 className="text-base-semibold text-center underline my-4">Apartment booked</h3>
 

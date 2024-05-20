@@ -10,7 +10,7 @@ interface PaymentInterface {
 }
 const PaymentCard = ({ type , mpesaReceiptNumber, amount, paymentMadeOn, mpesaPhoneNumber}: PaymentInterface) => {
   return (
-    <div className="shadow p-2 rounded cursor-pointer hover:shadow-count transition-all delay-2000">
+    <div className="shadow p-2 mb-2 rounded cursor-pointer hover:shadow-count transition-all delay-2000">
         <div className="flex items-center justify-between">
             <div>
                 <h4 className="text-body-bold mb-1">{type}</h4>

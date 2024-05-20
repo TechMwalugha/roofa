@@ -34,7 +34,18 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
 
    if(!rentalDetails) return
 
-   const allRentals = await fetchTotalRentals(params.id)
+   let allRentals = await fetchTotalRentals(params.id)
+
+   allRentals = allRentals.map((rental: {_id: mongoose.Schema.Types.ObjectId, title: string, location: string}) => {
+    return {
+      _id: rental._id.toString(),
+      title: rental.title,
+      location: rental.location
+    }
+  })
+
+  let rentalBookings = rentalDetails.bookings.map((rental: mongoose.Schema.Types.ObjectId) => rental.toString())
+
 
    const users = await fetchUsersNotAgents()
    
@@ -72,7 +83,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       rentalRules = {rentalDetails.rentalRules}
       availableRooms = {rentalDetails.availableRooms}
       rentalsNear = {rentalsNear}
-      bookings = {rentalDetails.bookings}
+      bookings = {rentalBookings}
       rentalStatus = {rentalDetails.rentalStatus}
       createdAt = {rentalDetails.createdAt}
       updatedAt = {rentalDetails.updatedAt}

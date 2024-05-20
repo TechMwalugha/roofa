@@ -12,7 +12,7 @@ import Link from "next/link"
 
 const MenuBar = ({title, image, content }: menuBarType) => {
   return (
-    <div className="flex items-center gap-2 ml-auto">
+    <div className="flex items-center justify-center gap-2 ml-auto">
       <DropdownMenu>
         <DropdownMenuTrigger className="outline-none border-none">Hey, <b>{title}</b></DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -21,8 +21,8 @@ const MenuBar = ({title, image, content }: menuBarType) => {
           {content.map((item, index) => <Link key={index} href={`/${item}`} className="capitalize"><DropdownMenuItem >{`${item === 'user/account-settings' ? 'Account' : item}`}</DropdownMenuItem> </Link>)}
         </DropdownMenuContent>
     </DropdownMenu>
-      <Image 
-       src={image}
+      <img
+       src={`/images/${image}`}
        width={30}
        height={30}
        alt={title}

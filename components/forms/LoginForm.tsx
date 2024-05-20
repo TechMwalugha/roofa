@@ -50,7 +50,7 @@ const LoginForm = () => {
                 setError(res.error)
                 return
             }
-            setError("Welcome back.")
+            setError("Karibu tena, Wait as we redirect you.")
 
             // Redirect to the home page after successful authentication
             router.push("/")
@@ -65,8 +65,19 @@ const LoginForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
       {error && error !== "processing" && (
-            <div className="bg-red-500 text-white w-full text-center text-small-medium mx-auto text-sm py-1 px-3 rounded-md mt-2">
-              {error}
+            <div className="absolute top-0 bg-[rgba(0,0,0,0.5)] left-0 right-0 bottom-0 flex items-center justify-center flex-col">
+              <div 
+              className="bg-white rounded-sm p-5 text-subtle-medium w-1/2 flex items-center justify-center flex-col"
+              >
+              <Image
+               src="/assets/login_notification_image.png" 
+               height={100}
+               width={100}
+               alt="Notification icon"
+               className="mb-3"
+               />
+                <p>{error}</p>
+              </div>
             </div>
           )}
         <Link 
