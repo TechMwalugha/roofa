@@ -15,25 +15,6 @@ const page = async ({ params }: { params : { id: string}}) => {
   const booking = await fetchOneBooking(params.id)
    const payment: any = await fetchOnePayment({ id: params.id})
 
-  // if(booking && booking.isPaymentMade.isMade && !booking.isBookingSettled && payment) {
-  //     await generatePdf({
-  //       receiptNo: payment._id.toString(),
-  //       date: new Date(),
-  //       name: booking.fullName,
-  //       email: booking.email,
-  //       identityNumber: booking.identityNumber,
-  //       gender: booking.gender,
-  //       reportingDate: booking.reportingDate,
-  //       apartmentName: booking.apartmentBooked.title,
-  //       apartmentLocation: booking.apartmentBooked.location,
-  //       apartmentPrice: booking.apartmentBooked.price,
-  //       mpesaReciptNumber: payment.mpesaReceiptNumber,
-  //       transactionDate: payment.transactionDate,
-  //       mpesaPhoneNumber: payment.mpesaPhoneNumber,
-  //       amountPaid: payment.amount,
-  //       })
-  //   }
-
 
   if(booking && booking.isPaymentMade.isMade && !booking.isBookingSettled && booking.bookedBy && payment && !containsGoogleusercontent(booking.bookedBy.image as string)) {
     image = `https://roofa.co.ke/images${booking.bookedBy.image}`
@@ -97,7 +78,7 @@ const page = async ({ params }: { params : { id: string}}) => {
           <div className='flex items-center justify-between'>
             <div>
               <img 
-              src={`/rentalImages/${booking.apartmentBooked.images[0]}`} 
+              src={`/images/rentalImages/${booking.apartmentBooked.images[0]}`} 
               className="w-28 h-24 object-cover rounded-sm mb-2"
               alt="rental image"
               />

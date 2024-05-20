@@ -56,7 +56,7 @@ const Share = ({ image } : { image: string}) => {
     <h2 className="text-heading4-medium">Share this place</h2>
 
     <img 
-    src={`/rentalImages/${image}`}
+    src={`/images/rentalImages/${image}`}
     alt="rental image"
     className="w-20 h-20 object-cover"
     />
