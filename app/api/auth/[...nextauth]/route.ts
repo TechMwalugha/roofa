@@ -39,14 +39,14 @@ const handler = NextAuth({
                         throw new Error('Password does not match')
                     }
                     if(!user.isEmailVerified) {
-                        throw new Error('Email is not verified')
+                        throw new Error('Email is not verified, kindly wait as we redirect you.')
                     }
-                    if(!user.accountStatus) throw new Error('This account is Suspended!')
+                    if(!user.accountStatus) throw new Error('This account is Suspended! Email Roofa Accounts. accounts@roofa.co.ke')
 
 
                     return user
                 } else {
-                    throw new Error('User does not exist')
+                    throw new Error('User does not exist, Please create an account.')
                     // return null
                 }
                 }catch(err: any) {

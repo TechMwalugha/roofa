@@ -29,6 +29,7 @@ const RegisterForm = () => {
     const [error, setError] = useState("");
     const [email, setEmail] = useState("");
     const [seePassword, setSeePassword] = useState(false);
+
     const router = useRouter();
 
     const form = useForm<z.infer<typeof registerFormSchema>>({
@@ -46,6 +47,7 @@ const RegisterForm = () => {
         form.reset()
         setError("processing")
       setEmail(values.email)
+
         try {
             const res = await fetch("api/register", {
                 method: "POST",
@@ -86,7 +88,7 @@ const RegisterForm = () => {
       <ToastContainer
        />
           {error === "User registered." && (
-            <div className="absolute top-0 bg-[rgba(0,0,0,0.5)] left-0 right-0 bottom-0 flex items-center justify-center flex-col">
+            <div className="fixed top-0 bg-[rgba(0,0,0,0.5)] px-3 left-0 right-0 bottom-0 flex items-center justify-center flex-col">
               <div className="p-4 bg-slate-200 rounded-lg">
               <p className="text-center text-subtle-medium mb-4">Hello {email}, your account is registered please verify your email below.</p>
               <Link href={`/verify/${email}`} className="bg-black text-white rounded-sm flex items-center justify-center py-2 px-3 transition-all">Verify Email</Link>
