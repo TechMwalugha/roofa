@@ -42,7 +42,7 @@ const page = async () => {
             <p className="text-small-medium">Update your password and secure your account</p>
         </Link>
 
-        <Link href="#" className="p-3 shadow-lg rounded-md flex-auto w-72">
+        <Link href="account-settings/gift-cards" className="p-3 shadow-lg rounded-md flex-auto w-72">
             <h4 className="mb-5">
                 <MdPayments size={30}/>
             </h4>
@@ -50,12 +50,12 @@ const page = async () => {
             <p className="text-small-medium">Review payments, payouts, coupons and gift cards</p>
         </Link>
 
-        <Link href="#" className="p-3 shadow-lg rounded-md flex-auto w-72">
+        <Link href="account-settings/referrals" className="p-3 shadow-lg rounded-md flex-auto w-72">
             <h4 className="mb-5">
                 <FaGifts size={30}/>
             </h4>
             <p className="text-regular-medium">Referral credit & coupon</p>
-            <p className="text-small-medium">Review payments, payouts, coupons and gift cards</p>
+            <p className="text-small-medium">You have ksh. 0 referral credits and coupons. Learn more.</p>
         </Link>
      </section>
 

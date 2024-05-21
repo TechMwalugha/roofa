@@ -1,4 +1,3 @@
-
 import ComingSoonCard from '@/components/cards/ComingSoonCard'
 import React from 'react'
 
