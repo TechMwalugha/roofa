@@ -3,7 +3,7 @@ import PaymentCard from "@/components/cards/PaymentCard";
 import Pagination from "@/components/shared/Pagination";
 import HorizontalLine from "@/components/shared/utils/HorizontalLine";
 import { fetchAllPayments } from "@/lib/actions/payment.action";
-import { getSecondsDifference } from "@/lib/utils";
+import { checkWhetherIsAgentOrAdmin, getSecondsDifference } from "@/lib/utils";
 import { GiReceiveMoney } from "react-icons/gi";
 import { GiTakeMyMoney } from "react-icons/gi";
 
@@ -14,6 +14,7 @@ const page = async ({
     [key: string]: string | undefined
   }
 }) => {
+
   const results: any = await fetchAllPayments({
       searchString: searchParams?.q,
       pageNumber: searchParams?.page ? +searchParams.page : 1,

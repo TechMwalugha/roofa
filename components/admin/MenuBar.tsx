@@ -18,7 +18,7 @@ const MenuBar = ({title, image, content }: menuBarType) => {
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {content.map((item, index) => <Link key={index} href={`/${item}`} className="capitalize"><DropdownMenuItem >{`${item === 'user/account-settings' ? 'Account' : item}`}</DropdownMenuItem> </Link>)}
+          {content.map((item: string, index) => <Link key={index} href={`/${item}`} className="capitalize"><DropdownMenuItem >{`${item === 'user/account-settings' ? 'Account' : 'Logout'}`}</DropdownMenuItem> </Link>)}
         </DropdownMenuContent>
     </DropdownMenu>
       <img

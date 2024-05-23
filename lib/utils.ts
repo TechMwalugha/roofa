@@ -1,5 +1,8 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { fetchUserByEmail } from "./actions/user.actions";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
  
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -153,4 +156,23 @@ export function returnPayment({ payments, MerchantRequestID}: { payments: any[];
 
 export function containsGoogleusercontent(str: string): boolean {
   return str.includes("lh3.googleusercontent.com");
+}
+
+export async function checkWhetherIsAgentOrAdmin() {
+  const session = await getServerSession()
+  if(!session) {
+    redirect('/not-found')
+  }
+  const sessionUser = await fetchUserByEmail(session?.user?.email as string)
+
+  if(!sessionUser) {
+    redirect('/not-found')
+  }
+
+  let isAllowed: boolean =  (sessionUser.role === 'roofa-agent' || sessionUser.role === 'admin') ? true : false
+
+  if(!isAllowed) {
+    redirect('/not-found')
+  }
+
 }

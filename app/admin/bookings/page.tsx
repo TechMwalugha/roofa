@@ -1,7 +1,7 @@
 import SearchUser from "@/components/admin/forms/SearchUser";
 import Pagination from "@/components/shared/Pagination";
 import { fetchAllBookings } from "@/lib/actions/booking.action"
-import { formatDateString } from "@/lib/utils";
+import { checkWhetherIsAgentOrAdmin, formatDateString } from "@/lib/utils";
 import Link from "next/link";
 import { CiBookmarkMinus } from "react-icons/ci";
 import { CiBookmarkCheck } from "react-icons/ci";
@@ -14,6 +14,7 @@ const page = async ({
     [key: string]: string | undefined
   }
 }) => {
+
 
   const result: any = await fetchAllBookings({
     searchString: searchParams?.q,

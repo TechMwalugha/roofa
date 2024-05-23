@@ -1,14 +1,12 @@
 import CreateRental from "@/components/admin/forms/CreateRental"
 import { fetchUsersNotAgents } from "@/lib/actions/user.actions"
 import Rental from "@/lib/models/rental.model"
-import User from "@/lib/models/user.model"
-import { connectToDB } from "@/lib/mongoose"
+import { checkWhetherIsAgentOrAdmin } from "@/lib/utils"
 import { ObjectId } from "mongoose"
 import { getServerSession } from "next-auth"
 
 
 const page = async () => {
-  const session = await getServerSession()
 
   const users: any = await fetchUsersNotAgents()
  

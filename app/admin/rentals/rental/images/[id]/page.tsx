@@ -3,9 +3,11 @@ import { ObjectId } from "mongoose"
 import UnlinkImagesForm from "@/components/admin/forms/UnlinkImagesForm"
 import HorizontalLine from "@/components/shared/utils/HorizontalLine"
 import UpdateRentalImages from "@/components/admin/forms/UpdateRentalImages"
+import { checkWhetherIsAgentOrAdmin } from "@/lib/utils"
 
 
 const page = async ({ params } : { params: { id: string }}) => {
+
 
   const rental = await Rental.findById(params.id as unknown as ObjectId)
   .select('title location images')

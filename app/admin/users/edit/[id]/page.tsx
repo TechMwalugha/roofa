@@ -25,22 +25,7 @@ const page = async ({
 }) => {
   const session = await getServerSession()
 
-  if(!session) {
-    redirect('/not-found')
-  }
-
   const sessionUser = await fetchUserByEmail(session?.user?.email as string)
-
-  if(!sessionUser) {
-    redirect('/not-found')
-  }
-
-  let isAllowed: boolean =  sessionUser.role === 'roofa-agent' || sessionUser.role === 'admin' ? true : false
-
-  if(!isAllowed) {
-    redirect('/not-found')
-  }
-
 
   const user = await fetchUserNotification(params.id as any)
 

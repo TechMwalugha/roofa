@@ -3,9 +3,12 @@ import { fetchUsersNotAgents } from "@/lib/actions/user.actions"
 import Rental from "@/lib/models/rental.model"
 import User from "@/lib/models/user.model"
 import { connectToDB } from "@/lib/mongoose"
+import { checkWhetherIsAgentOrAdmin } from "@/lib/utils"
 import mongoose, { ObjectId } from "mongoose"
 
 const page = async ({ params } : { params: { id: ObjectId}}) => {
+
+
   let rentalDetails
   try{
     connectToDB()

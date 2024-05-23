@@ -2,7 +2,7 @@ import RentalCard from "@/components/admin/cards/RentalCard";
 import SearchUser from "@/components/admin/forms/SearchUser";
 import { fetchAllRentals } from "@/lib/actions/rental.action";
 import Rental from "@/lib/models/rental.model";
-import { formatDateString } from "@/lib/utils";
+import { checkWhetherIsAgentOrAdmin, formatDateString } from "@/lib/utils";
 import Link from "next/link";
 import { FaHouseChimneyMedical } from "react-icons/fa6"
 import { MdOutlineNewLabel } from "react-icons/md";
@@ -16,8 +16,6 @@ const page = async ({
     [key: string]: string | undefined
   }
 }) => {
-
-  // const numberOfRentals = await Rental.countDocuments()
 
   const rentalResults: any = await fetchAllRentals({
     searchString: searchParams?.q,

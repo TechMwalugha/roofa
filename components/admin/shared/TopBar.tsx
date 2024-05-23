@@ -24,7 +24,7 @@ const TopBar = async () => {
       image={session.user?.image as string}
       content={[
         'user/account-settings',
-        'logout'
+        '/api/auth/signout'
       ]}
       />
     </div>
