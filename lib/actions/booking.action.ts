@@ -246,3 +246,17 @@ export async function settleBookingAction({ id }: { id: ObjectId}) {
         throw new Error(`Cannot update booking. ${error.message}`)
     }
 }
+
+export  async function checkBookingExistsById({merchantRequestID}: {merchantRequestID: string}) {
+    try {
+        // Use findOne() method to find a document with the given ID
+        const booking = await Booking.findOne({ MerchantRequestID: merchantRequestID })
+        // If no document is found, return false
+        if(!booking) return false
+
+        return true
+    } catch (error) {
+        console.error('Error checking document existence:', error);
+        return false; // Error occurred, return false
+    }
+}

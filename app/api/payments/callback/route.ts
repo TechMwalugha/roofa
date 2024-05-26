@@ -1,4 +1,4 @@
-import { updateBookingOnPayment } from "@/lib/actions/booking.action";
+import { checkBookingExistsById, updateBookingOnPayment } from "@/lib/actions/booking.action";
 import { createPayment } from "@/lib/actions/payment.action";
 import { NextResponse } from "next/server";
 
@@ -6,12 +6,27 @@ export async function POST(req: any) {
     try {
       const body = await req.json() 
 
+
+      if(!body.Body) return NextResponse.json(
+        { message: "Forbidden"},
+        { status: 403 }
+      );
+
+
         const merchantRequestID = body.Body.stkCallback.MerchantRequestID;
         const checkoutRequestID = body.Body.stkCallback.CheckoutRequestID;
         const resultCode = body.Body.stkCallback.ResultCode;
         const resultDesc = body.Body.stkCallback.ResultDesc;
-        
 
+
+      const paymentExists = await checkBookingExistsById({ merchantRequestID: merchantRequestID})
+
+      if(!paymentExists) return NextResponse.json(
+        { message: "Forbidden."},
+        { status: 403 }
+      );
+
+      console.log(paymentExists)
 
         if(resultCode === 0) {
           const callbackMetadata = body.Body.stkCallback.CallbackMetadata;
@@ -63,7 +78,7 @@ export async function POST(req: any) {
     } catch(error: any) {
       console.log(error.message)
         return NextResponse.json(
-            { message: "An error occurred while receiving the callback. retry" },
+            { message: "An error occurred while receiving the callback. retry"},
             { status: 500 }
           );
     }

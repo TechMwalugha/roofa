@@ -1,17 +1,26 @@
 import React from 'react';
-import { Detector } from 'react-detect-offline';
 
 const CheckInternetConnection = (props: React.PropsWithChildren<{}>) => {
-        return (
-                <>
-                    <Detector
-                        render={({ online }) => (
-                            online ? props.children: 
-                                <div>Please Check Internet Connection</div>
-                        ) as React.ReactElement<any, any>} // Add type assertion here
-                    />
-                </>
-        );
+    const [online, setOnline] = React.useState(navigator.onLine);
+
+    React.useEffect(() => {
+        const handleOnline = () => setOnline(true);
+        const handleOffline = () => setOnline(false);
+
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+
+    return (
+        <>
+            {online ? props.children : <div>Please Check Internet Connection</div>}
+        </>
+    );
 };
 
 export default CheckInternetConnection;

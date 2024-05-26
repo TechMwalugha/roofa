@@ -2,7 +2,7 @@ import * as z from "zod";
 
 const trimString: any = (u: unknown) => typeof u === "string" ? u.replaceAll(' ','') : u;
 
-export const bookingDetailsFormSchema = z.object({
+export const bookingDetailsFormSchema: any = z.object({
     email: z.preprocess(trimString, z.string().min(4, {message: 'Email is too short'}).max(50, {message: 'too long'}).email("This is not a valid email.").email()),
     fullName: z.string().min(4, { message: 'Name is too short' }).max(50, { message: 'Too long' }),
     reportingDate: z.any().refine(date => {

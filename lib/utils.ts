@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge"
 import { fetchUserByEmail } from "./actions/user.actions";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
  
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -176,3 +177,6 @@ export async function checkWhetherIsAgentOrAdmin() {
   }
 
 }
+
+
+

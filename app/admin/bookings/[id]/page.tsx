@@ -103,7 +103,6 @@ const page = async ({ params }: { params: { id: string }}) => {
                             <SettleBookingForm
                             id={booking._id.toString()}
                              />
-                            // <div>heelo</div>
                         )
                     }
                </>

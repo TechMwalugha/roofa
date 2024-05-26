@@ -243,3 +243,24 @@ export async function updateRentalImagesAction({ rentalId, images}: { rentalId: 
     throw new Error(`Unable to update images: ${error.message}`)
   }
 }
+
+export async function retrieveRentalPrice({ rentalId } : { rentalId: string }) {
+  try {
+    connectToDB()
+
+    const rental = await Rental.findById(rentalId as unknown as ObjectId).select('price serviceFee')
+
+    if(!rental) return {status: 'error', amount: rental.price + rental.serviceFee.amount}
+
+    if(rental.serviceFee.paidBy === 'customer') return  {status: 'success', amount: rental.price + rental.serviceFee.amount}
+
+    return {
+      status: 'success',
+      amount: rental.price
+    }
+    
+  } catch (error: any) {
+    throw new Error('Unable to fetch the price of the rental. Please try again')
+  }
+
+}

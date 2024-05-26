@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import moment from 'moment'
 import axios from "axios";
 import { createNewBooking } from "@/lib/actions/booking.action";
+import { retrieveRentalPrice } from "@/lib/actions/rental.action";
 
 export async function POST(req: any) {
     try {
@@ -23,6 +24,16 @@ export async function POST(req: any) {
         {message: "Transaction failed. Try again"},
         {status: 500}
       )
+
+      const amount: {status: string, amount: number} = await retrieveRentalPrice({
+        rentalId: rentalId
+      })
+
+      if(amount.status !== 'success') return NextResponse.json(
+        {message: 'Opps, an error occurred at our end. Please Try again'},
+        {status: 200}
+      )
+
 
         const url = "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
         const auth = `Bearer ${token}`
@@ -44,7 +55,7 @@ export async function POST(req: any) {
             PartyA: phoneNumber,
             PartyB: shortcode,
             PhoneNumber: phoneNumber,
-            CallBackURL: "https://roofa-git-master-techmwalughas-projects.vercel.app/api/payments/callback",
+            CallBackURL: "https://roofa.co.ke/api/payments/callback",
             AccountReference: fullName,
             TransactionDesc: "Booking rental Payment",
         },

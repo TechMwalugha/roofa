@@ -1,5 +1,4 @@
 import Carousel from "@/components/cards/Carousel";
-
 import Pagination from "@/components/shared/Pagination";
 import { fetchAllRentals } from "@/lib/actions/rental.action";
 import { Suspense } from "react";
@@ -26,7 +25,7 @@ export default async function Home({
         result.rentals && result.rentals.map((rental) => {
           const images = rental.images.slice(0, 5)
           return (
-
+              
               <Carousel 
             key={rental.id} 
             id={rental._id.toString()}
