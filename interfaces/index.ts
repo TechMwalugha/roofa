@@ -120,5 +120,5 @@ export interface createBookingInterface {
     fullName: string;
     reportingDate: Date;
     identityNumber: string;
-    gender: 'Male' | 'Female';
+    gender: 'male' | 'female';
 }

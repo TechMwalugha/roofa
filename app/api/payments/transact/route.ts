@@ -5,18 +5,20 @@ import moment from 'moment'
 import axios from "axios";
 import { createNewBooking } from "@/lib/actions/booking.action";
 import { retrieveRentalPrice } from "@/lib/actions/rental.action";
+import { z } from "zod";
+import { ObjectId } from "mongoose";
 
 export async function POST(req: any) {
     try {
-        const { 
-            email, 
-            fullName, 
-            reportingDate, 
-            mpesaPhoneNumber,
-            identityNumber,
-            gender,
-            rentalId
-         } = await req.json();
+        // const { 
+        //     email, 
+        //     fullName, 
+        //     reportingDate, 
+        //     mpesaPhoneNumber,
+        //     identityNumber,
+        //     gender,
+        //     rentalId
+        //  } = await req.json();
 
         const token = await getAccessToken()
 
@@ -24,6 +26,29 @@ export async function POST(req: any) {
         {message: "Transaction failed. Try again"},
         {status: 500}
       )
+
+      // Define schema for request body validation
+      const schema = z.object({
+        email: z.string().email().min(4).max(50),
+        fullName: z.string().min(4).max(50),
+        reportingDate: z.any().refine(date => {
+            const currentDate: Date = new Date();
+            const reportingDate: Date = new Date(date);
+            const differenceInDays: number = Math.floor((reportingDate.getTime() - currentDate.getTime()) / (24 * 60 * 60 * 1000));
+    
+            return differenceInDays <= 10 && differenceInDays >= 0;
+        }, { message: "The date is incorrect"}),
+        mpesaPhoneNumber: z.string().refine(phoneNumber => /^(07\d|01\d|2547\d|2541\d)\d{7}$/.test(phoneNumber), { message: "Invalid message phone number"}),
+        identityNumber: z.string().min(6).max(10),
+        gender: z.enum(["female", "male"]),
+        rentalId: z.string(),
+    });
+
+    // Parse and validate request body
+    const requestBody = schema.parse(await req.json());
+
+    // Destructure validated properties
+    const { email, fullName, reportingDate, mpesaPhoneNumber, identityNumber, gender, rentalId } = requestBody;
 
       const amount: {status: string, amount: number} = await retrieveRentalPrice({
         rentalId: rentalId
@@ -76,7 +101,7 @@ export async function POST(req: any) {
 
         await createNewBooking({
             MerchantRequestID: response.data.MerchantRequestID,
-            apartmentBooked: rentalId,
+            apartmentBooked: rentalId as unknown as ObjectId,
             email: email,
             fullName: fullName, 
             reportingDate: reportingDate, 

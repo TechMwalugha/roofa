@@ -26,7 +26,6 @@ export async function POST(req: any) {
         { status: 403 }
       );
 
-      console.log(paymentExists)
 
         if(resultCode === 0) {
           const callbackMetadata = body.Body.stkCallback.CallbackMetadata;
