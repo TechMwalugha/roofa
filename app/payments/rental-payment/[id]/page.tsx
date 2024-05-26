@@ -6,7 +6,6 @@ import { fetchOneBooking } from '@/lib/actions/booking.action'
 import { fetchOnePayment } from '@/lib/actions/payment.action'
 import generatePdf from '@/lib/emailing/pdf'
 import { containsGoogleusercontent, formatDateString } from '@/lib/utils'
-import puppeteer from 'puppeteer'
 
 
 const page = async ({ params }: { params : { id: string}}) => {
@@ -16,15 +15,17 @@ const page = async ({ params }: { params : { id: string}}) => {
    const payment: any = await fetchOnePayment({ id: params.id})
 
 
-  if(booking && booking.isPaymentMade.isMade && !booking.isBookingSettled && booking.bookedBy && payment && !containsGoogleusercontent(booking.bookedBy.image as string)) {
+  if(booking && booking.bookedBy && payment ) {
+    if(!containsGoogleusercontent(booking.bookedBy.image as string)) {
     image = `https://roofa.co.ke/images${booking.bookedBy.image}`
+    }
   }
 
   return (
     <div 
     className='p-3 rounded m-3 shadow-count'
     >
-    { booking && (
+    { booking  && booking.isPaymentMade &&(
       <>
       <h3 className='text-center text-heading3-medium'>Details of the booking</h3>
       <HorizontalLine />
@@ -78,7 +79,7 @@ const page = async ({ params }: { params : { id: string}}) => {
           <div className='flex items-center justify-between'>
             <div>
               <img 
-              src={`/images/rentalImages/${booking.apartmentBooked.images[0]}`} 
+              src={`https://roofa.co.ke/images/rentalImages/${booking.apartmentBooked.images[0]}`} 
               className="w-28 h-24 object-cover rounded-sm mb-2"
               alt="rental image"
               />
@@ -114,39 +115,39 @@ const page = async ({ params }: { params : { id: string}}) => {
         </div>
        </div>
       </div>
+      {/* if the booking has been settled already */}
+  
+      {
+        booking && booking.isPaymentMade.isMade && booking.isBookingSettled && (
+          <div 
+          className='mt-10'
+          >
+            <Danger
+            text="This booking has already been settled. Contact us for more information"
+            />
+          </div>
+        )
+      }
+  
+     {booking && booking.isPaymentMade.isMade && !booking.isBookingSettled && payment &&( 
+      <GenerateReceipt 
+      merchantRequestId={params.id}
+       />
+     )}
     </>
     )}
 
-    {/* if the booking has been settled already */}
-
-    {
-      booking && booking.isPaymentMade.isMade && booking.isBookingSettled && (
-        <div 
-        className='mt-10'
-        >
-          <Danger
-          text="This booking has already been settled. Contact us for more information"
-          />
-        </div>
-      )
-    }
-
-   {booking && booking.isPaymentMade.isMade && !booking.isBookingSettled && payment &&( 
-    <GenerateReceipt 
-    merchantRequestId={params.id}
-     />
-   )}
 
       {/* no booking found */}
       {
-       !booking && (
+       (!booking || !booking.isPaymentMade) && (
          <div className='w-full text-center text-2xl text-gray-400 mb-10 mx-auto'>
             No such booking found.
 
             <p
             className="text-subtle-medium"
             >
-              Please refresh below, if you are sure it is a mistake.</p>
+              Please refresh below, if you just completed the payment.</p>
             <Refresh />
             <img src="/assets/sad-disappointed-emoji.gif" alt="" className="mx-auto" />
           </div>
