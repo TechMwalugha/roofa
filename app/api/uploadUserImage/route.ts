@@ -1,13 +1,34 @@
 import { updateUserImage } from "@/lib/actions/user.actions";
+import { checkForRateLimit } from "@/lib/upstash";
 import { writeFile, unlink, access } from "fs/promises";
+import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { join } from "path";
 
 
 export async function POST(request: NextRequest) {
     try {
-  
+  const session = await getServerSession()
+
+  if(!session) return NextResponse.json(
+    { message: "Forbidden"},
+    { status: 403 }
+  )
+
+  //check for rate limits 
+
+  const ip = headers().get('x-forwarded-for')
+
+  const isRateLimit =  await checkForRateLimit({ ip: ip })
+
+  if(!isRateLimit)  return NextResponse.json(
+   { message: "Rate limit reached, please try again after 5 minutes." },
+   { status: 403 }
+ );
+
+
     const data = await request.formData()
     const file: File | null = data.get('file') as unknown as File
     if(file.size > 5 * 1024 * 1024) {
@@ -50,7 +71,9 @@ export async function POST(request: NextRequest) {
 
    
     revalidatePath(pathUrl)
-  return NextResponse.json({ success: true })
+  return NextResponse.json({ message: 'Image uploaded successfully' },
+    { status: 200}
+  )
         
     } catch (error: any) {
       console.log(error.message)

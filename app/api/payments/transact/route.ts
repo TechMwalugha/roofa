@@ -7,18 +7,21 @@ import { createNewBooking } from "@/lib/actions/booking.action";
 import { retrieveRentalPrice } from "@/lib/actions/rental.action";
 import { z } from "zod";
 import { ObjectId } from "mongoose";
+import { headers } from "next/headers";
+import { checkForRateLimit } from "@/lib/upstash";
 
 export async function POST(req: any) {
     try {
-        // const { 
-        //     email, 
-        //     fullName, 
-        //     reportingDate, 
-        //     mpesaPhoneNumber,
-        //     identityNumber,
-        //     gender,
-        //     rentalId
-        //  } = await req.json();
+        //check for rate limits 
+
+        const ip = headers().get('x-forwarded-for')
+
+       const isRateLimit =  await checkForRateLimit({ ip: ip })
+
+       if(!isRateLimit)  return NextResponse.json(
+        { message: "Rate limit reached, please try again after 5 minutes." },
+        { status: 403 }
+      );
 
         const token = await getAccessToken()
 

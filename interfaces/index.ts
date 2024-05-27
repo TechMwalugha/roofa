@@ -8,15 +8,9 @@ export type menuBarType = {
 }
 
 export interface updateUserProps {
-    id: mongoose.Schema.Types.ObjectId
-    name: string
-    email: string 
-    image: string 
-    password: string
-    isEmailVerified: boolean 
-    verificationToken: string 
-    role: string 
-    accountStatus: boolean
+    email: string; 
+    type: string; 
+    content: any;
 }
 export interface GeoLocation {
     name: string;

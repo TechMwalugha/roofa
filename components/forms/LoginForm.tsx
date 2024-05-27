@@ -26,6 +26,7 @@ import { FaEyeSlash } from "react-icons/fa";
 
 const LoginForm = () => {
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false)
     const [seePassword, setSeePassword] = useState(false)
     const router = useRouter();
 
@@ -39,7 +40,7 @@ const LoginForm = () => {
 
      async function onSubmit(values: z.infer<typeof loginFormSchema>) {
         form.reset()
-        setError("processing")
+        setLoading(true)
         try {
             const res = await signIn("credentials", {
                 redirect: false,
@@ -47,12 +48,15 @@ const LoginForm = () => {
                 password: values.password,
             })
 
+            setLoading(false)
+            
             if(res?.error === 'Email is not verified, kindly wait as we redirect you.') router.push(`/verify/${values.email}`)
 
             if(res?.error) {
                 setError(res.error)
                 return
             }
+
             setError("Karibu tena, Wait as we redirect you.")
 
             // Redirect to the home page after successful authentication
@@ -67,7 +71,7 @@ const LoginForm = () => {
     <div className="flex items-center justify-center h-screen bg-blue">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
-      {error && error !== "processing" && (
+      {error && (
             <div className="fixed top-0 bg-[rgba(0,0,0,0.5)] left-0 right-0 bottom-0 flex items-center justify-center flex-col">
               <div 
               className="bg-white rounded-sm p-5 text-subtle-medium w-1/2 flex items-center justify-center flex-col"
@@ -148,10 +152,14 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="rounded  bg-blue">
+        <Button 
+        type="submit" 
+        className="rounded bg-blue"
+        disabled={loading}
+        >
           
-          {error !=="processing" && ("Login")}
-          {error === "processing" && (
+          {!loading && ("Login")}
+          {loading && (
             <h2 className="flex gap-2 items-center">
             <svg
               className="animate-spin -mr-1 ml-3 h-5 w-5 text-white"

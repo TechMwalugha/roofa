@@ -74,23 +74,22 @@ export async function fetchUserByToken(token: string) {
 }
 
 export async function updateUser(
-    {id, name, email, image, password, isEmailVerified, verificationToken, role, accountStatus}: updateUserProps
+    {email, type, content}: updateUserProps
     ) {
     try {
         connectToDB()
 
-        const user = await User.findById(id)
+        const user = await User.findOne({ email: email})
 
         if(!user) return null
 
-        user.name = name
-        user.email = email
-        user.image = image
-        user.password = password
-        user.isEmailVerified = isEmailVerified
-        user.verificationToken = verificationToken
-        user.role = role
-        user.accountStatus = accountStatus
+        if(type === 'password') {
+            user.password = content
+        }
+
+        if(type === 'verificationToken') {
+            user.verificationToken = content
+        }
         
         await user.save()
 
@@ -446,3 +445,25 @@ export async function fetchUserBookings({email}: {email: string}) {
         throw new Error(`An error occurred while fetching user bookings: ${error.message}`)
      }
 }     
+
+export async function fetchUserForgotPasswordAction({email}: { email: string}) {
+
+    try {
+        connectToDB()
+
+        const user = await User.findOne({email: email}).
+        select('email isEmailVerified signInType -_id')
+
+        if(!user) return null
+
+        return {
+            email: user.email,
+            signInType: user.signInType,
+            isEmailVerified: user.isEmailVerified
+        }
+        
+    } catch (error: any) {
+        throw new Error(`An error occurred while fetching the user.`)
+        
+    }
+}

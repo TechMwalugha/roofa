@@ -19,7 +19,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import {  updateUser } from "@/lib/actions/user.actions"
+import {  fetchUserForgotPasswordAction, updateUser } from "@/lib/actions/user.actions"
 import { generateRandom32ByteString } from "@/lib/utils"
 
 
@@ -39,52 +39,32 @@ const ForgotPassword = () => {
         form.reset()
         try{
     
-          setLoader(true)
-            const userRes = await fetch("api/getUser", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: values.email
-                }),
-              });
+          setLoader(true)          
+              
+            const user = await fetchUserForgotPasswordAction({ email: values.email })
 
-              if(!userRes.ok) {
-                setLoader(false)
-                setError('an error occurred, try again')
-              }
-              const userData = await userRes.json()
-              
-              
-            const user = userData.user
             if(!user) {
               setLoader(false)
-                setError(userData.message)
+                setError('No user found. Please ensure the email is correct.')
                 return
             }
             if(!user.isEmailVerified) {
               setLoader(false)
-                setError('Verify email first')
+                setError('Email, not verified. Please Login to verify email.')
                 return
             }
             if(user.signInType === "google") {
               setLoader(false)
-              setError('Email uses google signin')
+              setError('This email uses google signin. Please login using google.')
+              return
             }
 
             const randomString = generateRandom32ByteString()
 
                 await updateUser({
-                    id: user._id,
-                    name: user.name,
                     email: user.email,
-                    image: user.image,
-                    password: user.password,
-                    isEmailVerified: user.isEmailVerified,
-                    verificationToken: randomString,
-                    role: user.role,
-                    accountStatus: user.accountStatus,
+                    type: 'verificationToken',
+                    content: randomString,
                 })
 
                 const res = await fetch("api/email", {
@@ -96,7 +76,18 @@ const ForgotPassword = () => {
                         email: user.email,
                         subject: 'Password Update',
                         heading: 'Forgot password',
-                        content: `click the link to to reset password: <a href=https://roofa.co.ke/forgotpassword/resetpassword/${randomString}>Click here</a>`,
+                        content: `click the button below to reset password: <br /> 
+                        <a 
+                        style="background-color: #67C1CA; width: 100%; margin: 20px 0; padding: 5px; border-radius: 3px;"
+                        href=https://roofa.co.ke/forgotpassword/resetpassword/${randomString}>
+                        Click here
+                        </a>
+                        <br/>
+                        Or
+                        <br/>
+                        paste this url on your browser: <br/>
+                        https://roofa.co.ke/forgotpassword/resetpassword/${randomString}
+                        `,
                     }),
                   });
             
@@ -114,8 +105,42 @@ const ForgotPassword = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
       {error && (
-          <div className="bg-red-500 text-white w-full text-center text-small-medium mx-auto text-sm py-1 px-3 rounded-md mt-2">
-              {error}
+            <div className="fixed top-0 bg-[rgba(0,0,0,0.5)] left-0 right-0 bottom-0 flex items-center justify-center flex-col">
+              <div 
+              className="bg-white rounded-sm p-5 text-subtle-medium w-1/2 flex items-center justify-center flex-col"
+              >
+              <Image
+               src="/assets/login_notification_image.png" 
+               height={100}
+               width={100}
+               alt="Notification icon"
+               className="mb-3"
+               />
+                <p>{error}</p>
+                {error === 'Email, not verified. Please Login to verify email.' && ( <Button
+                className="shadow-md mt-3 bg-blue"
+                onClick={() => router.push(`/login`)}
+                >
+                  Login
+                </Button> 
+                )}
+
+            {error === 'This email uses google signin. Please login using google.' && ( <Button
+                className="shadow-md mt-3 bg-blue"
+                onClick={() => router.push(`/login`)}
+                >
+                  Login
+                </Button> 
+                )}
+
+             { ( error === 'No user found. Please ensure the email is correct.' || error === "Check your email, the link has been sent." ) && ( <Button
+                className="shadow-md mt-3 bg-blue"
+                onClick={() => setError('')}
+                >
+                  Reload
+                </Button> 
+                )}
+              </div>
             </div>
           )}
           <h1 className="text-center">Forgot passsword?</h1>
@@ -147,7 +172,11 @@ const ForgotPassword = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="rounded  bg-blue">
+        <Button 
+        type="submit" 
+        className="rounded  bg-blue"
+        disabled = {loader}
+        >
           {!loader && (<h4>Send</h4>)}
           {loader && (
             <h2 className="flex gap-2 items-center">
