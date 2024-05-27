@@ -81,7 +81,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
           </div>
           <div className='w-16 h-16'>
             <img
-            src={`/images${ownerImage}`}
+            src={`${ownerImage}`}
             alt="user image"
             width={30}
             height={30}

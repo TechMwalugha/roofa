@@ -18,13 +18,15 @@ const UploadUserImageForm =(
         const [file, setFile] = useState<File>()
         const [error, setError] = useState('')
         const [loader, setLoader] = useState('')
+     
+        let displayImage = image
         
         const path = usePathname()
 
         //check if its google image:
 
         if(!containsGoogleusercontent(image as string)) {
-          image = `https://roofa.co.ke/images${image}`
+          displayImage = `https://roofa.co.ke/images${image}`
         }
 
         const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -92,7 +94,7 @@ const UploadUserImageForm =(
     <div className='flex gap-2 items-center mb-3 w-full'>
        <div className='w-16 h-16 relative'>
        <Image
-       src={file === undefined ? image : URL.createObjectURL(file)}
+       src={file === undefined ? displayImage : URL.createObjectURL(file)}
        fill
        alt="image"
        className='rounded-full object-cover'

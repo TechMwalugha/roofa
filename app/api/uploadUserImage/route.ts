@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     { status: 403 }
   )
 
-  //check for rate limits 
+  // check for rate limits 
 
   const ip = headers().get('x-forwarded-for')
 
@@ -62,15 +62,16 @@ export async function POST(request: NextRequest) {
     await writeFile(path, buffer)
 
     updateUserImage({id, newFileName})
-    const preImagePath: string = join('/', 'RealProjects', 'roofa', 'public', preImage)
+    const preImagePath: string = join('/', 'var' , 'www', 'html', 'images', preImage)
     const isDelete = await fileExists(preImagePath)
 
+    revalidatePath(pathUrl)
     if(isDelete) {
       await unlink(preImagePath)
+    
     }
 
    
-    revalidatePath(pathUrl)
   return NextResponse.json({ message: 'Image uploaded successfully' },
     { status: 200}
   )
