@@ -76,7 +76,10 @@ const ForgotPassword = () => {
                         email: user.email,
                         subject: 'Password Update',
                         heading: 'Forgot password',
-                        content: `click the button below to reset password: <br /> 
+                        content: `click the button below to reset password: 
+                        <br /> 
+                        <br /> 
+                        <br /> 
                         <a 
                         style="background-color: #67C1CA; text-decoration: none; 
                         color:black;  
@@ -86,9 +89,14 @@ const ForgotPassword = () => {
                         Click here
                         </a>
                         <br/>
+                        <br/>
+                        <br/>
                         Or
                         <br/>
-                        paste this url on your browser: <br/>
+                        <br/>
+                        paste this url on your browser: 
+                        <br/>
+                        <br/>
                         https://roofa.co.ke/forgotpassword/resetpassword/${randomString}
                         <br/>
                         <br/>

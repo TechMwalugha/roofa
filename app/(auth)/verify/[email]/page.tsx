@@ -38,9 +38,12 @@ const Page = async  ({ params }: {params: {email: string}}) =>{
       content: `Click the link to verify email: 
       <a style="font-size: 22px;" href=https://roofa.co.ke/verifytoken/${randomString}>Click here</a> 
       <br/> 
+      <br/> 
       The token expires in 1 hour.
       <br/>
+      <br/>
       Or paste this url in your browser: https://roofa.co.ke/verifytoken/${randomString}
+      <br />
       <br />
       If you did not request this, please ignore this email.
       `
