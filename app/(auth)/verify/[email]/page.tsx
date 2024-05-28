@@ -26,15 +26,9 @@ const Page = async  ({ params }: {params: {email: string}}) =>{
       const randomString = generateRandom32ByteString()
 
       await updateUser({
-        id: user._id,
-        name: user.name,
         email: user.email,
-        image: user.image,
-        password: user.password,
-        isEmailVerified: user.isEmailVerified,
-        verificationToken: randomString,
-        role: user.role,
-        accountStatus: user.accountStatus,
+        type: 'verificationToken',
+        content: randomString,
     })
 
     accountsEmail({

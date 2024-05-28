@@ -37,6 +37,7 @@ const page = async ({ params}: { params: { id: string}}) => {
          if(!user.isEmailVerified && secondsDifference < 3600) {
         execute = true
         user.isEmailVerified = true
+        user.verificationToken = ''
         await user.save()
     }
 
