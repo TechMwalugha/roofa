@@ -85,6 +85,7 @@ export async function updateUser(
 
         if(type === 'password') {
             user.password = content
+            user.verificationToken = ''
         }
 
         if(type === 'verificationToken') {
