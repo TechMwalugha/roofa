@@ -40,16 +40,20 @@ const DeleteAccountForm = ({id}: { id: string}) => {
         form.reset()
         try {
 
-            if(session?.user?.email !== values.email) {
-                setError('Email does match.')
-                return 
-            } 
-            if(session?.user?.id !== id) {
-                setError('Unable to delete account')
+          
+          if(session?.user?.email !== values.email) {
+            setError('Email does match.')
+            return 
+          } 
+          if(session?.user?.id !== id) {
+            setError('Unable to delete account')
+            
+            signOut()
+            return
+          }
+          const confirmWithUser = confirm(`Dear ${session?.user?.email} are you sure you want to delete your account? You will lose all your data including all bookings you have made.`)
 
-                signOut()
-                return
-            }
+          if(!confirmWithUser) return
 
             deleteUser(id as any)
             signOut()

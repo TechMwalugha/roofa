@@ -78,7 +78,10 @@ const ForgotPassword = () => {
                         heading: 'Forgot password',
                         content: `click the button below to reset password: <br /> 
                         <a 
-                        style="background-color: #67C1CA; width: 100%; margin: 20px 0; padding: 5px; border-radius: 3px;"
+                        style="background-color: #67C1CA; text-decoration: none; 
+                        color:black;  
+                        padding: 10px 30px; 
+                        font-weight: bold;"
                         href=https://roofa.co.ke/forgotpassword/resetpassword/${randomString}>
                         Click here
                         </a>
@@ -87,6 +90,9 @@ const ForgotPassword = () => {
                         <br/>
                         paste this url on your browser: <br/>
                         https://roofa.co.ke/forgotpassword/resetpassword/${randomString}
+                        <br/>
+                        <br/>
+                        If you did not request this, please ignore this email and your password will remain unchanged.
                         `,
                     }),
                   });
