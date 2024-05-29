@@ -178,5 +178,13 @@ export async function checkWhetherIsAgentOrAdmin() {
 
 }
 
+export const apiKeys = [
+  process.env.NEXT_PUBLIC_API_KEY,
+  process.env.NEXT_PUBLIC_API_KEY_2,
+  process.env.NEXT_PUBLIC_API_KEY_3,
+  process.env.NEXT_PUBLIC_API_KEY_4,
+  process.env.NEXT_PUBLIC_API_KEY_5,
+];
+
 
 

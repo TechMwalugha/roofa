@@ -17,10 +17,17 @@ const UpdateRentalImages = ({ rentalId ,images, title, location }: { rentalId: s
     const [loading, setLoading] = useState<boolean>(false)
     const router = useRouter()
 
-    const notifySuccess = () => {
-        toast.success('Images updated successfully.', {
+    const notifySuccess = (message: string) => {
+        toast.success(message, {
             position: 'top-right',
             toastId: 'imagesUpdateRental'
+        })
+    }
+
+    const notifyError = (message: string) => {
+        toast.error(message, {
+            position: 'top-right',
+            toastId: 'imagesUpdateRentalError'
         })
     }
 
@@ -49,10 +56,19 @@ const UpdateRentalImages = ({ rentalId ,images, title, location }: { rentalId: s
 
         const res = await fetch('/api/uploadRentalImages', {
             method: 'POST',
+            headers: {
+                'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
+              },
             body: formData
         })
 
         const responseData = await res.json()
+
+        if(!res.ok) {
+            setLoading(false)
+            notifyError(responseData.message)
+            return
+        }
 
         await updateRentalImagesAction({
             rentalId: rentalId as unknown as ObjectId,
@@ -63,7 +79,7 @@ const UpdateRentalImages = ({ rentalId ,images, title, location }: { rentalId: s
 
         setLoading(false)
 
-        notifySuccess()
+        notifySuccess(responseData.message)
         
         router.refresh()
     }

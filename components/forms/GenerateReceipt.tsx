@@ -47,11 +47,12 @@ const GenerateReceipt = ({ merchantRequestId } : { merchantRequestId : string })
   async function handleButtonClick() {
     setLoading(true)
     notifyWarn("Request initiated, the estimated wait time is 10 seconds ")
+
     const response = await fetch('/api/payments/regenerateReceipt', {
       method: 'POST',
-  
       headers: {
         "Content-Type": "application/json",
+        'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
       },
       
       body: JSON.stringify({ merchantRequestId }),
@@ -59,11 +60,11 @@ const GenerateReceipt = ({ merchantRequestId } : { merchantRequestId : string })
 
     const data = await response.json()
   
-    if(data.message == 'Receipt not regenerated. Try again') {
+    if(!response.ok || data.message == 'Receipt not regenerated. Try again') {
       notifyError(data.message)
     }
 
-    if(response.status === 200 && data.message == 'Receipt sent successfully. Kindly check your email') {
+    if(response.status === 200) {
       notifySuccess(data.message)
     }
     setLoading(false)

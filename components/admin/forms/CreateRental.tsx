@@ -72,11 +72,14 @@ const FileUploadForm = ({ users, allRentals }:
     });
     const res = await fetch('/api/uploadRentalImages', {
       method: 'POST',
+      headers: {
+        'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
+      },
       body: formData
     })
     const responseData = await res.json();
 
-    if (responseData.success) {
+    if (res.ok) {
       const imageUrls = responseData.data;
 
       // Perform further actions with imageUrls
@@ -106,7 +109,6 @@ const FileUploadForm = ({ users, allRentals }:
 
       router.refresh()
     } else {
-      console.error('Server response indicates failure');
       // Handle error or provide user feedback
 
       notifyError('Failed while uploading images. Try again')

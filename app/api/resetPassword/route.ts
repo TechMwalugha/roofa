@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { updateUser, fetchUserByEmail } from "@/lib/actions/user.actions";
 import { checkForRateLimit } from "@/lib/upstash";
 import { headers } from "next/headers";
+import { apiKeys } from "@/lib/utils";
 
 export async function POST(req: any) {
   try {
@@ -18,6 +19,17 @@ export async function POST(req: any) {
    { message: "Rate limit reached, please try again after 5 minutes." },
    { status: 403 }
  );
+
+          //check for the api key
+         const apiKey = req.headers.get('x-api-key');
+
+          if (!apiKey || !apiKeys.includes(apiKey)) {
+              return NextResponse.json(
+                  { message: "Unauthorized. Invalid API key." },
+                  { status: 401 }
+              );
+          }
+        
 
     const {  email, password } = await req.json();
     const user = await fetchUserByEmail(email)

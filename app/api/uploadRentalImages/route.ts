@@ -1,27 +1,65 @@
 import { fetchUserByEmail } from "@/lib/actions/user.actions";
+import { checkForRateLimit } from "@/lib/upstash";
+import { apiKeys } from "@/lib/utils";
 import fs from "fs";
 import { getServerSession } from "next-auth";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const session = await getServerSession()
+
+  try {
+     // check for rate limits 
+
+  const ip = headers().get('x-forwarded-for')
+
+  const isRateLimit =  await checkForRateLimit({ ip: ip })
+
+  if(!isRateLimit)  return NextResponse.json(
+   { message: "Rate limit reached, please try again after 5 minutes." },
+   { status: 429 }
+ );
+
+ //check for the api key
+ const apiKey = req.headers.get('x-api-key');
+
+ if (!apiKey || !apiKeys.includes(apiKey)) {
+     return NextResponse.json(
+         { message: "Unauthorized. Invalid API key." },
+         { status: 401 }
+     );
+ }
+ const session = await getServerSession()
   if(!session) {
-    redirect('/not-found')
+    return NextResponse.json({
+      message: "Forbidden"
+    },{
+      status: 403
+    })
   }
+
   const sessionUser = await fetchUserByEmail(session?.user?.email as string)
 
   if(!sessionUser) {
-    redirect('/not-found')
+    return NextResponse.json({
+      message: "Forbidden"
+    },{
+      status: 403
+    })
   }
 
   let isAllowed: boolean =  (sessionUser.role === 'roofa-agent' || sessionUser.role === 'admin') ? true : false
 
   if(!isAllowed) {
-    redirect('/not-found')
+    return NextResponse.json({
+      message: "Forbidden"
+    },{
+      status: 403
+    })
   }
 
-    const imageUrls = []
+  const imageUrls = []
   const formData = await req.formData();
   const formDataEntryValues = Array.from(formData.values());
   for (const formDataEntryValue of formDataEntryValues) {
@@ -38,5 +76,21 @@ export async function POST(req: Request) {
       imageUrls.push(newFileName)
     }
   }
-  return NextResponse.json({ success: true, data: imageUrls });
+
+  return NextResponse.json({ 
+    message: "Images uploaded successfully", 
+    data: imageUrls 
+  },{
+    status: 200
+  });
+    
+  } catch (error: any) {
+    return NextResponse.json({
+      message: "An error occurred on our end. Please try again"
+    },
+    {
+      status: 500
+    }
+  )
+  }
 }

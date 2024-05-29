@@ -1,5 +1,6 @@
 import { regenerateReceipt } from "@/lib/actions/all.action"
 import { checkForRateLimit } from "@/lib/upstash";
+import { apiKeys } from "@/lib/utils";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server"
 
@@ -14,8 +15,19 @@ export async function POST(req: any) {
 
        if(!isRateLimit)  return NextResponse.json(
         { message: "Rate limit reached, please try again after 5 minutes." },
-        { status: 403 }
+        { status: 429 }
       );
+
+        //check for api key
+
+        const apiKey = req.headers.get('x-api-key');
+
+        if (!apiKey || !apiKeys.includes(apiKey)) {
+          return NextResponse.json(
+              { message: "Unauthorized. Invalid API key." },
+              { status: 401 }
+          );
+      }
 
     const { merchantRequestId } = await req.json()
 

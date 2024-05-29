@@ -193,15 +193,14 @@ export async function fetchAllBookings({
         .skip(skipAmount)
         .limit(pageSize)
   
-      // Count the total number of users that match the search criteria (without pagination).
+      // Count the total number of booking that match the below criteria (without pagination).
       const totalBookingsCount = await Booking.countDocuments(query);
-      const pendingBooking = await Booking.countDocuments({"isBookingSettled": false,
-      "isPaymentMade.isMade": true})
-      const settledBooking = await Booking.countDocuments({"isBookingSettled": true,
-      "isPaymentMade.isMade": true})
-      const failedBooking = await Booking.countDocuments({
-        "isPaymentMade.isMade": false
-     });
+      const allBooking = await Booking.find(query)
+      .select('isBookingSettled isPaymentMade')
+
+      const pendingBooking = allBooking.filter((booking: any) => !booking.isBookingSettled && booking.isPaymentMade.isMade).length
+      const settledBooking = allBooking.filter((booking: any) => booking.isBookingSettled && booking.isPaymentMade.isMade).length
+      const failedBooking = allBooking.filter((booking: any) => !booking.isBookingSettled && !booking.isPaymentMade.isMade).length
   
       const bookings = await bookingsQuery.exec();
   

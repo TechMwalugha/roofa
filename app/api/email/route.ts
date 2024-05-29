@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import sendEmail from "@/lib/emailing/nodemailer.email"
 import { fetchUserByEmail } from "@/lib/actions/user.actions";
 import { accountsEmail } from "@/lib/emailing/mailing.email";
 import { headers } from "next/headers";
 import { checkForRateLimit } from "@/lib/upstash";
+import { apiKeys } from "@/lib/utils";
 
 
 
@@ -21,6 +21,16 @@ export async function POST(req: any) {
         { message: "Rate limit reached, please try again after 5 minutes." },
         { status: 403 }
       );
+
+       //check for the api key
+  const apiKey = req.headers.get('x-api-key');
+
+  if (!apiKey || !apiKeys.includes(apiKey)) {
+      return NextResponse.json(
+          { message: "Unauthorized. Invalid API key." },
+          { status: 401 }
+      );
+  }
 
         const { email, subject, heading, content} = await req.json()  
         

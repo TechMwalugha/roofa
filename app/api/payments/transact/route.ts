@@ -9,6 +9,7 @@ import { z } from "zod";
 import { ObjectId } from "mongoose";
 import { headers } from "next/headers";
 import { checkForRateLimit } from "@/lib/upstash";
+import { apiKeys } from "@/lib/utils";
 
 export async function POST(req: any) {
     try {
@@ -19,9 +20,20 @@ export async function POST(req: any) {
        const isRateLimit =  await checkForRateLimit({ ip: ip })
 
        if(!isRateLimit)  return NextResponse.json(
-        { message: "Rate limit reached, please try again after 5 minutes." },
-        { status: 403 }
+        { message: "Too many requests, please try again after 5 minutes." },
+        { status: 429 }
       );
+
+      //check for api key
+
+      const apiKey = req.headers.get('x-api-key');
+
+      if (!apiKey || !apiKeys.includes(apiKey)) {
+        return NextResponse.json(
+            { message: "Unauthorized. Invalid API key." },
+            { status: 401 }
+        );
+    }
 
         const token = await getAccessToken()
 

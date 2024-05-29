@@ -29,6 +29,13 @@ const UploadUserImageForm =(
           displayImage = `https://roofa.co.ke/images${image}`
         }
 
+
+        const notifyError = (message: string) => toast.error(message, {
+          position: toast.POSITION.TOP_RIGHT,
+          toastId: "mwalError",
+          theme: "dark"
+        });
+
         const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault()
   
@@ -62,13 +69,20 @@ const UploadUserImageForm =(
         
               const res = await fetch('/api/uploadUserImage', {
                 method: 'POST',
+                headers: {
+                  'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
+                },
                 body: data
               })
 
               setLoader("")
     
               // handle the error
-              if (!res.ok) throw new Error(await res.text())
+              if (!res.ok) {
+                const { message } = await res.json()
+                notifyError(message)
+                return
+              }
 
               const notifySuccess = () => toast.success("image uploaded successfully", {
                 position: toast.POSITION.TOP_RIGHT,

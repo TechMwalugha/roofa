@@ -1,5 +1,6 @@
 import { updateUserImage } from "@/lib/actions/user.actions";
 import { checkForRateLimit } from "@/lib/upstash";
+import { apiKeys } from "@/lib/utils";
 import { writeFile, unlink, access } from "fs/promises";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -10,12 +11,6 @@ import { join } from "path";
 
 export async function POST(request: NextRequest) {
     try {
-  const session = await getServerSession()
-
-  if(!session) return NextResponse.json(
-    { message: "Forbidden"},
-    { status: 403 }
-  )
 
   // check for rate limits 
 
@@ -25,8 +20,18 @@ export async function POST(request: NextRequest) {
 
   if(!isRateLimit)  return NextResponse.json(
    { message: "Rate limit reached, please try again after 5 minutes." },
-   { status: 403 }
+   { status: 429 }
  );
+
+ //check for the api key
+ const apiKey = request.headers.get('x-api-key');
+
+ if (!apiKey || !apiKeys.includes(apiKey)) {
+     return NextResponse.json(
+         { message: "Unauthorized. Invalid API key." },
+         { status: 401 }
+     );
+ }
 
 
     const data = await request.formData()
@@ -77,8 +82,12 @@ export async function POST(request: NextRequest) {
   )
         
     } catch (error: any) {
-      console.log(error.message)
-        throw new Error("Error uploading image. Try again")
+
+      return NextResponse.json({ 
+        message: "Internal server error, please try again"
+      }, {
+        status: 500
+      })
     }
 }
 
