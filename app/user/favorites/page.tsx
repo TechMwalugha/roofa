@@ -46,7 +46,7 @@ const page = async () => {
            </section> 
            </>
             ) : (
-                <div className="flex flex-col items-center justify-center h-full">
+                <div className="flex flex-col items-center justify-center h-screen px-3">
                     <h1 className="text-2xl font-semibold text-gray-700">You have no favorites yet</h1>
                     <p className="text-gray-500">Click on the heart icon on any rental to add it to your favorites</p>
 
