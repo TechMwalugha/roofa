@@ -1,5 +1,9 @@
 'use server'
+
 import generatePdf from "../emailing/pdf"
+import Booking from "../models/booking.model"
+import Rental from "../models/rental.model"
+import User from "../models/user.model"
 import { connectToDB } from "../mongoose"
 import { fetchOneBooking } from "./booking.action"
 import { fetchOnePayment } from "./payment.action"
@@ -33,6 +37,28 @@ export async function regenerateReceipt({ id }: { id: string }) {
 
         return false
 
+    } catch (error: any) {
+        console.log(error.message)
+    }
+}
+
+export async function dashboardAction(){
+    try {
+        connectToDB()
+
+      const allBooking = await Booking.find()
+      .select('fullName email identityNumber isBookingSettled isPaymentMade createdAt')
+
+      const unverifiedUsers = await User.find({isEmailVerified: false})
+      const totalRentals = await Rental.countDocuments()
+
+      const unsettledBooking = allBooking.filter((booking: any) => !booking.isBookingSettled && booking.isPaymentMade.isMade)
+
+      return {
+        unverifiedUsers: unverifiedUsers.length,
+        totalRentals: totalRentals,
+        unsettledBooking: unsettledBooking,
+      }
     } catch (error: any) {
         console.log(error.message)
     }

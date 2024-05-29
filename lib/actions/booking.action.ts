@@ -222,12 +222,10 @@ export async function settleBookingAction({ id }: { id: ObjectId}) {
 
         if(!booking) return false
 
-        console.log(booking.isBookingSettled)
+      
         if(booking.isPaymentMade.isMade) {
             booking.isBookingSettled = !booking.isBookingSettled
         }
-
-        console.log(booking.isBookingSettled)
 
         await booking.save()
 
@@ -235,7 +233,9 @@ export async function settleBookingAction({ id }: { id: ObjectId}) {
             email: booking.email, 
             subject: 'Roofa Booking', 
             heading: `Booking Settled successfully.`, 
-            content: `Dear ${booking.fullName} your booking for has been settled successfully.`, 
+            content: `Dear ${booking.fullName} your booking for has been settled successfully.
+            This means we have confirmed. 
+            `, 
             pdfFilePath: null ,
         })
 
