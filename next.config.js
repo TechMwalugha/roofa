@@ -17,6 +17,10 @@ const nextConfig = {
           protocol: "https",
           hostname: "roofa.co.ke"
         },
+        {
+          protocol: "https",
+          hostname: "img.freepik.com"
+        },
       ]
     }
 }

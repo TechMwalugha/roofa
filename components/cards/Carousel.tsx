@@ -1,5 +1,5 @@
 "use client"
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
@@ -22,6 +22,17 @@ function Carousel({
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const [sourceLoaded, setSourceLoaded] = useState(false)
+
+  const src = `https://roofa.co.ke/images/rentalImages/${images[currentIndex]}`
+
+  useEffect(() => {
+    const img = new Image()
+    img.src = src
+    img.onload = () => setSourceLoaded(true)
+  }, [src])
+
+
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
     const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1;
@@ -42,12 +53,18 @@ function Carousel({
     <section
     className='flex-auto w-72 mb-10'>
         <div className=' h-[250px] w-full relative group'>
-        <Suspense fallback={<div>Loading</div>}>
+        { sourceLoaded && (
             <div
-                style={{ backgroundImage: `url(/images/rentalImages/${images[currentIndex]})` }}
-                className='w-full h-full rounded-md bg-center bg-cover duration-500'
-            ></div>
-        </Suspense>
+            style={{ backgroundImage: `url(/images/rentalImages/${images[currentIndex]})` }}
+            className='animate-pulse w-full h-full rounded-md bg-center bg-cover duration-500'
+        ></div>
+        )}
+
+        { !sourceLoaded && (
+            <div
+            className='animate-pulse bg-slate-300 w-full h-full rounded-md bg-center bg-cover duration-500'
+        ></div>
+        )}
         {/* Left Arrow */}
         <div className='md:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
             <BsChevronCompactLeft onClick={prevSlide} size={30} />

@@ -48,14 +48,14 @@ const page = async () => {
             ) : (
                 <div className="flex flex-col items-center justify-center h-screen px-3">
                     <h1 className="text-2xl font-semibold text-gray-700">You have no favorites yet</h1>
-                    <p className="text-gray-500">Click on the heart icon on any rental to add it to your favorites</p>
+                    <p className="text-gray-500">Click on the heart icon on any rental to add it to your favorites, so you can easily locate the rental.</p>
 
                     <Image 
                     src="/assets/sad-disappointed-emoji.gif"
                     width={30}
                     height={30}
                     alt="sad emoji"
-                    className="w-2/4 h-2/4 cover"
+                    className="w-32 h-32 cover"
                     />
                 </div>
             )
