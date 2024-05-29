@@ -28,11 +28,13 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
   
   const user:any = await fetchUserByEmail(session?.user?.email as any)
 
+ if(rental.owner) {
   if(rental.owner.image && !containsGoogleusercontent(rental.owner.image as string)) {
     ownerImage = `https://roofa.co.ke/images${rental.owner.image}`
    } else if(rental.owner.image && containsGoogleusercontent(rental.owner.image as string)) {
     ownerImage = rental.owner.image
-   } else {
+   } 
+ } else {
     ownerImage = '/assets/account-profile.png'
    }
 
@@ -76,7 +78,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       <div className=''>
         <div className='flex items-center gap-9 p-2'>
           <div>
-            <h3 className='text-heading3-bold'>Entire apartment hosted by <span className='capitalize text-blue'>{rental.owner.name}</span></h3>
+            <h3 className='text-heading3-bold'>Entire apartment hosted by <span className='capitalize text-blue'>{rental.owner ? rental.owner.name : "Roofa"}</span></h3>
             <p className='capitalize'>{rental.rentalType.map((type: string, index: number) => `${index !== 0 ? ' . ' : '' } ${type}`)}</p>
           </div>
           <div className='w-16 h-16'>
