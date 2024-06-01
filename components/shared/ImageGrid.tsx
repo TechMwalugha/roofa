@@ -21,11 +21,17 @@ const ImageCarousel = (
   return (
     <section className='w-full'>
     <div className="relative md:h-[320px] max-md:h-72 flex max-md:items-center gallery">
-      <div className="flex bg-blue p-2 z-10 absolute left-0 top-1/2 transform -translate-y-1/2 md:hidden">
-        <button onClick={() => setCurrentImage((prev) => (prev - 1 + images.length) % images.length)} className="text-white text-2xl">&lt;</button>
+      <div 
+      onClick={() => setCurrentImage((prev) => (prev - 1 + images.length) % images.length)}
+      className="flex bg-blue p-2 z-10 absolute left-0 top-1/2 transform -translate-y-1/2 md:hidden cursor-pointer"
+      >
+        <button className="text-white text-2xl">&lt;</button>
       </div>
-      <div className="flex bg-blue p-2 z-10 absolute right-0 top-1/2 transform -translate-y-1/2 md:hidden">
-        <button onClick={() => setCurrentImage((prev) => (prev + 1) % images.length)} className="text-white text-2xl">&gt;</button>
+      <div 
+      onClick={() => setCurrentImage((prev) => (prev + 1) % images.length)}
+      className="flex bg-blue p-2 z-10 absolute right-0 top-1/2 transform -translate-y-1/2 md:hidden cursor-pointer"
+      >
+        <button className="text-white text-2xl">&gt;</button>
       </div>
       {images.map((image, index) => (
         
@@ -33,11 +39,7 @@ const ImageCarousel = (
        key={index}
        className={`relative bg-primary  m-0 overflow-hidden object-cover ${index === currentImage ? 'max-md:block' : 'max-md:hidden'} max-md:h-72 max-md:w-full  ${index === 0 ? 'gallery-img-1 md:rounded-s-lg' : ''} ${index === 2 || index === 4 ? "md:rounded-r-lg" : "" }`}
        >
-       {/* <img
-          src={`https://roofa.co.ke/images/rentalImages/${image}`}
-          alt={`Image ${index + 1}`}
-          className={`w-full h-full object-cover`}
-        /> */}
+
       <ImageComponent
       src={image}
       index={index}
@@ -53,7 +55,7 @@ const ImageCarousel = (
       ><TiThSmall /> <p>Show all photos</p> </Link>
     </div>
 
-    <div className="flex mt-5 md:hidden overflow-x-scroll hide-scrollbar px-5">
+    <div className="flex items-center justify-center mt-5 md:hidden overflow-x-scroll hide-scrollbar px-5">
           {images.map((image, index) => (
             <div
             key={index}

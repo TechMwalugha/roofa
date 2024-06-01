@@ -22,8 +22,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
   let ownerImage
   
   const rental:any = await fetchSingleRental({id})
-  // const rentalImages = rental.images.slice(0,5)
-  const rentalImages = rental.images
+  const rentalImages = rental.images.slice(0,5)
 
   const session = await getServerSession()
   
