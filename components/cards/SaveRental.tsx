@@ -35,9 +35,9 @@ const SaveRental = ({
             )}
 
             {loader && (
-                    <h2 className="flex gap-2 items-center bg-warning p-1 rounded">
+                    <h2 className="flex gap-2 items-center justify-center bg-warning p-1 rounded">
                     <svg
-                    className="animate-spin -mr-1 ml-3 h-5 w-5 text-white"
+                    className="animate-spin h-5 w-5 text-white"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24">
@@ -52,7 +52,7 @@ const SaveRental = ({
                         className="opacity-75"
                         fill="currentColor"
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                    </svg> Processing...
+                    </svg>
                     </h2>
                 )
                 }

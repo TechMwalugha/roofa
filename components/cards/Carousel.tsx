@@ -22,15 +22,17 @@ function Carousel({
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-//   const [sourceLoaded, setSourceLoaded] = useState(false)
+  const [sourceLoaded, setSourceLoaded] = useState(false)
+     let src 
 
-//   let src = `https://roofa.co.ke/images/rentalImages/${images[currentIndex]}`
-//   let img = new Image()
-  
-//   useEffect(() => {
-//     img.src = src
-//     img.onload = () => setSourceLoaded(true)
-//   }, [src])
+  useEffect(() => {
+    setSourceLoaded(false)
+    src = `https://roofa.co.ke/images/rentalImages/${images[currentIndex]}`
+    let img = new Image()
+    img.src = src
+    img.onload = () => setSourceLoaded(true)
+
+  }, [currentIndex])
 
 
   const prevSlide = () => {
@@ -41,6 +43,7 @@ function Carousel({
 
   const nextSlide = () => {
     const isLastSlide = currentIndex === images.length - 1;
+
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
@@ -53,11 +56,27 @@ function Carousel({
     <section
     className='flex-auto w-72 mb-10'>
         <div className=' h-[250px] w-full relative group'>
-
-            <div
-            style={{ backgroundImage: `url(/images/rentalImages/${images[currentIndex]})` }}
-            className='w-full h-full rounded-md bg-center bg-cover duration-500'
-        ></div>
+        {/* Loading spinner */}
+     
+        { !sourceLoaded && (
+            <div 
+            className='flex items-center justify-center animate-pulse w-full h-full rounded-md bg-slate-300 transition-all duration-3000'
+            >
+              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
+            </div>
+        )}
+      
+        {
+          sourceLoaded && (
+            <img 
+          src={`https://roofa.co.ke/images/rentalImages/${images[currentIndex]}`} 
+          alt={`${title} image ${currentIndex}`} 
+          className='w-full h-full rounded-md object-cover transition-all duration-500'
+          loading='lazy'
+          />
+          )
+        }
+   
 
         {/* Left Arrow */}
         <div className='md:hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
@@ -80,7 +99,7 @@ function Carousel({
         </div>
         </div>
 
-        {/* apartment detalils */}
+        {/* apartment details */}
 
         <Link 
         href={`/rentals/${id}`}

@@ -5,6 +5,7 @@ import './styles.css'
 import Link from 'next/link';
 import { TiThSmall } from "react-icons/ti";
 import { ObjectId } from 'mongoose';
+import ImageComponent from './ImageComponent';
 
 const ImageCarousel = (
   {
@@ -32,33 +33,41 @@ const ImageCarousel = (
        key={index}
        className={`relative bg-primary  m-0 overflow-hidden object-cover ${index === currentImage ? 'max-md:block' : 'max-md:hidden'} max-md:h-72 max-md:w-full  ${index === 0 ? 'gallery-img-1 md:rounded-s-lg' : ''} ${index === 2 || index === 4 ? "md:rounded-r-lg" : "" }`}
        >
-         <img
-          src={`/images/rentalImages/${image}`}
+       {/* <img
+          src={`https://roofa.co.ke/images/rentalImages/${image}`}
           alt={`Image ${index + 1}`}
           className={`w-full h-full object-cover`}
-        />
+        /> */}
+      <ImageComponent
+      src={image}
+      index={index}
+       />
+  
        </div>
 
-      ))}
+      )
+      )}
       <Link
       href={`allImages?id=${id}`}
       className='absolute flex items-center gap-2 bottom-2 right-2 md:right-10 bg-slate-50 p-2 rounded shadow'
       ><TiThSmall /> <p>Show all photos</p> </Link>
     </div>
 
-    <div className="flex mt-5 items-center justify-center md:hidden overflow-x-scroll hide-scrollbar">
+    <div className="flex mt-5 md:hidden overflow-x-scroll hide-scrollbar px-5">
           {images.map((image, index) => (
-            <img
-              key={index}
-              src={`/images/rentalImages/${image}`}
-              width={72}
-              height={72}
-              alt={`Rental image ${index}`}
-              className={`w-24 h-24 object-cover  m-1 cursor-pointer ${index === currentImage ? 'opacity-100 bg-primary' : 'opacity-50'}`}
-              onClick={() => setCurrentImage(index)}
-            />
+            <div
+            key={index}
+            className={`w-24 h-24 object-cover  mx-1 cursor-pointer ${index === currentImage ? 'opacity-100 bg-primary' : 'opacity-50'}`}
+            onClick={() => setCurrentImage(index)}
+            >
+              <ImageComponent 
+              src={image}
+              index={index}
+              />
+            </div>
+            
           ))}
-        </div>
+    </div>
     </section>
   );
 };

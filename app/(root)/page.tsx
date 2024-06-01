@@ -18,7 +18,6 @@ export default async function Home({
   })
 
   return (
-    <Suspense fallback={<div>Loading</div>}>
     <>
    <section className='px-2 flex flex-wrap items-center gap-5 xs:flex-row'>
       {
@@ -53,6 +52,5 @@ export default async function Home({
             isNext={result.isNext}
             />
     </>
-  </Suspense>
   )
 }

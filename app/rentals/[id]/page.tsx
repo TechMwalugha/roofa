@@ -22,7 +22,8 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
   let ownerImage
   
   const rental:any = await fetchSingleRental({id})
-  const rentalImages = rental.images.slice(0,5)
+  // const rentalImages = rental.images.slice(0,5)
+  const rentalImages = rental.images
 
   const session = await getServerSession()
   
@@ -64,9 +65,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
           id={user.id}
           rentalId = {rental.id}
           />
-            // <button
-            // className='flex items-center gap-2 bg-primary text-subtle-semibold p-1 rounded'
-            // ><TiTick /><span className=''>Saved</span></button>
+            
           )}
         </div>
       </div>
