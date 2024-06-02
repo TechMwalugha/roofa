@@ -28,6 +28,7 @@ const ImageComponent = ({
           />)
       }
       
+      
      { imageLoaded && (<img
           src={`https://roofa.co.ke/images/rentalImages/${src}`}
           alt={`Image ${index + 1}`}

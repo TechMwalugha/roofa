@@ -264,3 +264,17 @@ export async function retrieveRentalPrice({ rentalId } : { rentalId: string }) {
   }
 
 }
+
+export async function fetchRentalImages({ id }: { id: string }) {
+  try{
+    connectToDB()
+    const rentalImages = await Rental.findById(id as unknown as ObjectId)
+    .select('title location images')
+
+    if(!rentalImages) return false
+
+    return rentalImages
+  } catch(error: any) {
+    return false
+  }
+}

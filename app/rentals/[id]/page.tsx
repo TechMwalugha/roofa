@@ -15,6 +15,7 @@ import { TiTick } from "react-icons/ti";
 import SaveRental from '@/components/cards/SaveRental';
 import UnsaveRental from '@/components/cards/UnsaveRental';
 import { containsGoogleusercontent } from '@/lib/utils';
+import OfferAlert from '@/components/shared/alerts/OfferAlert';
 
 
 const page = async ({ params } : { params: { id: ObjectId}}) => {
@@ -41,6 +42,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
 
   return (
     <div className='md:p-2 max-sm:px-1'>
+      
       <div className=' flex items-center justify-between p-2'>
         <div>
         <h2 className="text-heading2-semibold">{rental.title}</h2>
@@ -68,6 +70,11 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
           )}
         </div>
       </div>
+      <OfferAlert
+      heading={`Roofa Offers`}
+      content={`Zero agency fees when you book this particular apartment with us!`}
+      url={`/rentals`}
+       />
       <ImageGrid
       images={rentalImages}
       id={id}
