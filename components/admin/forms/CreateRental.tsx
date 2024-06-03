@@ -12,6 +12,7 @@ import { createRental } from "@/lib/actions/rental.action";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
+import RentalOffers from "../cards/RentalOffers";
 
 const FileUploadForm = ({ users, allRentals }: 
   {
@@ -42,12 +43,15 @@ const FileUploadForm = ({ users, allRentals }:
 
   const [amenities, setAmenities] = useState<string[]>([""])
 
+  const [rentalOffers, setRentalOffers] = useState<string[]>([""])
+
   const [geoLocation, setGeoLocation] = useState({
     name: "",
     address: '',
     latitude: 0,
     longitude: 0
   })
+
 
   const [rentalRules, setRentalRules] = useState<string[]>([""])
 
@@ -95,6 +99,7 @@ const FileUploadForm = ({ users, allRentals }:
         amenities: amenities,
         geoLocation: geoLocation,
         rentalRules: rentalRules,
+        rentalOffers: rentalOffers,
         availableRooms: formData.get("availableRooms") as any,
         rentalsNear: formData.getAll("rentalsNear") as any,
         serviceFee: {
@@ -221,6 +226,12 @@ const FileUploadForm = ({ users, allRentals }:
        <RentalRules
         rentalRules={rentalRules}
         setRentalRules={setRentalRules}
+        />
+
+        {/* Rental offers */}
+        <RentalOffers 
+        rentalOffers = {rentalOffers}
+        setRentalOffers = {setRentalOffers}
         />
 
         {/* available rooms */}

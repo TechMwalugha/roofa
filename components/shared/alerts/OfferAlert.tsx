@@ -9,7 +9,7 @@ interface OfferAlert {
 const OfferAlert = ({ heading, content, url }: OfferAlert) => {
   return (
    
-  <div className="animate-bounce mt-5 bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert">
+  <div className="animate-spinner-grow mt-5 bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert">
     <div className="flex">
       <div className="flex-shrink-0">
         

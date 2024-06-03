@@ -35,6 +35,7 @@ export interface createNewRental {
             longitude: number
     };
     rentalRules: string[];
+    rentalOffers: string[];
     availableRooms: number;
     rentalsNear: mongoose.Schema.Types.ObjectId[];
     serviceFee: {
@@ -67,6 +68,7 @@ export interface UpdateRentalSchema {
         longitude: number
     };
     rentalRules: string[];
+    rentalOffers: string[];
     availableRooms: number;
     rentalsNear: {
         _id: string;

@@ -20,6 +20,7 @@ export async  function createRental({
             amenities,
             geoLocation,
             rentalRules,
+            rentalOffers,
             availableRooms,
             rentalsNear,
             serviceFee,
@@ -38,6 +39,7 @@ export async  function createRental({
             amenities,
             geoLocation,
             rentalRules,
+            rentalOffers,
             availableRooms,
             rentalsNear,
             serviceFee,
@@ -140,6 +142,7 @@ export async function updateRental({
             amenities,
             geoLocation,
             rentalRules,
+            rentalOffers,
             availableRooms,
             rentalsNear,
             serviceFee,
@@ -160,6 +163,7 @@ export async function updateRental({
             longitude: number
     };
     rentalRules: string[];
+    rentalOffers: string[];
     availableRooms: number;
     rentalsNear: mongoose.Schema.Types.ObjectId[];
     serviceFee: {
@@ -187,6 +191,7 @@ export async function updateRental({
     rental.amenities = amenities
     rental.geoLocation = geoLocation
     rental.rentalRules = rentalRules
+    rental.rentalOffers = rentalOffers
     rental.availableRooms = availableRooms
     rental.rentalsNear = rentalsNear
     rental.serviceFee = serviceFee

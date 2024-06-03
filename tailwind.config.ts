@@ -206,10 +206,29 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        "fade-in-bouncedown": {
+          "0%": {
+              opacity: 0,
+              transform: "translate3d(0%, -100%, 0)",
+          },
+          "33%": {
+              opacity: 0.5,
+              transform: "translate3d(0%, 0%, 0)",
+          },
+          "66%": {
+              opacity: 0.7,
+              transform: "translate3d(0%, -20%, 0)",
+          },
+          "100%": {
+              opacity: 1,
+              transform: "translate3d(0, 0, 0)",
+          },
+      },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in-bouncedown": "fade-in-bouncedown 0.7s ease-in",
       },
     },
   },

@@ -69,6 +69,11 @@ const rentalSchema = new mongoose.Schema({
             amount: Number,
         }
     },
+    rentalOffers: [
+        {
+            type: String
+        }
+    ],
     bookings: [
         {
             type: mongoose.Schema.Types.ObjectId,

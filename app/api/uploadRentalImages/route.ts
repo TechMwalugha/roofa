@@ -73,6 +73,7 @@ export async function POST(req: Request) {
       const fil = formDataEntryValue as unknown as Blob;
       const buffer = Buffer.from(await fil.arrayBuffer());
       fs.writeFileSync(`/var/www/html/images/rentalImages/${newFileName}`, buffer);
+      // fs.writeFileSync(`C:/RealProjects/roofa/public/rentalImages/${newFileName}`, buffer);
       imageUrls.push(newFileName)
     }
   }

@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import RentalOffers from "../cards/RentalOffers"
 
 
 const RentalFormDetails = ({
@@ -27,6 +28,7 @@ const RentalFormDetails = ({
     amenities,
     geoLocation,
     rentalRules,
+    rentalOffers,
     availableRooms,
     rentalsNear,
     serviceFee,
@@ -68,6 +70,14 @@ const RentalFormDetails = ({
         return []
     })
 
+    const [updateRentalOffers, setUpdateRentalOffers] = useState(() => {
+        if(rentalOffers){
+            return rentalOffers
+        }
+        return []
+    
+    })
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) =>{
         setLoading(true)
         e.preventDefault()
@@ -90,6 +100,7 @@ const RentalFormDetails = ({
                 longitude: formData.get('geoLocationLongitude') === "" ? geoLocation.longitude : Number(formData.get('geoLocationLongitude')) 
             },
             rentalRules: updateRentalRules,
+            rentalOffers: updateRentalOffers,
             availableRooms: formData.get('availableRooms') === "" ? availableRooms : Number(formData.get('availableRooms')),
             rentalsNear: formData.getAll('rentalsNear').length < 1 ? rentalsNear.map(rental => rental._id as unknown as ObjectId) : formData.getAll('rentalsNear') as unknown as ObjectId[],
             serviceFee: {
@@ -321,6 +332,10 @@ const RentalFormDetails = ({
     setRentalRules={setUpdateRentalRules}
     />
 
+    <RentalOffers
+    rentalOffers={updateRentalOffers}
+    setRentalOffers={setUpdateRentalOffers} 
+    />
 <div
     className="flex flex-col justify-center my-5"
     >

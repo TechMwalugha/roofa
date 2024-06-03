@@ -63,6 +63,8 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       image: user.image
     }
   })
+
+  
   return (
     <div>
       
@@ -84,6 +86,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
         }
       }
       rentalRules = {rentalDetails.rentalRules}
+      rentalOffers = {rentalDetails.rentalOffers}
       availableRooms = {rentalDetails.availableRooms}
       rentalsNear = {rentalsNear}
       bookings = {rentalBookings}
