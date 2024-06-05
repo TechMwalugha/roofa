@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { BiSolidOffer } from "react-icons/bi";
 
 interface OfferAlert {
     heading: string;
@@ -9,15 +10,12 @@ interface OfferAlert {
 const OfferAlert = ({ heading, content, url }: OfferAlert) => {
   return (
    
-  <div className="animate-spinner-grow mt-5 bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert">
+  <div className="animate-spinner-grow my-5 bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert">
     <div className="flex">
       <div className="flex-shrink-0">
         
-        <span className="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-400">
-          <svg className="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
-            <path d="m9 12 2 2 4-4"></path>
-          </svg>
+        <span className="animate-ping inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-400">
+          <BiSolidOffer size={26} />
         </span>
         
       </div>

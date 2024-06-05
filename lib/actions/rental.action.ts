@@ -122,12 +122,12 @@ export async function fetchSingleRental({ id }: { id : ObjectId}) {
       select: 'title location price images'
     })
     if(!rental) {
-      throw new Error("Rental not found")
+      return false
     }
     return rental
 
   } catch(error: any) {
-    throw new Error(`${error.message}`)
+    return false
   }
 }
 
@@ -196,7 +196,7 @@ export async function updateRental({
     rental.rentalsNear = rentalsNear
     rental.serviceFee = serviceFee
     rental.rentalStatus = rentalStatus
-    console.log("updated successfully.")
+  
     await rental.save()
 
     

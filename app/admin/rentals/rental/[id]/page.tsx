@@ -96,7 +96,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       serviceFee = {{ paidBy: rentalDetails.serviceFee.paidBy, amount: rentalDetails.serviceFee.amount }}
       allRentals={allRentals}
       users={updatedUsers}
-      owner={rentalDetails.owner._id.toString()}
+      owner={rentalDetails.owner?._id.toString()}
       />
     </div>
   )

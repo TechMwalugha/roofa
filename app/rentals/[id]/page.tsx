@@ -16,6 +16,7 @@ import SaveRental from '@/components/cards/SaveRental';
 import UnsaveRental from '@/components/cards/UnsaveRental';
 import { containsGoogleusercontent } from '@/lib/utils';
 import OfferAlert from '@/components/shared/alerts/OfferAlert';
+import ServerError from '@/components/shared/errorpages/ServerError';
 
 
 const page = async ({ params } : { params: { id: ObjectId}}) => {
@@ -23,7 +24,9 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
   let ownerImage
   
   const rental:any = await fetchSingleRental({id})
-  const rentalImages = rental.images.slice(0,5)
+
+  const rentalImages = rental?.images?.slice(0,5) ?? []
+  const rentalOffers = rental.rentalOffers?.slice(0,2)
 
   const session = await getServerSession()
   
@@ -40,10 +43,14 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
    }
 
 
+
   return (
     <div className='md:p-2 max-sm:px-1'>
       
-      <div className=' flex items-center justify-between p-2'>
+      {
+        rental && (
+          <>
+          <div className=' flex items-center justify-between p-2'>
         <div>
         <h2 className="text-heading2-semibold">{rental.title}</h2>
         <p className='text-small-medium'>{rental.location}</p>
@@ -70,11 +77,16 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
           )}
         </div>
       </div>
-      <OfferAlert
-      heading={`Roofa Offers`}
-      content={`Zero agency fees when you book this particular apartment with us!`}
-      url={`/rentals`}
-       />
+      {
+        rentalOffers && rentalOffers.map((offer: string, index: number) => (
+          <OfferAlert
+          key={index}
+          heading={`Roofa Offers`}
+          content={offer}
+          url={`/rentals`}
+          />
+        ))
+      }
       <ImageGrid
       images={rentalImages}
       id={id}
@@ -240,6 +252,15 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
      </section>
      </>
 )}
+</>
+        )
+      }
+
+      {
+        !rental && (
+          <ServerError />
+        )
+      }
     
     </div>
   )

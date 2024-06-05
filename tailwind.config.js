@@ -242,7 +242,7 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in-bouncedown": "fade-in-bouncedown 2s ease-in",
+        "fade-in-bouncedown": "fade-in-bouncedown 2s ease-in infinite",
         "spinner-grow": "spinner-grow 2s ease-in-out",
       },
     },

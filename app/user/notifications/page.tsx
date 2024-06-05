@@ -69,7 +69,7 @@ const page = async () => {
       {
         user.notifications.length <= 0 && (
           <div
-          className="flex flex-col items-center justify-center"
+          className="flex flex-col items-center justify-center h-screen"
           >
             <TbMessage2Off size={30} />
             <p
