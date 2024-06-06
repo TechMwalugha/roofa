@@ -217,6 +217,11 @@ const RegisterForm = () => {
         >
             Have an account? <span className="text-blue">Sign In</span>
         </Link>
+
+        <p className="text-subtle-medium text-center my-3">
+          When you create an account with Roofa.co.ke <br/> you are accepting our <Link href='/docs/terms' className="text-blue">Terms of use</Link> <br/>
+          Please do read our terms and conditions.
+        </p>
       </form>
     </Form>
     </div>

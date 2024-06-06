@@ -22,11 +22,11 @@ const BottomBar = () => {
         </div>
         <div className="flex items-center justify-between bg-dark-1 p-5">
             <div className="flex gap-3 text-subtle-medium">
-                <Link href='terms'>Terms and Conditions</Link>
-                <Link href="policy">Privacy Policy</Link>
+                <Link href='/docs/terms'>Terms and Conditions</Link>
+                <Link href="/docs/policy">Privacy Policy</Link>
             </div>
             <div className="text-subtle-medium">
-                <Link href="/">Copyright © 2023, Roofa </Link>
+                <Link href="/">Copyright © 2024, Roofa </Link>
             </div>
         </div>
 </section>
