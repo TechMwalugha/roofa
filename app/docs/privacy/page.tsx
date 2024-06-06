@@ -12,7 +12,7 @@ const page = () => {
       <span className="text-slate-700 my-3">Updated June 10, 2024</span>
 
       <Button
-      className="block mb-4"
+      className="block my-4"
       onClick={() => window.print()}
       >
         <BsFillPrinterFill size={26} />

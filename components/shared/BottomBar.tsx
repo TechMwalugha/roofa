@@ -13,8 +13,8 @@ const BottomBar = () => {
                             <Link 
                             className=" font-serif text-small-medium pb-0.5 tracking-wider capitalize hover:underline"
                             key={index}
-                            href={link}
-                            >{link}</Link>
+                            href={link.url}
+                            >{link.name}</Link>
                         ))}
                     </div>
                 ))}
@@ -23,7 +23,7 @@ const BottomBar = () => {
         <div className="flex items-center justify-between bg-dark-1 p-5">
             <div className="flex gap-3 text-subtle-medium">
                 <Link href='/docs/terms'>Terms and Conditions</Link>
-                <Link href="/docs/policy">Privacy Policy</Link>
+                <Link href="/docs/privacy">Privacy Policy</Link>
             </div>
             <div className="text-subtle-medium">
                 <Link href="/">Copyright © 2024, Roofa </Link>

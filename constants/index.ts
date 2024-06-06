@@ -1,15 +1,66 @@
 export const bottomBarContent = [
     {
         h1: 'About Roofa',
-        links: ['About us', 'Booking', 'Contact Us', 'Help Center']
+        links: [
+            {
+                name: 'About us',
+                url: "/docs/how-we-work"
+            }, 
+            { 
+                name: 'Booking',
+                url: "/"
+            }, 
+            { 
+                name: 'Contact Us', 
+                url: ''
+            }, 
+            {
+                name: 'Help Center',
+                url: ''
+            },
+        ]
     },
     {
         h1: 'EARN WITH ROOFA',
-        links: ['Deals','Refer', 'investors','Advertise',]
+        links: [
+            {
+                name: 'Deals',
+                url: "/"
+            },
+            {
+                name: 'Refer',
+                url: '/'
+            }, 
+            {
+                name: 'investors',
+                url: '/',
+            },
+            {
+                name: 'Advertise',
+                url: '/'
+            },
+        ]
     },
     {
         h1: 'Connect with Roofa',
-        links: ['Invite Friends','Facebook','Twitter','Instagram',]
+        links: [
+            {
+                name: 'Invite Friends',
+                url: "/"
+            },
+            {
+                name: 'Facebook',
+                url: "/",
+            },
+            {
+                name: 'Twitter',
+                url: "/"
+            },
+            {
+                name: 'Instagram',
+                url: "/"
+            },
+        ]
     }
 ]
 
