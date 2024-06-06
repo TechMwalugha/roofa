@@ -21,7 +21,7 @@ const page = () => {
 
       <p className="tracking-wider leading-8">Along with the Terms on this page, there are two other documents that form part of our contract with you:</p>
 <ul className="list-disc tracking-wider leading-8">
-  <li>Our <Link href="/d/aboutus" className="text-blue"> How we Work </Link>  page helps you to use our Platform and understand our reviews, our rankings, our recommendations, how we make money, and more.</li>
+  <li>Our <Link href="/d/how-we-work" className="text-blue"> How we Work </Link>  page helps you to use our Platform and understand our reviews, our rankings, our recommendations, how we make money, and more.</li>
   <li>Our <Link href="/d/aboutus" className="text-blue"> Content Standards and Guidelines </Link>  help us to keep everything on our Platform relevant to and appropriate for our global audience, without limiting freedom of expression. They tell you how we manage content and take action against anything inappropriate.</li>
 </ul>
 
@@ -33,7 +33,7 @@ By agreeing to our Terms, you’re agreeing to everything in all three documents
 All this information is important because it (along with your booking confirmation email and any pre-contractual information provided before you book) sets out the legal terms on which Service Providers offer their Travel Experiences through our Platform. 
 <br/>
 
-If something goes wrong with your Travel Experience, <Link href="/d/aboutus#somethin-goes-wrong" className="text-blue"> Section A11 of these Terms </Link> explains what you can do about it. This includes making a complaint to us, going to court, and (in some cases) using an online dispute resolution service. <br/>
+If something goes wrong with your Travel Experience, <Link href="/d/aboutus#something-goes-wrong" className="text-blue"> Section A11 of these Terms </Link> explains what you can do about it. This includes making a complaint to us, going to court, and (in some cases) using an online dispute resolution service. <br/>
 
 If you want to appeal a moderation decision, or report any content on our Platform, our <Link href="/d/aboutus" className="text-blue"> Content Standards and Guidelines </Link> explain how to do so and how we manage these requests. <br/>
 

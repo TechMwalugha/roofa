@@ -217,7 +217,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
             <span className='bg-gray-100 p-[2px] text-primary'>{rental.serviceFee.paidBy.trim() == 'customer' ? ` The service fee is Ksh. ${rental.serviceFee.amount}` : 'No need to worry about the service Fee'}.</span> 
             </p>
             <Link
-            href="/"
+            href="/docs/how-we-work#how-do-we-make-money"
             className='underline decoration-solid mb-4'
             >
             More details

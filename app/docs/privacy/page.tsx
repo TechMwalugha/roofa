@@ -9,6 +9,8 @@ const page = () => {
     <div className="sm:px-10 px-4 text-[13px]">
       <h1 className="text-heading1-bold text-center mt-4">Roofa Privacy Notice</h1>
 
+      <span className="text-slate-700 my-3">Updated June 10, 2024</span>
+
       <Button
       className="block mb-4"
       onClick={() => window.print()}
