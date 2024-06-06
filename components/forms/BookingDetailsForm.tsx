@@ -129,7 +129,7 @@ const BookingDetailsForm = ({
               <p className='text-subtle-medium lowercase mt-2'>please check your phone and enter the pin to complete the transaction, if you have completed the transaction click the button below. </p>
                 <Link 
                 href={`/payments/rental-payment/${transactionResponse}`}
-                className='bg-blue p-3 rounded mt-4 shadow'
+                className='bg-blue p-3 rounded mt-4 shadow-md'
                 >
                   Confirm Transaction
                 </Link>

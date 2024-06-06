@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer'
-import { formatDateString } from '../utils';
+import { formatDateString, getMonthAndYear } from '../utils';
 import sendEmail from './nodemailer.email';
 import { readFileSync } from 'fs';
 
@@ -140,7 +140,7 @@ export default async function generatePdf({
               <h2>Client Details</h2>
               <div class="item">
                   <b>Name</b>
-                  <p>${name}</p>
+                  <p style="text-transform: capitalize;">${name}</p>
               </div>
               <div class="item">
                   <b>Email</b>
@@ -152,13 +152,13 @@ export default async function generatePdf({
               </div>
               <div class="item">
                   <b>Gender</b>
-                  <p>${gender}</p>
+                  <p style="text-transform: capitalize;">${gender}</p>
               </div>
               <div class="item">
                   <b>Reporting Date</b>
-                  <p>${formatDateString(reportingDate as unknown as string)}</p>
+                  <p>${getMonthAndYear(reportingDate as unknown as string)}</p>
               </div>
-              <p style="font-size: 12px; text-align: center;">kindly report within the specified date. incase of anything kindly reach us</p>
+              <p style="font-size: 12px; text-align: center;">Kindly report within the specified date. Incase of anything kindly reach to the property owners.</p>
           </div>
   
           <div class="apartment-booked">
@@ -231,25 +231,23 @@ export default async function generatePdf({
         content: `Dear ${name}, <br />
 
         We hope this email finds you well and excited for booking with Roofa!
-        
-        First and foremost, we want to extend our warmest congratulations on successfully booking your desired accommodation through our platform. We are thrilled to have helped you secure an apartment and are committed to ensuring your stay is comfortable and memorable.
-        
-        As your check-in date approaches, we kindly want to remind you of a few important details to ensure a smooth and hassle-free experience:
-        
-        Bring Matching Credentials: Please remember to carry identification credentials that match the information provided during the booking process. This typically includes your ID card or passport, as well as any additional documentation such as the M-Pesa message if applicable. Ensuring your credentials match the details on your receipt will help expedite the check-in process.
-        
-        Check-In Date: Please ensure you arrive at the specified accommodation on the designated check-in date as indicated in your booking confirmation. This helps us coordinate your arrival efficiently and ensures that your accommodation is ready for you to settle in comfortably.
-        
-        If you have any questions or require further assistance before your arrival, please do not hesitate to reach out to our customer support team. We are here to help make your stay as enjoyable as possible.
-        
-        Once again, congratulations on securing your booking with Roofa. We look forward to hosting you and providing you with a memorable experience. <br />
+        Thank you for booking <span style="color: #67C1CA;">${apartmentName}</span> in <span style="color: #67C1CA;">${apartmentLocation}</span> with us. 
 
-        Find the attached booking receipt below, please present this while checking in. <br />
+        Kindly be patient as we settle your booking with the property owners of ${apartmentName}. <br/>
+
+        You should receive a confirmation call on ${mpesaPhoneNumber} from 254715539518 or <br/>
+         a confirmation email on ${email} from reservations@roofa.co.ke within the next 6 hours.
         <br />
-        Warm regards,<br />
+        <br />
+        For the mean time you can check our: <strong style="text-align: center; font-size: 22px;"><a href="https://roofa.co.ke/docs/how-we-work#over-booking">Booking Policy</a></strong> <br />
+        <br />
+
+        Find the attached booking receipt below, you will be required to present this while checking in to ${apartmentName}. <br />
+        <br />
+        Warm regards<br />
         
-        Roofa Bookings <br />
-        Roofa Customer Support Team`, 
+        Roofa Reservations <br />
+        Roofa Customer Support Team: <a href="mailto: info@roofa.co.ke">info@roofa.co.ke</a>`, 
         pdfFilePath: `public/receipts/Roof-${receiptNo}.pdf`
     })
  } catch (error: any) {

@@ -5,7 +5,7 @@ import HorizontalLine from '@/components/shared/utils/HorizontalLine'
 import { fetchOneBooking } from '@/lib/actions/booking.action'
 import { fetchOnePayment } from '@/lib/actions/payment.action'
 import generatePdf from '@/lib/emailing/pdf'
-import { containsGoogleusercontent, formatDateString } from '@/lib/utils'
+import { containsGoogleusercontent, formatDateString, getMonthAndYear } from '@/lib/utils'
 
 
 const page = async ({ params }: { params : { id: string}}) => {
@@ -67,7 +67,7 @@ const page = async ({ params }: { params : { id: string}}) => {
 
             <div className='flex items-center justify-between text-subtle-medium bg-danger p-2 mb-2'>
               <h5 className=''>Reporting Date: </h5>
-              <p className='text-green-300'>{formatDateString(booking.reportingDate as string)}</p>
+              <p className='text-green-300'>{getMonthAndYear(booking.reportingDate as string)}</p>
             </div>
           </div>
         </div>

@@ -1,3 +1,5 @@
+'use server'
+
 import  nodeMailer from 'nodemailer'
 interface Props {
     email: string
@@ -73,7 +75,7 @@ const sendEmail = async ({email, subject, heading, content, pdfFilePath}: Props)
                                 <p class="data"
                                 style="text-align: justify-all; 
                                         align-items: center; 
-                                        font-size: 15px; 
+                                        font-size: 18px; 
                                         padding-bottom: 12px;"> 
                                    ${content}
                                 </p> 
@@ -144,15 +146,15 @@ const sendEmail = async ({email, subject, heading, content, pdfFilePath}: Props)
                     color:#999999;" 
                 valign="top"
                 align="center"> 
-            <a href="#"
+            <a href="https://roofa.co.ke/docs/how-we-work"
             target="_blank"
             style="color:#999999; 
-                    text-decoration:underline;">PRIVACY STATEMENT</a> 
-                    | <a href="#" target="_blank"
+                    text-decoration:underline;">HOW WE WORK</a> 
+                    | <a href="https://roofa.co.ke/docs/terms" target="_blank"
                     style="color:#999999; text-decoration:underline;">TERMS OF SERVICE</a> 
-                    | <a href="#"
+                    | <a href="https://roofa.co.ke/docs/privacy"
                     target="_blank"
-                    style="color:#999999; text-decoration:underline;">RETURNS</a><br> 
+                    style="color:#999999; text-decoration:underline;">POLICY NOTICE</a><br> 
                             © 2024 ROOFAH HOUSING PLC . All Rights Reserved.<br> 
                             If you do not wish to receive any further 
                             emails from us, please 
@@ -204,10 +206,12 @@ const sendEmail = async ({email, subject, heading, content, pdfFilePath}: Props)
 
         await transporter.sendMail(mailOptions);
         console.log('email sent')
+        return true
 
     } catch (error: any) {
         console.log("Email not sent")
         console.error(error)
+        return false
     }
 }
 

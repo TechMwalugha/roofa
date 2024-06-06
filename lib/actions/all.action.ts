@@ -28,7 +28,7 @@ export async function regenerateReceipt({ id }: { id: string }) {
                 apartmentLocation: booking.apartmentBooked.location,
                 apartmentPrice: booking.apartmentBooked.price,
                 mpesaReciptNumber: payment.mpesaReceiptNumber,
-                transactionDate: payment.transactionDate,
+                transactionDate: payment.createdAt,
                 mpesaPhoneNumber: payment.mpesaPhoneNumber,
                 amountPaid: payment.amount,
                 })

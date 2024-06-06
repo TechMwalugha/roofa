@@ -40,6 +40,19 @@ export function formatDateString(dateString: string) {
   return `${time} - ${formattedDate}`;
 }
 
+export function getMonthAndYear(date: string): string {
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const updatedDate = new Date(date)
+  const dayOfWeek = days[updatedDate.getDay()];
+  const dayOfMonth = updatedDate.getDate();
+  const month = months[updatedDate.getMonth()];
+  const year = updatedDate.getFullYear();
+
+  return `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
+}
+
 export function getSecondsDifference(userJoinDate: string) {
   const targetDate = new Date(userJoinDate);
 

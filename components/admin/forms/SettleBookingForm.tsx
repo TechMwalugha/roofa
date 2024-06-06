@@ -12,6 +12,10 @@ const SettleBookingForm = ({ id }: { id: string }) => {
     const router = useRouter()
 
     async function completeBooking(id: string) {
+      const confirmAction = confirm('Are you sure you want to settle this booking?')
+
+      if(!confirmAction) return 
+
       setLoading(true)
     const res = await settleBookingAction({ id: id as unknown as ObjectId})
 
@@ -26,7 +30,7 @@ const SettleBookingForm = ({ id }: { id: string }) => {
     setLoading(false)
     }
   return (
-    <div className="flex items-center justify-center mt-10">
+    <div className="">
       <Button
       onClick={() => completeBooking(id)}
       disabled = {loading}
