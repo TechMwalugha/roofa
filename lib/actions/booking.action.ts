@@ -219,6 +219,11 @@ export async function settleBookingAction({ id }: { id: ObjectId}) {
         connectToDB()
         
         const booking = await Booking.findById(id)
+        .populate({
+            path: "apartmentBooked",
+            model: Rental,
+            select: "title"
+        })
 
         if(!booking) return false
 
@@ -227,19 +232,25 @@ export async function settleBookingAction({ id }: { id: ObjectId}) {
             booking.isBookingSettled = !booking.isBookingSettled
         }
 
-        await booking.save()
 
-        sendEmail({
+        const res = await sendEmail({
             email: booking.email, 
-            subject: 'Roofa Booking', 
+            subject: 'Roofa Reservations', 
             heading: `Booking Settled successfully.`, 
-            content: `Dear ${booking.fullName} your booking for has been settled successfully.
-            This means we have confirmed. 
+            content: `Dear <strong style="color: #67C1CA;">${booking.fullName}</strong> your booking for has been settled successfully.
+            This means you have checked in to the apartment. Thank you for trusting in us. Have a nice stay in  <strong style="color: #67C1CA;">${booking.apartmentBooked.title}<strong/>
+            <br/>
+            <br/>
+            Regards <br/>
+            Roofa Reservations<br/>
+            reservations@roofa.co.ke
             `, 
             pdfFilePath: null ,
         })
 
-        return true
+        if(res) await booking.save()
+
+        return res
         
     } catch (error: any) {
         throw new Error(`Cannot update booking. ${error.message}`)

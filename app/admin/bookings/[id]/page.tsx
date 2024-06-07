@@ -8,18 +8,25 @@ import React from 'react'
 import PaymentCard from '@/components/cards/PaymentCard';
 import SettleBookingForm from '@/components/admin/forms/SettleBookingForm';
 import NotifyUserViaEmail from '@/components/admin/forms/NotifyUserViaEmail';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog"
 
 const page = async ({ params }: { params: { id: string }}) => {
 
     let payment
-    let isFailedBooking: boolean
-    let isPendingBooking: boolean
-    let isSettledBooking: boolean
+    let pathToPdf = ''
 
-    const booking = await fetchOneBookingId({id: params.id})
+    const booking: any = await fetchOneBookingId({id: params.id})
     
     if(booking?.isPaymentMade?.isMade) {
         payment = await fetchOnePayment({ id: booking.MerchantRequestID })
+        pathToPdf=`/receipts/Roof-${payment._id.toString()}.pdf`
     }
 
   return (
@@ -43,7 +50,7 @@ const page = async ({ params }: { params: { id: string }}) => {
                         <div className="mt-5 shadow hover:shadow-count transition-all delay-2000 p-2 rounded cursor-pointer lg:flex-1">
 
                          <div className="w-full h-36">
-                            <img src={`/images/rentalImages/${booking.apartmentBooked.images[0]}`} alt={`${booking.apartmentBooked.title} image`} className="w-full h-full object-cover rounded" />
+                            <img src={`https://roofa.co.ke/images/rentalImages/${booking.apartmentBooked.images[0]}`} alt={`${booking.apartmentBooked.title} image`} className="w-full h-full object-cover rounded" />
                          </div>
                          <h3 className="text-base-semibold text-center underline my-4">Apartment booked</h3>
 
@@ -103,12 +110,45 @@ const page = async ({ params }: { params: { id: string }}) => {
                     <div className='flex items-center justify-between'>
 
 
+                        
+             {
+                !booking.isBookingSettled && (
+            <Dialog>
+                <DialogTrigger
+                className="bg-blue p-2 rounded-md capitalize"
+                >
+                    notify user
+                </DialogTrigger>
+                    <DialogContent
+                    className="h-5/6 overflow-y-scroll"
+                    >
+                    <DialogHeader>
+                        <DialogTitle>Compose the notification?</DialogTitle>
                         <NotifyUserViaEmail
-                        email={booking.email}
-                         />
+                            email={booking.email}
+                            pathToPdf={pathToPdf}
+                        />
+                    </DialogHeader>
+                    </DialogContent>
+
+            </Dialog>
+                )
+             }
+
+                         {
+                            payment && (
+                                <a 
+                                href={`/receipts/Roof-${payment._id.toString()}.pdf`}
+                                target='_blank'
+                                className='shadow-md rounded-sm px-3 py-2'
+                                >
+                                Receipt
+                                </a>
+                            )
+                         }
 
                     {
-                        !booking.isBookingSettled &&  booking.isPaymentMade.isMade && (
+                        !booking.isBookingSettled &&  payment && (
                             <SettleBookingForm
                             id={booking._id.toString()}
                             />

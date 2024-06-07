@@ -3,16 +3,12 @@ import UserToAgent from "@/components/admin/cards/UserToAgent"
 import CollapsibleCon from "@/components/cards/Collapsible"
 import HorizontalLine from "@/components/shared/utils/HorizontalLine"
 import { fetchUserByEmail, fetchUserById, fetchUserNotification } from "@/lib/actions/user.actions"
-import { formatDateString } from "@/lib/utils"
+import { containsGoogleusercontent, formatDateString } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth";
 import SuspendUser from "@/components/admin/cards/SuspendUser"
-import Notification from "@/lib/models/notification.model"
-import { ObjectId } from "mongoose"
-import { connectToDB } from "@/lib/mongoose"
-import User from "@/lib/models/user.model"
 import ReloadBar from "@/components/shared/ReloadBar"
 
 
@@ -30,10 +26,17 @@ const page = async ({
   const user = await fetchUserNotification(params.id as any)
 
 
-
   if(!user) {
     redirect('/admin/users')
   }
+
+  let image = user.image
+
+  //check if is a google image
+  if(user.image && !containsGoogleusercontent(user.image as string)) {
+    image = `https://roofa.co.ke/images${image}`
+    
+   }
 
   return (
     <section>
@@ -56,8 +59,8 @@ const page = async ({
       <div className="p-3 shadow-groups" >
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <Image 
-            src={user.image}
+            <img 
+            src={image}
             width={45}
             height={45}
             alt="user image"

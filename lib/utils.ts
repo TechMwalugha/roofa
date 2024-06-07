@@ -199,5 +199,10 @@ export const apiKeys = [
   process.env.NEXT_PUBLIC_API_KEY_5,
 ];
 
+export function randomEmailMessage() {
+  
+}
+
+
 
 

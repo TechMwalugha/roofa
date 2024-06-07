@@ -12,7 +12,7 @@ const SettleBookingForm = ({ id }: { id: string }) => {
     const router = useRouter()
 
     async function completeBooking(id: string) {
-      const confirmAction = confirm('Are you sure you want to settle this booking?')
+      const confirmAction = confirm('Are you sure you want to settle this booking? you can NOT revert back.')
 
       if(!confirmAction) return 
 
@@ -20,11 +20,11 @@ const SettleBookingForm = ({ id }: { id: string }) => {
     const res = await settleBookingAction({ id: id as unknown as ObjectId})
 
     if(res) {
-        alert(`Updated Successfully`)
+        alert(`Booking settled Successfully and client notified.`)
 
         router.refresh()
     } else {
-      alert(`An error occurred please try again later`)
+      alert(`An error occurred please try again.`)
     }
 
     setLoading(false)

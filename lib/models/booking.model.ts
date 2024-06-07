@@ -55,6 +55,11 @@ const bookingSchema = new mongoose.Schema({
     }
 })
 
+bookingSchema.pre('save', function(next) {
+    this.updatedAt = Date.now() as any
+    next()
+})
+
 const Booking = mongoose.models.Booking || mongoose.model('Booking', bookingSchema)
 
 export default Booking

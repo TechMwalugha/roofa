@@ -9,8 +9,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
+import { containsGoogleusercontent } from "@/lib/utils"
 
 const MenuBar = ({title, image, content }: menuBarType) => {
+
+  //check if is a google image
+  if(image && !containsGoogleusercontent(image as string)) {
+    image = `https://roofa.co.ke/images${image}`
+   }
+
   return (
     <div className="flex items-center justify-center gap-2 ml-auto">
       <DropdownMenu>
@@ -22,7 +29,7 @@ const MenuBar = ({title, image, content }: menuBarType) => {
         </DropdownMenuContent>
     </DropdownMenu>
       <img
-       src={`/images/${image}`}
+       src={`${image}`}
        width={30}
        height={30}
        alt={title}

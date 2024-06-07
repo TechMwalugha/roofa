@@ -1,114 +1,154 @@
 'use client'
 
+import { CreateNotificationFormSchema } from "@/lib/validations/Notification.validation"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from 'zod'
+import { Button } from "@/components/ui/button"
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-  } from "@/components/ui/dialog"
-import sendEmail from "@/lib/emailing/nodemailer.email"
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { FormEvent, useState } from "react"
+import sendEmail from "@/lib/emailing/nodemailer.email"
 
-const NotifyUserViaEmail = ({ email } : { email: string}) => {
-    const [loading, setLoading] = useState(() => false)
+const NotifyUserViaEmail = ({
+  email,
+  pathToPdf
 
-    const router = useRouter()
+}: {
+  email: string;
+  pathToPdf: string;
+}) => {
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(() => false);
+    const [includePdf, setIncludePdf] = useState(() => false)
+    const router = useRouter();
 
-    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-        // send email to user
-        e.preventDefault()
-        setLoading(true)
-        const formData = new FormData(e.currentTarget)
 
-      const res = await sendEmail({
-            email: email,
-            subject: formData.get('subject') as string,
-            heading: formData.get('heading') as string,
-            content: formData.get('message') as string,
-            pdfFilePath: ''
-        })
+    const form = useForm<z.infer<typeof CreateNotificationFormSchema>>({
+        resolver: zodResolver(CreateNotificationFormSchema),
+        defaultValues: {
+            subject: '',
+            message: '',
+        },
+      })
 
+     async function onSubmit(values: z.infer<typeof CreateNotificationFormSchema>) {
+        // form.reset()
+         setLoading(true)
+
+       
+          const res = await sendEmail({
+            email: email, 
+            subject: `${values.subject}`, 
+            heading: `${values.subject}`, 
+            content: `${values.message}`,
+            pdfFilePath: `${includePdf ? `public/${pathToPdf}` : ''}`,
+          })
+            
         setLoading(false)
         if(!res) {
-            alert('Email not sent')
-            router.refresh()
-            return
+          alert('An error occurred, please try again')
+          return
         }
 
-        alert('Email sent')
-        router.refresh()
-
-
-    }
-
+        alert("Message sent successfully")
+      }
   return (
-    <div>
-       <Dialog>
-      <DialogTrigger
-      className="bg-blue p-2 rounded-md capitalize"
-      >
-        notify user
-      </DialogTrigger>
-        <DialogContent
-        className="h-5/6 overflow-y-scroll"
-        >
-          <DialogHeader>
-            <DialogTitle>Compose the notification?</DialogTitle>
-            <form className="w-full p-3" onSubmit={handleSubmit}>
-                <div className="mb-3">
-            
-                    <input 
-                    type="email" 
-                    className="w-full cursor-not-allowed shadow-xl p-2 rounded-sm text-center border-none outline-none" 
-                    name="email" 
-                    required
-                    value={email} 
-                    readOnly
-                    />
-                </div>
-                <div className="mb-3">
-                    <input 
-                    type="text" 
-                    name="subject" 
-                    required
-                    className="w-full shadow-xl p-2 rounded-sm text-center border-none outline-none"
-                    placeholder="Subject"
-                    />
-                </div>
-                <div className="mb-3">
-                    <input 
-                    type="text"
-                    name="heading" 
-                    required
-                    className="w-full shadow-xl p-2 rounded-sm text-center border-none outline-none"
-                    placeholder="Heading"
-                    />
-                </div>
-                <div className="mb-3">
-                    <textarea 
-                    name="message" 
-                    required
-                    rows={7}
-                    className="w-full shadow-xl p-2 rounded-sm text-center border-none outline-none" 
-                    />
-                </div>
+    <Form {...form}>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
+    
+        <FormField
+          control={form.control}
+          name="subject"
+          render={({ field }) => (
+            <FormItem
+            className='mb-2'
+            >
+              <FormLabel>Subject</FormLabel>
+              <FormControl>
+                <Input 
+                placeholder="Booking is confirmed" 
+                {...field}
+                />
+              </FormControl>
+              <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="message"
+          render={({ field }) => (
+            <FormItem
+            className='mb-2'
+            >
 
-                <button 
-                type="submit"
-                className={`w-full p-2 rounded-sm shadow-sm bg-blue ${loading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-                disabled={loading}
-                >
-                    Send
-                </button>
-            </form>
-          </DialogHeader>
-        </DialogContent>
+              <FormControl>
+                <textarea 
+                {...field} 
+                cols={15} 
+                rows={15}
+                className="w-full border p-3 rounded"
+                placeholder="Write your message here..... (brief & concise)"
+                
+                ></textarea>
+              </FormControl>
+              <FormMessage className="text-subtle-medium bg-red-500 p-1 text-center rounded-sm"/>
+            </FormItem>
+          )}
+        />
 
-    </Dialog>
-    </div>
+        {
+          pathToPdf && (
+        <div className="flex items-center gap-5 mb-4 text-subtle-medium"> 
+              <label htmlFor="includePdf">Attach pdf receipt?</label>
+              <input 
+              type="checkbox"
+              name="sendCopy"
+              id="includePdf"
+              onChange={(e) => setIncludePdf(e.target.checked)}
+              />
+        </div>
+          )
+        }
+        <Button type="submit" className="rounded  bg-blue">
+          
+          {!loading && ("Send")}
+          {loading && (
+            <h2 className="flex gap-2 items-center">
+            <svg
+              className="animate-spin -mr-1 ml-3 h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24">
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg> Processing...
+            </h2>
+          )}
+        </Button>
+        
+     
+      </form>
+    </Form>
+
   )
 }
 
