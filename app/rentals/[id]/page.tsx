@@ -43,7 +43,6 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
    }
 
 
-
   return (
     <div className='md:p-2 max-sm:px-1'>
       
@@ -182,9 +181,11 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
 
       {/* Location on map */}
 
-      {/* <div>
-        <LocationMap />
-      </div> */}
+        <h2 className='mb-3 text-heading4-medium text-center capitalize'>{rental.title} location on map</h2>
+      <div className="flex items-center justify-center">
+        {/* <LocationMap /> */}
+        <iframe src={rental.geoLocation.name} width="600" height="450" className='border-none w-full' allowFullScreen={true} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+      </div>
       <HorizontalLine />
 
       {/* rules */}
@@ -231,7 +232,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       {/* Houses near this house */}
       {Array.isArray(rental.rentalsNear) && rental.rentalsNear.length !==0 && (
       <>
-      <h2 className='text-center mb-3 text-heading4-medium'>Houses near this house </h2>
+      <h2 className='text-center mb-3 text-heading4-medium capitalize'>Rentals near {rental.title} </h2>
 
       <section className='px-2 flex flex-wrap items-center gap-5 xs:flex-row mb-4'>
         {
