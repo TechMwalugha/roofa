@@ -72,53 +72,53 @@ const FileUploadForm = ({ users, allRentals }:
     const formData = new FormData(e.currentTarget);
 
      
-    // images.forEach((image, i) => {
-    //   formData.append(image.name, image);
-    // });
-    // const res = await fetch('/api/uploadRentalImages', {
-    //   method: 'POST',
-    //   headers: {
-    //     'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
-    //   },
-    //   body: formData
-    // })
-    // const responseData = await res.json();
+    images.forEach((image, i) => {
+      formData.append(image.name, image);
+    });
+    const res = await fetch('/api/uploadRentalImages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
+      },
+      body: formData
+    })
+    const responseData = await res.json();
 
-    // if (res.ok) {
-    //   const imageUrls = responseData.data;
+    if (res.ok) {
+      const imageUrls = responseData.data;
 
-    //   // Perform further actions with imageUrls
+      // Perform further actions with imageUrls
 
-    //   createRental({
-    //     title: formData.get("title") as string,
-    //     description: formData.get("description") as string,
-    //     rentalType: formData.getAll("rentalType") as string[],
-    //     price: formData.get("price") as any,
-    //     location: formData.get("location") as string,
-    //     images: imageUrls,
-    //     owner: formData.get("owner") as any,
-    //     amenities: amenities,
-    //     geoLocation: geoLocation,
-    //     rentalRules: rentalRules,
-    //     rentalOffers: rentalOffers,
-    //     availableRooms: formData.get("availableRooms") as any,
-    //     rentalsNear: formData.getAll("rentalsNear") as any,
-    //     serviceFee: {
-    //       paidBy: formData.get("paidBy") as string,
-    //       amount: formData.get("amount") as any,
-    //     },
-    //     rentalStatus: formData.get("rentalStatus") == 'on' ? true : false,
+      createRental({
+        title: formData.get("title") as string,
+        description: formData.get("description") as string,
+        rentalType: formData.getAll("rentalType") as string[],
+        price: formData.get("price") as any,
+        location: formData.get("location") as string,
+        images: imageUrls,
+        owner: formData.get("owner") as any,
+        amenities: amenities,
+        geoLocation: geoLocation,
+        rentalRules: rentalRules,
+        rentalOffers: rentalOffers,
+        availableRooms: formData.get("availableRooms") as any,
+        rentalsNear: formData.getAll("rentalsNear") as any,
+        serviceFee: {
+          paidBy: formData.get("paidBy") as string,
+          amount: formData.get("amount") as any,
+        },
+        rentalStatus: formData.get("rentalStatus") == 'on' ? true : false,
       
-    //   })
+      })
 
-    //   notifySuccess("Apartment created successfully")
+      notifySuccess("Apartment created successfully")
 
-    //   router.refresh()
-    // } else {
-    //   // Handle error or provide user feedback
+      router.refresh()
+    } else {
+      // Handle error or provide user feedback
 
-    //   notifyError('Failed while uploading images. Try again')
-    // }
+      notifyError('Failed while uploading images. Try again')
+    }
 
 
 
@@ -194,7 +194,7 @@ const FileUploadForm = ({ users, allRentals }:
 
       </div>
       {/* owner */}
-      {/* <select 
+      <select 
        name="owner"
        className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
        multiple
@@ -217,7 +217,7 @@ const FileUploadForm = ({ users, allRentals }:
             </option>
           )
         })}
-       </select> */}
+       </select>
        {/* amenities*/}
        <Amenities
        amenities={amenities}

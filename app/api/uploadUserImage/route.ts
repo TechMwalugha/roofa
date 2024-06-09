@@ -94,6 +94,8 @@ export async function POST(request: NextRequest) {
 
 async function fileExists(filePath: any) {
   try {
+    if(filePath == "/var/www/html/images/userImages/account-profile.png") return false
+
     await access(filePath);
     return true; // File exists
   } catch (error: any) {

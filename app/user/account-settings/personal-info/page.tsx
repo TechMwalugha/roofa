@@ -28,21 +28,21 @@ const page = async () => {
         </Link>
 
         <Link 
-        href='notifications'
+        href='/user/notifications'
         className="shadow p-3 rounded-md">
             <h3 className="font-bold">Notifications</h3>
             <p className="text-small-medium font-normal">your account updates & info</p>
         </Link>
 
         <Link 
-        href='bookings'
+        href='/user/bookings'
         className="shadow p-3 rounded-md">
             <h3 className="font-bold">Bookings</h3>
             <p className="text-small-medium font-normal">your current roofa bookings</p>
         </Link>
 
         <Link 
-        href='account-settings'
+        href='/user/account-settings'
         className="shadow p-3 rounded-md">
             <h3 className="font-bold">Rental history</h3>
             <p className="text-small-medium font-normal">your rental stayed history.</p>
