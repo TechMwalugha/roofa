@@ -70,54 +70,55 @@ const FileUploadForm = ({ users, allRentals }:
 
     setUploading(true);
     const formData = new FormData(e.currentTarget);
+
      
-    images.forEach((image, i) => {
-      formData.append(image.name, image);
-    });
-    const res = await fetch('/api/uploadRentalImages', {
-      method: 'POST',
-      headers: {
-        'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
-      },
-      body: formData
-    })
-    const responseData = await res.json();
+    // images.forEach((image, i) => {
+    //   formData.append(image.name, image);
+    // });
+    // const res = await fetch('/api/uploadRentalImages', {
+    //   method: 'POST',
+    //   headers: {
+    //     'x-api-key': process.env.NEXT_PUBLIC_API_KEY || '',
+    //   },
+    //   body: formData
+    // })
+    // const responseData = await res.json();
 
-    if (res.ok) {
-      const imageUrls = responseData.data;
+    // if (res.ok) {
+    //   const imageUrls = responseData.data;
 
-      // Perform further actions with imageUrls
+    //   // Perform further actions with imageUrls
 
-      createRental({
-        title: formData.get("title") as string,
-        description: formData.get("description") as string,
-        rentalType: formData.getAll("rentalType") as string[],
-        price: formData.get("price") as any,
-        location: formData.get("location") as string,
-        images: imageUrls,
-        owner: formData.get("owner") as any,
-        amenities: amenities,
-        geoLocation: geoLocation,
-        rentalRules: rentalRules,
-        rentalOffers: rentalOffers,
-        availableRooms: formData.get("availableRooms") as any,
-        rentalsNear: formData.getAll("rentalsNear") as any,
-        serviceFee: {
-          paidBy: formData.get("paidBy") as string,
-          amount: formData.get("amount") as any,
-        },
-        rentalStatus: formData.get("rentalStatus") == 'on' ? true : false,
+    //   createRental({
+    //     title: formData.get("title") as string,
+    //     description: formData.get("description") as string,
+    //     rentalType: formData.getAll("rentalType") as string[],
+    //     price: formData.get("price") as any,
+    //     location: formData.get("location") as string,
+    //     images: imageUrls,
+    //     owner: formData.get("owner") as any,
+    //     amenities: amenities,
+    //     geoLocation: geoLocation,
+    //     rentalRules: rentalRules,
+    //     rentalOffers: rentalOffers,
+    //     availableRooms: formData.get("availableRooms") as any,
+    //     rentalsNear: formData.getAll("rentalsNear") as any,
+    //     serviceFee: {
+    //       paidBy: formData.get("paidBy") as string,
+    //       amount: formData.get("amount") as any,
+    //     },
+    //     rentalStatus: formData.get("rentalStatus") == 'on' ? true : false,
       
-      })
+    //   })
 
-      notifySuccess("Apartment created successfully")
+    //   notifySuccess("Apartment created successfully")
 
-      router.refresh()
-    } else {
-      // Handle error or provide user feedback
+    //   router.refresh()
+    // } else {
+    //   // Handle error or provide user feedback
 
-      notifyError('Failed while uploading images. Try again')
-    }
+    //   notifyError('Failed while uploading images. Try again')
+    // }
 
 
 
@@ -133,6 +134,7 @@ const FileUploadForm = ({ users, allRentals }:
       name="title" 
       placeholder="Rental title"
       className="w-full p-3 capitalize outline-none border-none rounded shadow-count mb-2"
+      required
        />
        <textarea 
        name="description" 
@@ -140,12 +142,14 @@ const FileUploadForm = ({ users, allRentals }:
        rows={5}
        className="w-full p-3 outline-none border-none rounded shadow-count mb-2 capitalize"
        placeholder="rental description"
+       required
        ></textarea>
 
        <select 
        name="rentalType"
        className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
        multiple
+       required
        >
         <option 
         value="" 
@@ -168,6 +172,7 @@ const FileUploadForm = ({ users, allRentals }:
        placeholder="Rent Price"
        min={1000}
        max={50000}
+       required
        />
        {/* location */}
        <input 
@@ -175,6 +180,7 @@ const FileUploadForm = ({ users, allRentals }:
        name="location"
        className="w-full p-3 capitalize outline-none border-none rounded shadow-count mb-2" 
        placeholder="kisauni, mombasa"
+       required
        />
        {/* images */}
       <div className="">
@@ -188,10 +194,11 @@ const FileUploadForm = ({ users, allRentals }:
 
       </div>
       {/* owner */}
-      <select 
+      {/* <select 
        name="owner"
        className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
        multiple
+       required
        >
         <option 
         value="" 
@@ -210,7 +217,7 @@ const FileUploadForm = ({ users, allRentals }:
             </option>
           )
         })}
-       </select>
+       </select> */}
        {/* amenities*/}
        <Amenities
        amenities={amenities}
@@ -240,6 +247,7 @@ const FileUploadForm = ({ users, allRentals }:
        name="availableRooms"
        className="w-full p-3  outline-none border-none rounded shadow-count mb-2" 
        placeholder="available rooms e.g 12"
+       required
        />
 
       <select 
@@ -267,12 +275,21 @@ const FileUploadForm = ({ users, allRentals }:
       </select>
 
       <div>
-      <input 
+      {/* <input 
        type="text"
        name="paidBy"
        className="w-full p-3  outline-none border-none rounded shadow-count mb-2" 
        placeholder="paid by customer or landlord"
-       />
+       /> */}
+       <select 
+       name="paidBy" 
+       id=""
+       className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
+       >
+        <option value="" disabled>Select the commission type:</option>
+        <option value="customer">Customer</option>
+        <option value="owner">Owner</option>
+       </select>
 
       <input 
        type="number"

@@ -23,7 +23,7 @@ const page = async () => {
 
   return (
     <div>
-      create
+      <h3 className="text-heading3-bold text-center">Create new rental</h3>
       <CreateRental
         users={users.map((user: any) => {
           user._id = (user._id as ObjectId).toString()

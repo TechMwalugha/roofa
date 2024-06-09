@@ -38,6 +38,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      {/* Google tag (gtag.js) */}
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-6RCQT81ZG6"></script>
+      <script src='/lib/google-analytics.js'></script>
       <body className={inter.className}> 
       <Provider>
         <TopBar/>

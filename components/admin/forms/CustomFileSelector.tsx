@@ -19,6 +19,7 @@ const CustomFileSelector = (props: Props) => {
         // overall input styling
         "hover:cursor-pointer border w-full shadow-count rounded-lg text-gray-400": true,
       })}
+      required
     />
   );
 };
