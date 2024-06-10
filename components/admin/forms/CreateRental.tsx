@@ -186,7 +186,7 @@ const FileUploadForm = ({ users, allRentals }:
       <div className="">
         <div className="flex justify-between">
         <CustomFileSelector
-          accept="image/png, image/jpeg"
+          accept="image/png, image/jpeg, image/jpg, image/avif, image/webp"
           onChange={handleFileSelected}
           />
         </div>

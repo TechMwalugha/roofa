@@ -8,6 +8,8 @@ interface OfferAlert {
 }
 
 const OfferAlert = ({ heading, content, url }: OfferAlert) => {
+  if(!content) return
+  
   return (
    
   <div className="animate-spinner-grow my-5 bg-teal-50 border-t-2 border-teal-500 rounded-lg p-4 dark:bg-teal-800/30" role="alert">
