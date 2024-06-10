@@ -39,6 +39,7 @@ const page = async () => {
                     location={rental.location}
                     price={rental.price}
                     images={images}
+                    status={rental.rentalStatus}
                   />
                   )
               })

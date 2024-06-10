@@ -3,6 +3,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
+import { MdAccessTime } from "react-icons/md";
 import Link from 'next/link';
 
 
@@ -11,13 +12,15 @@ function Carousel({
     title,
     location,
     price,
-    images
+    images,
+    status,
 }: {
     id: string
     title: string
     location: string
     price: number
     images: string[]
+    status: boolean
 }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -101,7 +104,9 @@ function Carousel({
 
         {/* apartment details */}
 
-        <Link 
+        {
+          status && (
+            <Link 
         href={`/rentals/${id}`}
         >
            <div className='flex gap-2 items-center mt-8 justify-between'> 
@@ -115,6 +120,21 @@ function Carousel({
                 </div>
             </div>
         </Link>
+          )
+        }
+
+        {
+          !status && (
+            <div className=' mt-8 '>
+                <h3 className='capitalize text-heading4-medium'>{title}</h3>
+                <h4 className='text-gray-500'>{location}</h4>
+                <h3 className='capitalize text-heading4-medium flex items-center gap-3'>
+                <MdAccessTime size={30} />
+                <p className=''>Coming Soon</p>
+                </h3>
+            </div>
+          )
+        }
     </section>
   );
 }

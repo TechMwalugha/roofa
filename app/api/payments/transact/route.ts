@@ -71,7 +71,7 @@ export async function POST(req: any) {
 
       if(amount.status !== 'success') return NextResponse.json(
         {message: 'Opps, an error occurred at our end. Please Try again'},
-        {status: 200}
+        {status: 500}
       )
 
 
@@ -91,12 +91,12 @@ export async function POST(req: any) {
             Password: password,
             Timestamp: timeStamp,
             TransactionType: "CustomerPayBillOnline",
-            Amount: "1",
+            Amount: amount.amount,
             PartyA: phoneNumber,
             PartyB: shortcode,
             PhoneNumber: phoneNumber,
             CallBackURL: "https://roofa.co.ke/api/payments/callback",
-            AccountReference: fullName,
+            AccountReference: identityNumber,
             TransactionDesc: "Booking rental Payment",
         },
         {

@@ -246,6 +246,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
               location={rental.location}
               price={rental.price}
               images={images}
+              status={rental.rentalStatus}
               />
             )
         })
