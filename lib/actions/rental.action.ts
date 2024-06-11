@@ -86,7 +86,7 @@ export async function fetchAllRentals({
       }
   
       // Define the sort options for the fetched users based on createdAt field and provided sort order.
-      const sortOptions = { createdAt: sortBy };
+      const sortOptions = { availableRooms: sortBy };
   
       const rentalsQuery = Rental.find(query)
         .sort(sortOptions)

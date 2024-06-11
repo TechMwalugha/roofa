@@ -25,7 +25,7 @@ const BookingCard = ({ availableRooms, id} : { availableRooms: number, id: Objec
             )}
 
             { availableRooms < 1 && (
-                <p className="text-small-semibold mb-3">Opps! the rental is full. <br /> check houses near ⬇️</p>
+                <p className="text-small-semibold mb-3">Opps! the rental is full. <br /> check houses near below ⬇️</p>
             )}
         </PopoverContent>
     </Popover>

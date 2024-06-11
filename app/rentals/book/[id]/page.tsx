@@ -3,6 +3,7 @@ import ReviewOrderCard from "@/components/cards/ReviewOrderCard"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { fetchSingleRental } from "@/lib/actions/rental.action"
 import { ObjectId } from "mongoose"
+import { redirect } from "next/navigation"
 
 
 
@@ -11,6 +12,7 @@ const page = async ({ params } : { params: { id: string }}) => {
 
   const rental = await fetchSingleRental({ id })
 
+  if(!rental.rentalStatus) redirect('/')
 
   return (
     <Tabs 

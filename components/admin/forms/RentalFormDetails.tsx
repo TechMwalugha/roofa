@@ -347,7 +347,6 @@ const RentalFormDetails = ({
          </label>
         <input 
         type="number" 
-        min={4}
         id="availableRooms"
         name="availableRooms"
         placeholder={availableRooms.toString()}

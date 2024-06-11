@@ -117,10 +117,20 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       </div>
 
       {/* availability */}
-      <BookingCard
-     availableRooms={rental.availableRooms}
-     id={rental.id}
-      />
+      {
+        rental && rental.rentalStatus && (
+          <BookingCard
+          availableRooms={rental.availableRooms}
+          id={rental.id}
+            />
+        )
+      }
+
+      {
+        rental && !rental.rentalStatus && (
+          <div className="w-full mb-5 bg-blue p-6 rounded-lg shadow hover:text-white transition-all text-center cursor-pointer">Coming Soon</div>
+        )
+      }
 
       {/* adverts */}
 
