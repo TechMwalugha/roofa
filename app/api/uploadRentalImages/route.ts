@@ -12,14 +12,14 @@ export async function POST(req: Request) {
   try {
      // check for rate limits 
 
-  const ip = headers().get('x-forwarded-for')
+//   const ip = headers().get('x-forwarded-for')
 
-  const isRateLimit =  await checkForRateLimit({ ip: ip })
+//   const isRateLimit =  await checkForRateLimit({ ip: ip })
 
-  if(!isRateLimit)  return NextResponse.json(
-   { message: "Rate limit reached, please try again after 5 minutes." },
-   { status: 429 }
- );
+//   if(!isRateLimit)  return NextResponse.json(
+//    { message: "Rate limit reached, please try again after 5 minutes." },
+//    { status: 429 }
+//  );
 
  //check for the api key
  const apiKey = req.headers.get('x-api-key');

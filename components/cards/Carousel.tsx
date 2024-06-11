@@ -128,7 +128,7 @@ function Carousel({
             <div className=' mt-8 '>
                 <h3 className='capitalize text-heading4-medium'>{title}</h3>
                 <h4 className='text-gray-500'>{location}</h4>
-                <h3 className='capitalize text-heading4-medium flex items-center gap-3'>
+                <h3 className='capitalize text-heading4-medium flex items-center gap-1 text-blue'>
                 <MdAccessTime size={30} />
                 <p className=''>Coming Soon</p>
                 </h3>
