@@ -82,7 +82,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
           key={index}
           heading={`Roofa Offers`}
           content={offer}
-          url={`/rentals`}
+          url={`/docs/how-we-work#how-do-we-make-money`}
           />
         ))
       }
