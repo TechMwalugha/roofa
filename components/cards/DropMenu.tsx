@@ -1,5 +1,6 @@
 'use client'
 import { useSession, signIn, signOut } from 'next-auth/react'
+import {useEffect, useState} from 'react'
 import { Button } from "@/components/ui/button"
 import * as React from "react"
 import {
@@ -22,9 +23,11 @@ import { RiAccountPinCircleLine } from 'react-icons/ri'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { containsGoogleusercontent } from '@/lib/utils'
+import { fetchUserUnreadMessages } from '@/lib/actions/user.actions'
 
 export default function DropdownMenuDemo() {
   const { data: session } = useSession()
+  const [unreadMessages, setUnreadMessages] = React.useState(0)
   
   const router = useRouter()
 
@@ -36,10 +39,20 @@ export default function DropdownMenuDemo() {
   if(image && !containsGoogleusercontent(image as string)) {
    image = `https://roofa.co.ke/images${image}`
   }
+
+  useEffect(() => {
+    if(session) {
+      fetchNumberOfUnreadMessages(session?.user?.email as string).then((data: any) => {
+        setUnreadMessages(data)
+      })
+    }
+
+  }, [session])
+
   return (
    session ? ( <DropdownMenu>
     <DropdownMenuTrigger asChild>
-      <Button variant="outline" className="border-none outline-none no-focus">
+      <Button variant="outline" className=" relative border-none outline-none no-focus">
         <Image
           className="inline-block w-8 h-8 rounded-full object-cover"
           src={image as string}
@@ -47,6 +60,15 @@ export default function DropdownMenuDemo() {
           width={35}
           height={35}
         />
+
+        {
+          unreadMessages > 0 && (
+            <span className="absolute top-0 right-1 bg-red-600 w-4 h-4 rounded-full flex items-center justify-center text-white text-subtle-medium">
+              {unreadMessages}
+            </span>
+          )
+        }
+
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent className="w-56 absolute right-1 custom-scrollbar">
@@ -56,7 +78,14 @@ export default function DropdownMenuDemo() {
         <DropdownMenuRadioItem value="one" 
         onClick={() => router.push('/user/notifications')}
         className='cursor-pointer hover:bg-gray-200'
-        >Notifications</DropdownMenuRadioItem>
+        >
+          Notifications
+          {
+            unreadMessages > 0 && (
+              <span className='bg-red-600 w-2 h-2 rounded-full'></span>
+            )
+          }
+        </DropdownMenuRadioItem>
         <DropdownMenuRadioItem value="two" 
         onClick={() => router.push('/user/bookings')}
         className='cursor-pointer hover:bg-gray-200'
@@ -106,4 +135,10 @@ export default function DropdownMenuDemo() {
     </DropdownMenuContent>
   </DropdownMenu>)
   )
+}
+
+async function fetchNumberOfUnreadMessages(email: string) {
+  let unreadMessages =  await fetchUserUnreadMessages({ email: email})
+  
+  return unreadMessages
 }

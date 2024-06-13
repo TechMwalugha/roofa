@@ -11,7 +11,6 @@ const page = async () => {
   const userId = await fetchUserByEmail(session?.user?.email as string)
   const user = await fetchUserNotification(userId._id)
 
-  // console.log(userId._id)
 
     let numberOfUnreadMessages = 0
   user.notifications.forEach((message: any) => {
@@ -20,6 +19,7 @@ const page = async () => {
       numberOfUnreadMessages =+ 1
     }
   })
+
 
   return (
   <div className=" md:flex md:items-center md:justify-center">

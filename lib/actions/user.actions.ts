@@ -468,3 +468,26 @@ export async function fetchUserForgotPasswordAction({email}: { email: string}) {
         
     }
 }
+
+export async function fetchUserUnreadMessages({email} : {email: string}) {
+    try{
+        connectToDB()
+
+        const user = await User.findOne({ email: email})
+        .populate({
+            path: 'notifications',
+            model: Notification,
+            select: "read"
+        })
+        .select('notifications')
+
+        if(!user) return false
+
+        const totalUnreadMessages = user.notifications.filter((message: any) => !message.read)
+
+        return totalUnreadMessages.length
+
+    } catch(err: any) {
+        return false
+    }
+}

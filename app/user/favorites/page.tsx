@@ -73,7 +73,7 @@ async function fetchUserFavourites(email: string){
     .populate({
       path: 'favorites',
       model: Rental,
-      select: "title location price images"
+      select: "title location price images rentalStatus"
     })
 
     return user
