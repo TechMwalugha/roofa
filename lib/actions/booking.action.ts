@@ -25,10 +25,10 @@ export async function createNewBooking({
 
         const session = await getServerSession()
 
-        const userId = await User.findOne({email: session?.user?.email as string}).select('_id')
+        const userId = await User.findOne({email: session?.user?.email as string}).select('_id bookings')
         let bookedBy: (ObjectId | null)
 
-        if (session) {
+        if (userId) {
             bookedBy = userId._id
         } else {
             bookedBy = null
@@ -45,6 +45,7 @@ export async function createNewBooking({
             identityNumber, 
             gender,
         })
+
 
      await booking.save();
         

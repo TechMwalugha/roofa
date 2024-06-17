@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import Notification from './notification.model'
+import Booking from './booking.model'
 
 const userSchema = new mongoose.Schema({
     name: {

@@ -4,6 +4,7 @@ import Link from "next/link"
 import { CiCirclePlus } from "react-icons/ci";
 import { CiCircleMinus } from "react-icons/ci";
 import HorizontalLine from "../shared/utils/HorizontalLine";
+import { formatCurrency } from "@/lib/utils";
 
 const ReviewOrderCard = ({
     id,
@@ -102,7 +103,7 @@ const ReviewOrderCard = ({
                 >Rent</p>
                 <p
                 className="text-small-medium text-gray-1"
-                >Ksh. {price}</p>
+                >{formatCurrency(price)}</p>
             </div>
 
             {
@@ -115,7 +116,7 @@ const ReviewOrderCard = ({
                         >Service fee</p>
                         <p
                         className="text-small-medium text-gray-1"
-                        >Ksh. {serviceFee.amount}</p>
+                        >{formatCurrency(serviceFee.amount)}</p>
                     </div>
                 )
             }
@@ -128,7 +129,7 @@ const ReviewOrderCard = ({
                 >Discount</p>
                 <p
                 className="text-small-medium text-gray-1"
-                >Ksh. 0</p>
+                >{formatCurrency(0)}</p>
             </div>
 
             <div
@@ -139,7 +140,7 @@ const ReviewOrderCard = ({
                 >Total Price</p>
                 <p
                 className="text-small-semibold"
-                >Ksh. {totalPrice}</p>
+                >{formatCurrency(totalPrice)}</p>
             </div>
         </div>
       </div>

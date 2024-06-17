@@ -1,10 +1,11 @@
 "use server"
 
-import { createNewNotification } from "@/interfaces";
+import type { createNewNotification } from "@/interfaces";
 import { connectToDB } from "../mongoose";
 import Notification from "../models/notification.model";
 import { fetchUserById } from "./user.actions";
 import { ObjectId } from "mongoose";
+import { revalidatePath } from "next/cache";
 
 export async function createNewNotification({
     from,
@@ -32,14 +33,6 @@ export async function createNewNotification({
 
         await toUser.save()
 
-        //save the notification to the user sending it
-
-        const fromUser = await fetchUserById(from)
-
-        fromUser.notifications.push(notification._id)
-
-        await fromUser.save()
-
     } catch (error: any) {
         throw new Error(`An error occurred creating new Notification: ${error.message}`)
     }
@@ -54,7 +47,8 @@ export async function readNotificationAction(id: ObjectId){
 
         await notification.save()
 
-
+        revalidatePath("/admin/users")
+        revalidatePath("/user/notifications")
     } catch (error: any) {
         throw new Error(`An error occurred reading Notification: ${error.message}`)
     }
@@ -74,19 +68,12 @@ export async function deleteNotificationAction({
 
         const toUser = await fetchUserById(toId)
 
-        const fromUser = await fetchUserById(fromId)
 
         toUser.notifications = toUser.notifications.filter((notification: ObjectId) => notification.toString() !== notificationId.toString())
-      
-        fromUser.notifications = fromUser.notifications.filter((notification: ObjectId) => notification.toString() !== notificationId.toString())
 
 
         await toUser.save()
 
-        await fromUser.save()
-
-        console.log(toUser.notifications)
-        console.log(fromUser.notifications)
 
         await Notification.findOneAndDelete({ _id: notificationId})
 

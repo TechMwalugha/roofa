@@ -1,6 +1,6 @@
 import { fetchOneBookingId } from '@/lib/actions/booking.action'
 import { fetchOnePayment } from '@/lib/actions/payment.action'
-import { checkWhetherIsAgentOrAdmin, formatDateString } from "@/lib/utils"
+import { checkWhetherIsAgentOrAdmin, formatCurrency, formatDateString } from "@/lib/utils"
 import Link from "next/link"
 import { CiNoWaitingSign } from "react-icons/ci";
 import { MdCloudDone } from "react-icons/md";
@@ -66,7 +66,7 @@ const page = async ({ params }: { params: { id: string }}) => {
 
                          <div className="flex items-center justify-between mb-2">
                             <p className="text-small-semibold">Price:</p>
-                            <p>Ksh. {booking.apartmentBooked.price}</p>
+                            <p>{formatCurrency(booking.apartmentBooked.price)}</p>
                          </div>
                        </div>
 

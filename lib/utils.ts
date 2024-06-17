@@ -23,21 +23,24 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatDateString(dateString: string) {
-  const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  };
 
-  const date = new Date(dateString);
-  const formattedDate = date.toLocaleDateString(undefined, options);
+  const dateFormatter = Intl.DateTimeFormat(undefined, {
+    dateStyle: "full",
+    timeStyle: "full",
+    timeZone: undefined,
+  })
 
-  const time = date.toLocaleTimeString([], {
-    hour: "numeric",
-    minute: "2-digit",
-  });
+  return dateFormatter.format(new Date(dateString))
+}
 
-  return `${time} - ${formattedDate}`;
+export function formatCurrency(amount: number) {
+  const formatter = Intl.NumberFormat("en-US", {
+    currency: "KSH",
+    style: "currency",
+    minimumFractionDigits: 0,
+  })
+
+  return formatter.format(amount)
 }
 
 export function getMonthAndYear(date: string): string {

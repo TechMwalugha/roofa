@@ -117,12 +117,18 @@ export async function deleteUser(userId: mongoose.Schema.Types.ObjectId) {
         connectToDB()
 
         const user = await User.findById(userId)
-        
-    
-        const deletedUser = await User.findOneAndDelete({ 
-            _id: userId
-        });
+        .select("notifications bookings")
 
+        if(!user) return
+
+        await Booking.updateMany(
+            { _id: user.bookings }, 
+            { bookedBy: null },
+    )
+        
+        await Notification.deleteMany({ _id: user.notifications})
+
+        await User.deleteOne({_id: userId})
         
     } catch (error: any) {
         throw new Error(`An error occurred: ${error.message}`)

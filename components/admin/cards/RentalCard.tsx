@@ -8,6 +8,7 @@ import {
     TooltipTrigger,
   } from "@/components/ui/tooltip"
 import Link from "next/link";
+import { formatCurrency } from "@/lib/utils";
 
 const RentalCard = ({
     rentalId,
@@ -48,7 +49,7 @@ const RentalCard = ({
             <span
             className="text-subtle-medium"
             >
-                Ksh. {price}
+             {formatCurrency(price)}
             </span>
         </div>
 

@@ -14,7 +14,7 @@ import { fetchUserByEmail } from '@/lib/actions/user.actions';
 import { TiTick } from "react-icons/ti";
 import SaveRental from '@/components/cards/SaveRental';
 import UnsaveRental from '@/components/cards/UnsaveRental';
-import { containsGoogleusercontent } from '@/lib/utils';
+import { containsGoogleusercontent, formatCurrency } from '@/lib/utils';
 import OfferAlert from '@/components/shared/alerts/OfferAlert';
 import ServerError from '@/components/shared/errorpages/ServerError';
 
@@ -111,7 +111,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       </div>
 
       <div className='max-sm:ml-2'>
-          <h2 className='text-heading3-bold'>Ksh. {rental.price} / <span className='italic text-base-medium text-red-500'>month</span></h2>
+          <h2 className='text-heading3-bold'>{formatCurrency(rental.price)} / <span className='italic text-base-medium text-red-500'>month</span></h2>
       </div>
 
       </div>

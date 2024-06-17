@@ -5,6 +5,7 @@ import { RxDotFilled } from 'react-icons/rx';
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { MdAccessTime } from "react-icons/md";
 import Link from 'next/link';
+import { formatCurrency } from '@/lib/utils';
 
 
 function Carousel({
@@ -113,7 +114,7 @@ function Carousel({
                 <div>
                     <h3 className='capitalize text-heading4-medium'>{title}</h3>
                     <h4 className='text-gray-500'>{location}</h4>
-                    <p className='text-gray-400'>Ksh. {price}</p>
+                    <p className='text-gray-400'>{formatCurrency(price)}</p>
                 </div>
                 <div className=' text-blue hover:text-danger'>
                 <MdOutlineShoppingCartCheckout size={30} />
