@@ -187,7 +187,12 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="rounded-md bg-blue hover:bg-blue-gray-500">
+        <Button 
+        type="submit" 
+        className="rounded-md bg-blue hover:bg-blue-gray-500"
+        disabled={error === "processing"}
+        >
+
           {error !=="processing" && ("Register")}
           {error === "processing" && (
             <h2 className="flex gap-2 items-center">

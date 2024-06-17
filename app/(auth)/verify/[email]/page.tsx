@@ -70,9 +70,10 @@ const Page = async  ({ params }: {params: {email: string}}) =>{
           <Link href='/login' className="community-card_btn w-full">Login</Link>
         </div>
       )}
+      {/* !user?.isEmailVerified */}
       {user && !user?.isEmailVerified && (
-        <div className="shadow p-2 rounded flex flex-col w-3/4 lg:w-1/2">
-          <h3 className="text-center capitalize">check your email and click the link to activate account</h3>
+        <div className="shadow p-8 rounded flex flex-col w-3/4 lg:w-1/2">
+          <h3 className="text-center text-small-medium animate-pulse">Check your email and click the link to activate account</h3>
         <Image
         src='/assets/verifyemail.jpg'
         width={100}
@@ -82,13 +83,13 @@ const Page = async  ({ params }: {params: {email: string}}) =>{
         />
 
         <div>
-          <p className="text-small-medium">
+          <p className="text-subtle-medium text-center text-gray-500">
             If you did not receive an email, please check your spam folder or 
           </p>
-          <div className="flex items-center justify-between mt-3">
-            <Link href="#" className="text-small-medium bg-blue p-1 rounded capitalize hover:bg-black hover:text-white">Resend Link</Link>
-            <Link href="/register" className="text-small-medium bg-blue p-1 rounded capitalize hover:bg-black hover:text-white">create Account</Link>
-            <Link href="#" className="text-small-medium bg-blue p-1 rounded capitalize hover:bg-black hover:text-white">Help</Link>
+          <div className="flex items-center justify-between mt-3 gap-4 text-center">
+            <Link href="#" className="text-small-medium bg-blue p-1 rounded capitalize hover:bg-black hover:text-white flex-grow">Resend Link</Link>
+            <Link href="/register" className="text-small-medium bg-blue p-1 rounded capitalize hover:bg-black hover:text-white flex-grow">create Account</Link>
+            <Link href="#" className="text-small-medium bg-blue p-1 rounded capitalize hover:bg-black hover:text-white flex-grow">Help</Link>
           </div>
         </div>
       </div>

@@ -23,6 +23,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import { AuthCallBackAlert } from "../cards/AuthCallBackAlert"
 
 const LoginForm = () => {
     const [error, setError] = useState("");
@@ -72,26 +73,10 @@ const LoginForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
       {error && (
-            <div className="fixed top-0 bg-[rgba(0,0,0,0.5)] left-0 right-0 bottom-0 flex items-center justify-center flex-col">
-              <div 
-              className="bg-white rounded-sm p-5 text-subtle-medium w-1/2 flex items-center justify-center flex-col"
-              >
-              <Image
-               src="/assets/login_notification_image.png" 
-               height={100}
-               width={100}
-               alt="Notification icon"
-               className="mb-3"
-               />
-                <p>{error}</p>
-                <Button
-                className="shadow-md mt-3 bg-blue"
-                onClick={() => setError('')}
-                >
-                  Reload
-                </Button>
-              </div>
-            </div>
+            <AuthCallBackAlert 
+            message = {error}
+            setError={setError}
+             />
           )}
         <Link 
         href='/'

@@ -87,9 +87,9 @@ const ResetPassword = ({ id,  email }: Params) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-white p-5 rounded-lg flex flex-col">
       {error && (
-            <div className="fixed top-0 bg-[rgba(0,0,0,0.5)] left-0 right-0 bottom-0 flex items-center justify-center flex-col">
+            <div className="fixed top-0 bg-[rgba(0,0,0,0.5)] left-0 right-0 bottom-0 flex items-center justify-center flex-col px-2">
               <div 
-              className="bg-white rounded-sm p-5 text-subtle-medium w-1/2 flex items-center justify-center flex-col"
+              className="bg-white rounded-sm p-5 text-subtle-medium w-full md:w-1/2 flex items-center justify-center flex-col"
               >
               <Image
                src="/assets/login_notification_image.png" 
