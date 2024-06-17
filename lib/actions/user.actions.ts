@@ -116,7 +116,7 @@ export async function deleteUser(userId: mongoose.Schema.Types.ObjectId) {
     try {
         connectToDB()
 
-        const user = await User.findById(userId)
+        const user: any = await User.findById(userId)
         .select("notifications bookings")
 
         if(!user) return
@@ -124,7 +124,12 @@ export async function deleteUser(userId: mongoose.Schema.Types.ObjectId) {
         await Booking.updateMany(
             { _id: user.bookings }, 
             { bookedBy: null },
-    )
+    )  
+
+       await Rental.updateMany(
+        { owner: user._id },
+        { owner: null }
+       )
         
         await Notification.deleteMany({ _id: user.notifications})
 
