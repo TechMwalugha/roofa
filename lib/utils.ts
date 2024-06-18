@@ -27,7 +27,7 @@ export function formatDateString(dateString: string) {
   const dateFormatter = Intl.DateTimeFormat(undefined, {
     dateStyle: "full",
     timeStyle: "full",
-    timeZone: undefined,
+    timeZone: "EAT",
   })
 
   return dateFormatter.format(new Date(dateString))
