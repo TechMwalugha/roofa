@@ -2,7 +2,6 @@ import { updateUserImage } from "@/lib/actions/user.actions";
 import { checkForRateLimit } from "@/lib/upstash";
 import { apiKeys } from "@/lib/utils";
 import { writeFile, unlink, access } from "fs/promises";
-import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -92,7 +91,7 @@ export async function POST(request: NextRequest) {
 }
 
 
-async function fileExists(filePath: any) {
+export async function fileExists(filePath: any) {
   try {
     if(filePath == "/var/www/html/images/userImages/account-profile.png") return false
 

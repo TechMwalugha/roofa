@@ -9,6 +9,9 @@ import Notification from '../models/notification.model'
 import Payment from '../models/payment.model'
 import Booking from '../models/booking.model'
 import Rental from '../models/rental.model'
+import { fileExists } from '@/app/api/uploadUserImage/route'
+import { unlink } from 'fs/promises'
+import { join } from 'path'
 
 interface createUserProps {
     name: string,
@@ -117,9 +120,20 @@ export async function deleteUser(userId: mongoose.Schema.Types.ObjectId) {
         connectToDB()
 
         const user: any = await User.findById(userId)
-        .select("notifications bookings")
+        .select("image notifications bookings")
 
         if(!user) return
+
+        const userImage: string = join('/', 'var' , 'www', 'html', 'images', user.image)
+        
+        //delete user image from the file system
+        if(userImage != "/var/www/html/images/userImages/account-profile.png" ) {
+            const isDeleteImage = await fileExists(userImage)
+
+            if(isDeleteImage) {
+                await unlink(userImage)
+            }
+        }
 
         await Booking.updateMany(
             { _id: user.bookings }, 
@@ -131,6 +145,7 @@ export async function deleteUser(userId: mongoose.Schema.Types.ObjectId) {
         { owner: null }
        )
         
+
         await Notification.deleteMany({ _id: user.notifications})
 
         await User.deleteOne({_id: userId})
