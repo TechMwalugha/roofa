@@ -4,6 +4,7 @@ import GoogleProvider from 'next-auth/providers/google'
 import { createUser, fetchUserByEmail } from '@/lib/actions/user.actions'
 import CredentialsProvider  from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'
+import User from '@/lib/models/user.model'
 
 const handler = NextAuth({
     theme: {
@@ -83,7 +84,7 @@ const handler = NextAuth({
                         isEmailVerified: true      
                     })
                 }
-                const user = await fetchUserByEmail(profile.email)
+                const user: any = await fetchUserByEmail(profile.email)
 
                 if(user.signInType !== 'google') throw new Error('Email uses credentials to sign in')
 
@@ -94,10 +95,20 @@ const handler = NextAuth({
                 return true
 
             } catch(error: any) {
-                console.log(error)
                 return false
             }
-        }
+        },
+        async jwt({ token, user, account, profile, isNewUser }) {
+            const userInfo = await User.findOne({ email: token.email as string })
+            .select('isEmailVerified accountStatus role')
+            token.isEmailVerified = userInfo.isEmailVerified
+            token.accountStatus = userInfo.accountStatus
+            token.role = userInfo.role
+            return token
+          }
+    },
+    session: {
+        maxAge:  2 * 24 * 60 * 60,
     }
 })
 
