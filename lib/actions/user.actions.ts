@@ -126,7 +126,7 @@ export async function deleteUser(userId: mongoose.Schema.Types.ObjectId) {
 
         const userImage: string = join('/', 'var' , 'www', 'html', 'images', user.image)
         
-        //delete user image from the file system
+        //delete user profile image from the file system
         if(userImage != "/var/www/html/images/userImages/account-profile.png" ) {
             const isDeleteImage = await fileExists(userImage)
 
