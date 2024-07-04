@@ -111,7 +111,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       </div>
 
       <div className='max-sm:ml-2'>
-          <h2 className='text-heading3-bold'>{formatCurrency(rental.price)} / <span className='italic text-base-medium text-red-500'>month</span></h2>
+          <h2 className='text-heading3-bold'>{formatCurrency(rental.price)} / <span className='italic text-base-medium text-red-500'>{rental.apartmentType === "Rental" ? "month" : "day"}</span></h2>
       </div>
 
       </div>
