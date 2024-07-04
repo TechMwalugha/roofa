@@ -40,7 +40,7 @@ const TopBar = () => {
         </div>
 
         <div>
-        <SearchUser routeType="/" />
+        <SearchUser routeType={`${path.includes('airbnbs') ? "/airbnbs" : "/"}`} />
         </div>
 
         <div className="flex items-center justify-between gap-3  overflow-x-scroll hide-scrollbar mt-4">
