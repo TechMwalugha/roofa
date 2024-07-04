@@ -7,6 +7,11 @@ const rentalSchema = new mongoose.Schema({
         maxLength: [256, 'Invalid length. Maximum is 256 characters'],
         lowerCase: true
     },
+    apartmentType: {
+        type: String,
+        required: true,
+    }
+    ,
     description: {
         type: String,
         required: true,
@@ -83,7 +88,6 @@ const rentalSchema = new mongoose.Schema({
     rentalStatus: {
         type: Boolean,
         required: true,
-        defualt: true,
     },
     createdAt: {
         type: Date,

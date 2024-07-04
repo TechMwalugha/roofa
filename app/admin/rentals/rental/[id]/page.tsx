@@ -71,6 +71,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       <RentalFormDetails
       rentalId={rentalDetails._id.toString()}
       title={rentalDetails.title}
+      apartmentType={rentalDetails.apartmentType}
       description={rentalDetails.description}
       rentalType = {rentalDetails.rentalType}
       price = {rentalDetails.price}

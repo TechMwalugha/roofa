@@ -15,6 +15,7 @@ export default async function Home({
     searchString: searchParams?.q,
     pageNumber: searchParams?.page ? +searchParams.page : 1,
     pageSize: 25,
+    apartmentType: 'Rental'
   })
 
   return (
@@ -33,7 +34,6 @@ export default async function Home({
             location={rental.location}
             price={rental.price}
             images={images}
-            status={rental.rentalStatus}
             />
 
             )

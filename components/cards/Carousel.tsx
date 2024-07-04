@@ -14,14 +14,12 @@ function Carousel({
     location,
     price,
     images,
-    status,
 }: {
     id: string
     title: string
     location: string
     price: number
     images: string[]
-    status: boolean
 }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -105,8 +103,7 @@ function Carousel({
 
         {/* apartment details */}
 
-        {
-          status && (
+       
             <Link 
         href={`/rentals/${id}`}
         >
@@ -121,21 +118,6 @@ function Carousel({
                 </div>
             </div>
         </Link>
-          )
-        }
-
-        {
-          !status && (
-            <div className=' mt-8 '>
-                <h3 className='capitalize text-heading4-medium'>{title}</h3>
-                <h4 className='text-gray-500'>{location}</h4>
-                <h3 className='capitalize text-heading4-medium flex items-center gap-1 text-blue'>
-                <MdAccessTime size={30} />
-                <p className=''>Coming Soon</p>
-                </h3>
-            </div>
-          )
-        }
     </section>
   );
 }

@@ -96,7 +96,6 @@ const BookingDetailsForm = ({
         });
 
         const data = await res.json()
-        console.log(data)
 
         if(data.message !== "Request accepted for processing. Complete payment") {
           notifyError(`An error occurred. Please try again: ${data.message}`)
@@ -298,7 +297,7 @@ const BookingDetailsForm = ({
         className="w-full object-cover"
         alt='Safe checkout Image'
         />
-        <p className="text-tiny-medium italic text-center">secured checkout with RoofaPay in partnership with tinypesa</p>
+        <p className="text-tiny-medium italic text-center">secured checkout with RoofaPay in partnership with M-pesa</p>
       </form>
     </Form>
     </div>

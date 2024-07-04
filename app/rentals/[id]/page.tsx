@@ -118,17 +118,11 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
 
       {/* availability */}
       {
-        rental && rental.rentalStatus && (
+        rental && (
           <BookingCard
           availableRooms={rental.availableRooms}
           id={rental.id}
             />
-        )
-      }
-
-      {
-        rental && !rental.rentalStatus && (
-          <div className="w-full mb-5 bg-blue p-6 rounded-lg shadow hover:text-white transition-all text-center cursor-pointer">Coming Soon</div>
         )
       }
 
@@ -207,7 +201,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
         className='flex gap-5 max-md:flex-col'
         >
           <div className='md:w-2/4 px-2'>
-            <h3 className='text-body-medium'>House rules</h3>
+            <h3 className='text-body-medium'>Apartment rules</h3>
           
               {rental.rentalRules.map((rule: string, index: number) => {
                 return(
@@ -223,8 +217,8 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
 
           <div className='md:w-2/4 px-2'>
             <h3 className='text-body-medium'>Booking policy</h3>
-            <p className='text-small-regular mb-4'>Be aware that Roofa charges a fee for the service offered. The service fee is either paid by you or the house owners. 
-            For this house the service fee is paid by {rental.serviceFee.paidBy.trim() == 'customer' ? 'you' : 'owners of the house'}. 
+            <p className='text-small-regular mb-4'>Be aware that Roofa charges a fee for the service offered. The service fee is either paid by you or the apartment owners. 
+            For this house the service fee is paid by {rental.serviceFee.paidBy.trim() == 'customer' ? 'you' : 'owners of the apartment'}. 
             <span className='bg-gray-100 p-[2px] text-primary'>{rental.serviceFee.paidBy.trim() == 'customer' ? ` The service fee is Ksh. ${rental.serviceFee.amount}` : 'No need to worry about the service Fee'}.</span> 
             </p>
             <Link
@@ -242,7 +236,7 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       {/* Houses near this house */}
       {Array.isArray(rental.rentalsNear) && rental.rentalsNear.length !==0 && (
       <>
-      <h2 className='text-center mb-3 text-heading4-medium capitalize'>Rentals near {rental.title} </h2>
+      <h2 className='text-center mb-3 text-heading4-medium capitalize'>Apartment near {rental.title} </h2>
 
       <section className='px-2 flex flex-wrap items-center gap-5 xs:flex-row mb-4'>
         {
@@ -256,7 +250,6 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
               location={rental.location}
               price={rental.price}
               images={images}
-              status={rental.rentalStatus}
               />
             )
         })

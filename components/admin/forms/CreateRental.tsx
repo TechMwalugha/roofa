@@ -91,6 +91,7 @@ const FileUploadForm = ({ users, allRentals }:
 
       createRental({
         title: formData.get("title") as string,
+        apartmentType: formData.get("apartmentType") as "Rental" | "Airbnb",
         description: formData.get("description") as string,
         rentalType: formData.getAll("rentalType") as string[],
         price: formData.get("price") as any,
@@ -136,6 +137,19 @@ const FileUploadForm = ({ users, allRentals }:
       className="w-full p-3 capitalize outline-none border-none rounded shadow-count mb-2"
       required
        />
+
+       {/* Apartment Type */}
+       <select 
+       name="apartmentType"
+       className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
+       required
+       >
+        <option value="" disabled>Select the type of apartment</option>
+        <option value="Rental">Rental</option>
+        <option value="Airbnb">Airbnb</option>
+       </select>
+
+       {/* Description */}
        <textarea 
        name="description" 
        cols={30} 

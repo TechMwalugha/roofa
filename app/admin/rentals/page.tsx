@@ -20,7 +20,8 @@ const page = async ({
   const rentalResults: any = await fetchAllRentals({
     searchString: searchParams?.q,
     pageNumber: searchParams?.page ? +searchParams.page : 1,
-    pageSize: 25
+    pageSize: 25,
+    apartmentType: ''
   })
 
 

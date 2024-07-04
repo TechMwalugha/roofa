@@ -11,6 +11,7 @@ import { unlink } from "fs/promises"
 
 export async  function createRental({
             title,
+            apartmentType,
             description,
             rentalType,
             price,
@@ -30,6 +31,7 @@ export async  function createRental({
          connectToDB()
         const rental = new Rental({
             title,
+            apartmentType,
             description,
             rentalType,
             price,
@@ -57,11 +59,13 @@ export async function fetchAllRentals({
     pageNumber = 1,
     pageSize = 20,
     sortBy = "desc",
+    apartmentType = 'Rental',
   }: {
     searchString?: string;
     pageNumber?: number;
     pageSize?: number;
     sortBy?: SortOrder;
+    apartmentType: string;
   }) {
     try {
       connectToDB();
@@ -73,7 +77,11 @@ export async function fetchAllRentals({
       const regex = new RegExp(searchString, "i");
 
       // Create an initial query object to filter users.
-      const query: FilterQuery<typeof Rental> = {};
+      const query: FilterQuery<typeof Rental> = { rentalStatus: true, };
+
+      if(apartmentType !== '') {
+        query.apartmentType = apartmentType
+      }
   
       // If the search string is not empty, add the $or operator to match either name or email fields.
       if (searchString.trim() !== "") {
@@ -134,6 +142,7 @@ export async function fetchSingleRental({ id }: { id : ObjectId}) {
 export async function updateRental({
             rentalId,
             title,
+            apartmentType,
             description,
             rentalType,
             price,
@@ -150,6 +159,7 @@ export async function updateRental({
 }: {
     rentalId: mongoose.Schema.Types.ObjectId;
     title: string;
+    apartmentType: 'Rental' | 'Airbnb'
     description: string;
     rentalType: string[]
     price: number;
@@ -183,6 +193,7 @@ export async function updateRental({
     //TODO: check if the new values are equal to the old values
 
     rental.title = title
+    rental.apartmentType = apartmentType
     rental.description = description
     rental.rentalType = rentalType
     rental.price = price

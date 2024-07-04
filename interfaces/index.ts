@@ -21,6 +21,7 @@ export interface GeoLocation {
 
 export interface createNewRental {
     title: string;
+    apartmentType: 'Rental' | 'Airbnb';
     description: string;
     rentalType: string[]
     price: number;
@@ -55,6 +56,7 @@ export interface createNewNotification {
 export interface UpdateRentalSchema {
     rentalId: string;
     title: string;
+    apartmentType: "Rental" | "Airbnb";
     description: string;
     rentalType: string[];
     price: number;

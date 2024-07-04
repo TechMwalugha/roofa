@@ -20,6 +20,7 @@ import RentalOffers from "../cards/RentalOffers"
 const RentalFormDetails = ({
     rentalId,
     title,
+    apartmentType,
     description,
     rentalType,
     price,
@@ -87,6 +88,7 @@ const RentalFormDetails = ({
        const result = updateRental({
             rentalId: rentalId as unknown as ObjectId,
             title: formData.get('title') === '' ? title : formData.get('title') as string ,
+            apartmentType: formData.get('apartmentType') as 'Rental' | 'Airbnb',
             description: formData.get('description') === "" ? description : formData.get('description') as string,
             rentalType: formData.getAll('rentalType').length < 1 ? rentalType : formData.getAll('rentalType') as string[],
             price: Number(formData.get('price')) < 1000 ? price : Number(formData.get('price')),
@@ -163,6 +165,17 @@ const RentalFormDetails = ({
         placeholder={title}
         className="border-none outline-none shadow-count p-3 rounded-lg placeholder:text-slate-400 placeholder:italic mt-2"
         />
+    </div>
+
+    <div className="flex flex-col justify-center my-5">
+        <select 
+        name="apartmentType"
+        className="w-full capitalize p-3 outline-none border-none rounded shadow-count mb-2"
+        >
+            <option value="" disabled>Apartment Type</option>
+            <option value="Rental" selected={apartmentType == 'Rental'}>Rental</option>
+            <option value="Airbnb" selected={apartmentType == 'Airbnb'}>Airbnb</option>
+        </select>
     </div>
 
     <div
