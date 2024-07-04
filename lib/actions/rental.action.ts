@@ -77,10 +77,11 @@ export async function fetchAllRentals({
       const regex = new RegExp(searchString, "i");
 
       // Create an initial query object to filter users.
-      const query: FilterQuery<typeof Rental> = { rentalStatus: true, };
+      const query: FilterQuery<typeof Rental> = {};
 
-      if(apartmentType !== '') {
+      if(apartmentType !== 'admin') {
         query.apartmentType = apartmentType
+        query.rentalStatus = true
       }
   
       // If the search string is not empty, add the $or operator to match either name or email fields.

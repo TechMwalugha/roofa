@@ -21,7 +21,7 @@ const page = async ({
     searchString: searchParams?.q,
     pageNumber: searchParams?.page ? +searchParams.page : 1,
     pageSize: 25,
-    apartmentType: ''
+    apartmentType: 'admin'
   })
 
 
