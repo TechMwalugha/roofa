@@ -18,7 +18,7 @@ export default withAuth(
         return NextResponse.redirect(new URL(`/docs/${req.nextauth.token?.email}/account-suspended`, req.url))
     }
 
-    if(req.nextUrl.pathname.includes('admin') && req.nextauth.token.role != 'admin') {
+    if(req.nextUrl.pathname.includes('admin') && (req.nextauth.token.role != 'admin' || req.nextauth.token.role != 'roofa-agent')) {
         return NextResponse.redirect(new URL('/not-found', req.url))
     }
 
