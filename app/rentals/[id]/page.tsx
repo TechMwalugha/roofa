@@ -17,6 +17,7 @@ import UnsaveRental from '@/components/cards/UnsaveRental';
 import { containsGoogleusercontent, formatCurrency } from '@/lib/utils';
 import OfferAlert from '@/components/shared/alerts/OfferAlert';
 import ServerError from '@/components/shared/errorpages/ServerError';
+import RentalPageContactUs from '@/components/cards/RentalPageContactUs';
 
 
 const page = async ({ params } : { params: { id: ObjectId}}) => {
@@ -126,15 +127,9 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
         )
       }
 
-      {/* adverts */}
+      {/* Contact Sales Officer
 
-      <div className='shadow hidden lg:block flex-auto rounded relative group h-[200px]'>
-          <div
-          style={{ backgroundImage: `url(/assets/advert-rental-img.jpg)` }}
-          className='w-full h-full rounded-md bg-center bg-contain duration-500'
-          >
-          </div>
-      </div>
+      <RentalPageContactUs /> */}
 
       {/* amenities*/}
       <div 
@@ -257,6 +252,10 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
      </section>
      </>
 )}
+
+    {/* Contact Sales Officer */}
+
+    <RentalPageContactUs />
 </>
         )
       }
