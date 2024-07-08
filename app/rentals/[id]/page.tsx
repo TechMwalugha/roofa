@@ -127,10 +127,6 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
         )
       }
 
-      {/* Contact Sales Officer
-
-      <RentalPageContactUs /> */}
-
       {/* amenities*/}
       <div 
       className='my-5'
@@ -255,7 +251,9 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
 
     {/* Contact Sales Officer */}
 
-    <RentalPageContactUs />
+    {
+      rental.apartmentType === 'Airbnb' && <RentalPageContactUs />
+    }
 </>
         )
       }

@@ -8,9 +8,10 @@ import DropMenu from '@/components/cards/DropMenu'
 import BottomBar from '@/components/shared/BottomBar'
 
 const inter = Inter({ subsets: ['latin'] })
+
  const metadata: Metadata = {
-  title: 'Roofa Housing',
-  description: 'Find your next stay',
+  title: 'Roofa Housing PLC Rooms',
+  description: 'Find your next stay, airbnbs, rentals at cheap and affordable prices',
 }
 
 export default function RootLayout({

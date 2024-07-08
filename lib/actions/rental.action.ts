@@ -267,9 +267,9 @@ export async function retrieveRentalPrice({ rentalId } : { rentalId: string }) {
 
     const rental = await Rental.findById(rentalId as unknown as ObjectId).select('price serviceFee')
 
-    if(!rental) return {status: 'error', amount: rental.price + rental.serviceFee.amount}
+    if(!rental) return {status: 'error', amount: 0}
 
-    if(rental.serviceFee.paidBy === 'customer') return  {status: 'success', amount: rental.price + rental.serviceFee.amount}
+    if(rental.serviceFee.paidBy === 'customer') return  {status: 'success', amount: rental.price + rental.serviceFee.amount - rental.serviceFee.amount*0.1}
 
     return {
       status: 'success',

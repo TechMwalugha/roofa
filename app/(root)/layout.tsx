@@ -7,9 +7,10 @@ import Provider from '@/context/Provider'
 import type { Viewport } from "next";
 
 const APP_NAME = "Roofa Housing PLC";
-const APP_DEFAULT_TITLE = "Roofa";
-const APP_TITLE_TEMPLATE = "%s - Roofa";
-const APP_DESCRIPTION = "Find your Next Stay with Roofa!";
+const APP_DEFAULT_TITLE = "Roofah Housing - Book airbnb or rentals in Kenya";
+const APP_TITLE_TEMPLATE = "%s - Roofah";
+const APP_DESCRIPTION = "Explore top-quality rentals and Airbnbs in Nairobi and Nakuru with Roofah Housing. Discover comfortable accommodations for short-term stays and long-term leases.";
+
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
@@ -52,10 +53,7 @@ export const viewport: Viewport = {
 };
 
 const inter = Inter({ subsets: ['latin'] })
-//  const metadata: Metadata = {
-//   title: 'Roofa Housing',
-//   description: 'Find your next stay',
-// }
+
 
 export default function RootLayout({
   children,

@@ -12,7 +12,7 @@ const RentalPageContactUs = () => {
             className="h-full object-cover"
             />
             <div className="text-center">
-                <h2 className="mb-4 text-heading4-medium">Are you planning to stay for long? Or do you want the prices to be customized for your preferences?</h2>
+                <h2 className="mb-4 sm:text-heading4-medium text-body-semibold">Are you planning to stay for long? Or do you want the prices to be customized for your preferences?</h2>
 
                 <Button asChild>
                     <Link href="tel:0110536267">Contact Sales Team</Link>

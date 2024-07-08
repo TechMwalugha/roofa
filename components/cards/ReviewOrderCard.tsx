@@ -25,9 +25,11 @@ const ReviewOrderCard = ({
     image: string
 }) => {
     let totalPrice
+    let discount = 0
 
     if(serviceFee.paidBy.trim() == 'customer') {
-        totalPrice = price + serviceFee.amount
+        discount = serviceFee.amount*0.1
+        totalPrice = price + serviceFee.amount - discount
     } else {
         totalPrice = price
     }
@@ -94,6 +96,7 @@ const ReviewOrderCard = ({
         className="uppercase text-base1-semibold mb-5"
         >price details</h2>
 
+
         <div>
             <div
             className="flex items-center justify-between mb-3"
@@ -129,7 +132,7 @@ const ReviewOrderCard = ({
                 >Discount</p>
                 <p
                 className="text-small-medium text-gray-1"
-                >{formatCurrency(0)}</p>
+                >{formatCurrency(discount)}</p>
             </div>
 
             <div
