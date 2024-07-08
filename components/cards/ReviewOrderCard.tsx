@@ -143,7 +143,10 @@ const ReviewOrderCard = ({
                 >Total Price</p>
                 <p
                 className="text-small-semibold"
-                >{formatCurrency(totalPrice)}</p>
+                >
+                    {serviceFee.paidBy.trim() == 'customer' && (<span className="text-red-400 mr-4 text-subtle-medium line-through">{formatCurrency(price + serviceFee.amount)}</span>) }
+                    {formatCurrency(totalPrice)}
+                </p>
             </div>
         </div>
       </div>
