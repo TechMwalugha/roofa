@@ -109,7 +109,7 @@ function Carousel({
         >
            <div className='flex gap-2 items-center mt-8 justify-between'> 
                 <div>
-                    <h3 className='capitalize text-heading4-medium'>{title}</h3>
+                    <h3 className='capitalize text-heading4-medium line-clamp-1'>{title}</h3>
                     <h4 className='text-gray-500'>{location}</h4>
                     <p className='text-gray-400'>{formatCurrency(price)}</p>
                 </div>
