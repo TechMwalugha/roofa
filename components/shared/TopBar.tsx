@@ -60,19 +60,19 @@ const TopBar = () => {
             <Link href='?q=two bedroom' className="flex gap-2 items-center justify-center"><IoBedSharp/> <span>Two</span> <span>Bedroom</span></Link>
           </div>
           <div>
-            <Link href='?q=nakuru rafiki' className="flex gap-2 items-center justify-center"><MdLocationPin/> <span>Nakuru</span> <span>Rafiki</span></Link>
+            <Link href='?q=naivasha' className="flex gap-2 items-center justify-center"><MdLocationPin/> <span>Naivasha</span> <span>Town</span></Link>
           </div>
           <div>
-            <Link href='?q=nakuru kampi' className="flex gap-2 items-center justify-center"><MdLocationPin/> <span>Nakuru</span> <span>Kampi</span></Link>
+            <Link href='?q=nairobi' className="flex gap-2 items-center justify-center"><MdLocationPin/> <span>Nairobi</span></Link>
           </div>
           <div>
-            <Link href='?q=nakuru town' className="flex gap-2 items-center justify-center"><MdLocationPin/> <span>Nakuru</span> <span>Town</span></Link>
+            <Link href='?q=nakuru' className="flex gap-2 items-center justify-center"><MdLocationPin/> <span>Nakuru</span> <span>Town</span></Link>
           </div>
           <div>
             <Link href='?q=play station' className="flex gap-2 items-center justify-center"><SiPlaystation/> <span>Play</span> <span>Station</span> </Link>
           </div>
           <div>
-            <Link href='?q=internet' className="flex gap-2 items-center justify-center"><FaWifi/> Internet</Link>
+            <Link href='?q=wifi' className="flex gap-2 items-center justify-center"><FaWifi/> WIFI</Link>
           </div>
           <div>
             <Link href='?q=Rooftop Terrace' className="flex gap-2 items-center justify-center"><MdRoofing/> <span>Rooftop</span> <span>Terrace</span> </Link>
