@@ -7,9 +7,10 @@ import Provider from '@/context/Provider'
 
 
 const inter = Inter({ subsets: ['latin'] })
- const metadata: Metadata = {
-  title: 'Roofa Housing',
-  description: 'Find your next stay',
+
+ export const metadata: Metadata = {
+  title: 'Roofah Housing PLC - Legal Terms',
+  description: 'Learn about how Roofah Housing protects your privacy and handles your personal information.',
 }
 
 export default function RootLayout({

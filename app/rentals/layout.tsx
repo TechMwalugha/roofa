@@ -9,8 +9,8 @@ import BottomBar from '@/components/shared/BottomBar'
 
 const inter = Inter({ subsets: ['latin'] })
 
- const metadata: Metadata = {
-  title: 'Roofa Housing PLC Rooms',
+ export const metadata: Metadata = {
+  title: 'Roofa Housing PLC - Apartments',
   description: 'Find your next stay, airbnbs, rentals at cheap and affordable prices',
 }
 

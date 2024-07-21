@@ -9,9 +9,10 @@ import { redirect } from 'next/navigation'
 import { fetchUserByEmail } from '@/lib/actions/user.actions'
 
 const inter = Inter({ subsets: ['latin'] })
- const metadata: Metadata = {
-  title: 'Roofa Housing',
-  description: 'Find your next stay',
+
+ export const metadata: Metadata = {
+  title: 'Roofa Housing - Administration',
+  description: 'Create, Read, Update the information on Roofah Housing PLC',
 }
 
 export default async function RootLayout({
