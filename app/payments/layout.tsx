@@ -8,6 +8,7 @@ import DropMenu from '@/components/cards/DropMenu'
 import BottomBar from '@/components/shared/BottomBar'
 
 const inter = Inter({ subsets: ['latin'] })
+
 export const metadata: Metadata = {
   title: 'Roofah Housing -  Payment Status',
   description: 'Your payment status for your stay at Roofah Housing.',

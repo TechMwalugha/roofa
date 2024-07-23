@@ -19,7 +19,6 @@ import OfferAlert from '@/components/shared/alerts/OfferAlert';
 import ServerError from '@/components/shared/errorpages/ServerError';
 import RentalPageContactUs from '@/components/cards/RentalPageContactUs';
 
-
 const page = async ({ params } : { params: { id: ObjectId}}) => {
   const id = params.id
   let ownerImage

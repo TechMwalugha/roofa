@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, ResolvingMetadata } from 'next'
 import { Inter } from 'next/font/google'
 import '../globals.css'
 import Provider from '@/context/Provider'
@@ -9,16 +9,12 @@ import BottomBar from '@/components/shared/BottomBar'
 
 const inter = Inter({ subsets: ['latin'] })
 
- export const metadata: Metadata = {
-  title: 'Roofa Housing PLC - Apartments',
-  description: 'Find your next stay, airbnbs, rentals at cheap and affordable prices',
+export const metadata: Metadata = {
+  title: 'Roofah Housing - Apartments',
+  description: 'Reserve this Apartment Today.',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode}) {
   return (
     <html lang="en">
       <head>
