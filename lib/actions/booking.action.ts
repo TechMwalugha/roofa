@@ -19,6 +19,7 @@ export async function createNewBooking({
     reportingDate, 
     identityNumber, 
     gender,
+    mpesaPhoneNumber
 }: createBookingInterface) {
     try {
         connectToDB()
@@ -44,6 +45,7 @@ export async function createNewBooking({
             reportingDate, 
             identityNumber, 
             gender,
+            mpesaPhoneNumber
         })
 
 
@@ -131,7 +133,7 @@ export async function fetchOneBooking(id: string) {
     }
 }
 
-export async function fetchOneBookingId({ id }: { id: string} ) {
+export async function fetchOneBookingId({ id }: { id: string } ) {
     try{
         connectToDB()
 

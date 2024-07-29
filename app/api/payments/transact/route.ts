@@ -51,7 +51,7 @@ export async function POST(req: any) {
             const reportingDate: Date = new Date(date);
             const differenceInDays: number = Math.floor((reportingDate.getTime() - currentDate.getTime()) / (24 * 60 * 60 * 1000));
     
-            return differenceInDays <= 10 && differenceInDays >= 0;
+            return differenceInDays <= 10 && differenceInDays >= -1;
         }, { message: "The date is incorrect"}),
         mpesaPhoneNumber: z.string().refine(phoneNumber => /^(07\d|01\d|2547\d|2541\d)\d{7}$/.test(phoneNumber), { message: "Invalid message phone number"}),
         identityNumber: z.string().min(6).max(10),
@@ -122,6 +122,7 @@ export async function POST(req: any) {
             reportingDate: reportingDate, 
             identityNumber: identityNumber, 
             gender: gender,
+            mpesaPhoneNumber: phoneNumber
         })
 
     return NextResponse.json(

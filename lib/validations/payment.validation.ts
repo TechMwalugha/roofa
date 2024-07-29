@@ -10,9 +10,9 @@ export const bookingDetailsFormSchema: any = z.object({
         const reportingDate: Date = new Date(date);
         const differenceInDays: number = Math.floor((reportingDate.getTime() - currentDate.getTime()) / (24 * 60 * 60 * 1000));
 
-        return differenceInDays <= 10 && differenceInDays >= 0;
+        return differenceInDays <= 10 && differenceInDays >= -1;
     }, { message: 'Reporting date must be within the next 10 days' }),
-    mpesaPhoneNumber: z.preprocess(trimString, z.string().refine(phoneNumber => /^(07\d|01\d|2547\d|2541\d)\d{7}$/.test(phoneNumber), {
+        mpesaPhoneNumber: z.preprocess(trimString, z.string().refine(phoneNumber => /^(07\d|01\d|2547\d|2541\d)\d{7}$/.test(phoneNumber), {
         message: 'Invalid M-PESA phone number format'
     })),
     identityNumber: z.string().refine(identityNumber => /^\d{6,10}$/.test(identityNumber), {

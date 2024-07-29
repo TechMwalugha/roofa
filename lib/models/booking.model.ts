@@ -35,6 +35,9 @@ const bookingSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    mpesaPhoneNumber: {
+        type: String,
+    },
     isBookingSettled: {
         type: Boolean,
         default: false

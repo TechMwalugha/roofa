@@ -119,4 +119,5 @@ export interface createBookingInterface {
     reportingDate: Date;
     identityNumber: string;
     gender: 'male' | 'female';
+    mpesaPhoneNumber: string;
 }

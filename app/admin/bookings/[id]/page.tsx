@@ -40,6 +40,7 @@ const page = async ({ params }: { params: { id: string }}) => {
                                 <p className="text-small-regular">Name: <span className="text-danger capitalize ">{booking.fullName}</span></p>
                                 <p className="text-small-regular">Email: <span className="text-danger ">{booking.email}</span></p>
                                 <p className="text-small-regular">Identity Number: <span className="text-danger ">{booking.identityNumber}</span></p>
+                                <p className="text-small-regular">Phone Number: <span className="text-danger ">{booking.mpesaPhoneNumber}</span></p>
                                 <p className="text-small-regular">Gender: <span className="text-danger capitalize">{booking.gender}</span></p>
                                 <p className="text-small-regular">Reporting Date: <span className="text-danger ">{formatDateString(booking.reportingDate)}</span></p>
                             </div>
