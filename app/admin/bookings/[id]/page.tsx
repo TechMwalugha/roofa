@@ -107,7 +107,7 @@ const page = async ({ params }: { params: { id: string }}) => {
                         )
                        }
 
-                        <h3 className='mb-2 bg-slate-300 p-3 text-subtle-medium text-center'>Actions</h3>
+                        <h3 className='my-2 bg-slate-300 p-3 text-subtle-medium text-center'>Actions</h3>
                     <div className='flex items-center justify-between'>
 
 
