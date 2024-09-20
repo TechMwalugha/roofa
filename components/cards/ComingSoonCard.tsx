@@ -26,7 +26,7 @@ const ComingSoonCard = () => {
        className='flex items-center justify-center gap-3'
        onClick={() => router.back()}
        >
-        <p>Go back</p>
+        <p>Back</p>
         <IoCaretBackCircle size={30} />
        </Button>
     </div>
