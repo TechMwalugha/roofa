@@ -119,10 +119,13 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
       {/* availability */}
       {
         rental && (
+          <div className='flex justify-center items-center'>
+
           <BookingCard
           availableRooms={rental.availableRooms}
           id={rental.id}
-            />
+          />
+        </div>
         )
       }
 
