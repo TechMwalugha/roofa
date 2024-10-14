@@ -11,11 +11,12 @@ import { Button } from "../ui/button"
 const BookingCard = ({ availableRooms, id} : { availableRooms: number, id: ObjectId}) => {
   return (
     <Button
-    className={`my-5 py-6 w-full bg-blue ${availableRooms < 1 ? "text-[#000]" : ""}`}
-    disabled={availableRooms < 1 }
+    className={`p-0 w-full bg-blue ${availableRooms < 1 ? "text-[#000]" : ""}`}
+    // disabled={availableRooms < 1 }
     >
       <Link 
       href={availableRooms < 1 ? "" : `/rentals/book/${id}`}
+      className="w-full"
       >
       {availableRooms >= 1 ? "Reserve" : "Not Available"}
       </Link>
