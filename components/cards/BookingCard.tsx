@@ -12,7 +12,7 @@ const BookingCard = ({ availableRooms, id} : { availableRooms: number, id: Objec
   return (
     <Button
     className={`p-0 w-full bg-blue ${availableRooms < 1 ? "text-[#000]" : ""}`}
-    // disabled={availableRooms < 1 }
+    disabled={availableRooms < 1 }
     >
       <Link 
       href={availableRooms < 1 ? "" : `/rentals/book/${id}`}
