@@ -121,10 +121,19 @@ const page = async ({ params } : { params: { id: ObjectId}}) => {
         rental && (
           <div className='flex justify-center items-center'>
 
-          <BookingCard
+          {/* <BookingCard
           availableRooms={rental.availableRooms}
           id={rental.id}
-          />
+          /> */}
+
+
+          <div className='my-5'>
+             <h3 className='text-heading3-bold text-center'>Check Availability?</h3>
+            <div className='mt-5 flex gap-3 items-center'>
+              <Link className="bg-blue p-3 rounded-md" href={`tel:254715539518`}>Reserve via a Call</Link>
+              <Link className="bg-blue p-3 rounded-md" href={`https://wa.me/254715539518?text=Hello,%20I%20want%20to%20reserve%20this%20particular%20apartment%20https%3A%2F%2Froofa.co.ke%2Frentals%2F${rental.id}`} target="_blank">Reserve via WhatsApp</Link>
+            </div>
+          </div>
         </div>
         )
       }

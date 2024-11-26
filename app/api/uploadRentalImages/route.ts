@@ -72,7 +72,7 @@ export async function POST(req: Request) {
     const newFileName: string = `${Date.now()}_${extension[0]}.${extension[extension.length - 1 ]}`;
       const fil = formDataEntryValue as unknown as Blob;
       const buffer = Buffer.from(await fil.arrayBuffer());
-      fs.writeFileSync(`/var/www/html/images/rentalImages/${newFileName}`, buffer);
+      fs.writeFileSync(`/var/www/html/images/rentalImages/${newFileName}`, new Uint8Array(buffer));
       // fs.writeFileSync(`C:/RealProjects/roofa/public/rentalImages/${newFileName}`, buffer);
       imageUrls.push(newFileName)
     }
